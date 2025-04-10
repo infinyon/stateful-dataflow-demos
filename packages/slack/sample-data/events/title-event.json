@@ -1,0 +1,11 @@
+{
+	"blocks": [
+		{
+			"type": "section",
+			"text": {
+				"type": "mrkdwn",
+				"text": "New *Stripe* event - *invoice.created* (draft) :memo:"
+			}
+		} 
+	]
+}

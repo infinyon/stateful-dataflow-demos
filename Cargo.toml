@@ -1,0 +1,22 @@
+[workspace]
+members = [
+    "packages/slack/rust/slack-package",
+    "packages/stripe/rust/stripe-types",
+]
+
+resolver = "2"
+
+[profile.wasm-release]
+inherits = "release"
+strip = true
+opt-level = 'z'
+lto = true
+codegen-units = 1
+panic = "abort"
+
+[profile.wasm-debug]
+inherits = "dev"
+overflow-checks = false
+strip = true
+opt-level = 's'
+panic = "abort"

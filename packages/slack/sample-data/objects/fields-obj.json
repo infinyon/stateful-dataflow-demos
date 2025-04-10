@@ -1,0 +1,11 @@
+{
+	"title": "New *Stripe* event - *invoice.created* (draft) :memo:",
+	"fields": [
+    "*Account:*\nInfinyOn (US)",
+    "*Customer:*\nNick Cardin <nick+fc9@infinyon.com>",
+    "*Amount Due:*\n350.00 USD",
+    "*Amount Paid:*\n0.00 USD",
+    "*Period:*\nMar 10, 2025 - Apr 23, 2025",
+    "*Items:*\n -"
+  ]
+}
