@@ -90,10 +90,9 @@ mod test {
     #[test]
     fn test_file() {
         let input_file: Vec<u8> = std::fs::read("../../sample-data/event1.json")
-            .expect("cannot read file");
+            .expect("cannot read event1 - input file");
         let output_file: Vec<u8> = std::fs::read("../../sample-data/output/event1.json")
-            .expect("cannot read file");
-        
+            .expect("cannot read event1 - output file");
 
         let raw_result = run_jaq_transform(input_file, JAQ_FILTER).expect("transform");
         let resul_str = std::str::from_utf8(&raw_result).expect("convert result to str");
