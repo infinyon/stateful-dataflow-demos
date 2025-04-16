@@ -5,5 +5,6 @@ use crate::bindings::examples::stripe_types_types::types::StripeEvent;
 use crate::bindings::examples::stripe_types_types::types::*;
 #[sdf(fn_name = "test-event")]
 pub(crate) fn test_event(sev: StripeEvent) -> Result<StripeEvent> {
-    Ok(sev)
+    println!("test-event called - not implemented!");
+    Err(sdfg::anyhow::anyhow!("test-event is not implemented"))
 }

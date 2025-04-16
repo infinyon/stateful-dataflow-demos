@@ -1,4 +1,4 @@
-apiVersion: 0.5.0
+apiVersion: 0.6.0
 
 meta:
   name: slack-package
@@ -6,8 +6,6 @@ meta:
   namespace: examples
 
 types:
-  ## Fields generated from [SDF Schema](./slack-schema.json).
-  ## These fields are compatible with the Slack API.
   slack-event:
     type: object
     properties:
@@ -23,6 +21,16 @@ types:
               type: text-section
             fields-section:
               type: fields-section
+  slack-obj:
+    type: object
+    properties:
+      fields:
+        type: list
+        type-name: slack-obj-fields
+        items:
+          type: string
+      title:
+        type: string
   text-section:
     type: object
     properties:
@@ -30,40 +38,24 @@ types:
         type: text-object
       type:
         type: enum
-        type-name: section-text-type
-        serialize:
-          rename: type
-        deserialize:
-          rename: type        
+        type-name: text-section-type
         oneOf:
           section:
             type: null
-            serialize:
-              rename: section
-            deserialize:
-              rename: section
   fields-section:
     type: object
     properties:
       fields:
         type: list
-        type-name: section-fields-fields
+        type-name: fields-section-fields
         items:
           type: text-object
       type:
         type: enum
-        type-name: section-fields-type
-        serialize:
-          rename: type
-        deserialize:
-          rename: type        
+        type-name: fields-section-type
         oneOf:
           section:
             type: null
-            serialize:
-              rename: section
-            deserialize:
-              rename: section
   text-object:
     type: object
     properties:
@@ -72,30 +64,9 @@ types:
       type:
         type: enum
         type-name: text-object-type
-        serialize:
-          rename: type
-        deserialize:
-          rename: type        
         oneOf:
           mrkdwn:
             type: null
-            serialize:
-              rename: mrkdwn
-            deserialize:
-              rename: mrkdwn
-
-  ## Input object Populated by the User
-  ## This field is an abstracted object that is used to create a Slack Event
-  fields-obj:
-    type: object
-    properties:
-      title:
-        type: string
-      fields:
-        type: list
-        type-name: fields-list
-        items:
-          type: string
 
 functions:
   ## Function to turn fields-obj into a slack-event
@@ -103,7 +74,7 @@ functions:
     operator: map
     inputs:
       - name: obj
-        type: fields-obj
+        type: slack-obj
     output:
       type: slack-event
 

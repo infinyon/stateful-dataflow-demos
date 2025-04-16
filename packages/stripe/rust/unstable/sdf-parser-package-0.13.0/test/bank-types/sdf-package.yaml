@@ -1,0 +1,31 @@
+apiVersion: 0.5.0
+meta:
+  name: bank
+  version: 0.1.0
+  namespace: example
+
+types:
+  bank-event:
+    type: object
+    properties:
+      name:
+        type: string
+      amount:
+        type: float32
+
+  bank-account:
+    type: arrow-row
+    properties:
+      balance:
+        type: float32
+      name:
+        type: string
+
+states:
+  account-balance:
+    type: keyed-state
+    properties:
+      key:
+        type: string
+      value:
+        type: bank-account

@@ -1,0 +1,1197 @@
+types:
+  stripe-event:
+    type: object
+    properties:
+      api-version:
+        type: string
+        optional: true
+      created:
+        type: i32
+      data:
+        type: event-data
+      fluvio-version:
+        type: string
+      id:
+        type: string
+      livemode:
+        type: bool
+      pending-webhooks:
+        type: i32
+  event-data:
+    type: enum
+    type-name: event-data-event-datauntagged
+    tagging: untagged
+    oneOf:
+      invoice:
+        type: invoice
+      invoiceitem:
+        type: invoiceitem
+      customer:
+        type: customer
+      payment-intent:
+        type: payment-intent
+      subscription-schedule:
+        type: subscription-schedule
+      issuing-cardholder:
+        type: issuing-cardholder
+      issuing-card:
+        type: issuing-card
+      issuing-authorization:
+        type: issuing-authorization
+      issuing-dispute:
+        type: issuing-dispute
+      topup:
+        type: topup
+  invoice:
+    type: object
+    properties:
+      account-country:
+        type: string
+        optional: true
+      account-name:
+        type: string
+        optional: true
+      amount-due:
+        type: i32
+      amount-paid:
+        type: i32
+      amount-remaining:
+        type: i32
+      amount-shipping:
+        type: i32
+      attempt-count:
+        type: i32
+      attempted:
+        type: bool
+      billing-reason:
+        type: enum
+        type-name: invoice-billing-reason
+        optional: true
+        oneOf:
+          automatic_pending_invoice_item_invoice:
+            type: null
+          manual:
+            type: null
+          quote_accept:
+            type: null
+          subscription:
+            type: null
+          subscription_create:
+            type: null
+          subscription_cycle:
+            type: null
+          subscription_threshold:
+            type: null
+          subscription_update:
+            type: null
+          upcoming:
+            type: null
+      collection-method:
+        type: enum
+        type-name: invoice-collection-method
+        oneOf:
+          charge_automatically:
+            type: null
+          send_invoice:
+            type: null
+      created:
+        type: i32
+      currency:
+        type: string
+      customer:
+        type: string
+        optional: true
+      customer-email:
+        type: string
+        optional: true
+      customer-name:
+        type: string
+        optional: true
+      hosted-invoice-url:
+        type: string
+        optional: true
+      id:
+        type: string
+        optional: true
+      lines:
+        type: list
+        type-name: invoice-lines
+        items:
+          type: line-item
+      paid:
+        type: bool
+      paid-out-of-band:
+        type: bool
+      period-end:
+        type: i32
+      period-start:
+        type: i32
+      status:
+        type: enum
+        type-name: invoice-status
+        optional: true
+        oneOf:
+          draft:
+            type: null
+          open:
+            type: null
+          paid:
+            type: null
+          uncollectible:
+            type: null
+          void:
+            type: null
+      subtotal:
+        type: i32
+      total:
+        type: i32
+      event-type:
+        type: enum
+        type-name: invoice-event-type
+        oneOf:
+          invoice-created:
+            type: null
+            serialize:
+              rename: invoice.created
+            deserialize:
+              rename: invoice.created
+          invoice-deleted:
+            type: null
+            serialize:
+              rename: invoice.deleted
+            deserialize:
+              rename: invoice.deleted
+          invoice-finalization-failed:
+            type: null
+            serialize:
+              rename: invoice.finalization_failed
+            deserialize:
+              rename: invoice.finalization_failed
+          invoice-finalized:
+            type: null
+            serialize:
+              rename: invoice.finalized
+            deserialize:
+              rename: invoice.finalized
+          invoice-marked-uncollectible:
+            type: null
+            serialize:
+              rename: invoice.marked_uncollectible
+            deserialize:
+              rename: invoice.marked_uncollectible
+          invoice-overdue:
+            type: null
+            serialize:
+              rename: invoice.overdue
+            deserialize:
+              rename: invoice.overdue
+          invoice-paid:
+            type: null
+            serialize:
+              rename: invoice.paid
+            deserialize:
+              rename: invoice.paid
+          invoice-payment-action-required:
+            type: null
+            serialize:
+              rename: invoice.payment_action_required
+            deserialize:
+              rename: invoice.payment_action_required
+          invoice-payment-failed:
+            type: null
+            serialize:
+              rename: invoice.payment_failed
+            deserialize:
+              rename: invoice.payment_failed
+          invoice-payment-succeeded:
+            type: null
+            serialize:
+              rename: invoice.payment_succeeded
+            deserialize:
+              rename: invoice.payment_succeeded
+          invoice-sent:
+            type: null
+            serialize:
+              rename: invoice.sent
+            deserialize:
+              rename: invoice.sent
+          invoice-upcoming:
+            type: null
+            serialize:
+              rename: invoice.upcoming
+            deserialize:
+              rename: invoice.upcoming
+          invoice-updated:
+            type: null
+            serialize:
+              rename: invoice.updated
+            deserialize:
+              rename: invoice.updated
+          invoice-voided:
+            type: null
+            serialize:
+              rename: invoice.voided
+            deserialize:
+              rename: invoice.voided
+          invoice-invoice-will-be-due:
+            type: null
+            serialize:
+              rename: invoice.invoice.will_be_due
+            deserialize:
+              rename: invoice.invoice.will_be_due
+  invoiceitem:
+    type: object
+    properties:
+      amount:
+        type: i32
+      currency:
+        type: string
+      customer:
+        type: string
+      date:
+        type: i32
+      description:
+        type: string
+        optional: true
+      id:
+        type: string
+      period:
+        type: period
+      quantity:
+        type: i32
+      event-type:
+        type: enum
+        type-name: invoiceitem-event-type
+        oneOf:
+          invoiceitem-created:
+            type: null
+            serialize:
+              rename: invoiceitem.created
+            deserialize:
+              rename: invoiceitem.created
+          invoiceitem-deleted:
+            type: null
+            serialize:
+              rename: invoiceitem.deleted
+            deserialize:
+              rename: invoiceitem.deleted
+  customer:
+    type: object
+    properties:
+      address:
+        type: object
+        type-name: customer-address
+        optional: true
+        properties:
+          city:
+            type: string
+            optional: true
+          country:
+            type: string
+            optional: true
+          line1:
+            type: string
+            optional: true
+          line2:
+            type: string
+            optional: true
+          postal-code:
+            type: string
+            optional: true
+          state:
+            type: string
+            optional: true
+      balance:
+        type: i32
+        optional: true
+      created:
+        type: i32
+      currency:
+        type: string
+        optional: true
+      delinquent:
+        type: bool
+        optional: true
+      description:
+        type: string
+        optional: true
+      email:
+        type: string
+        optional: true
+      id:
+        type: string
+      invoice-prefix:
+        type: string
+        optional: true
+      name:
+        type: string
+        optional: true
+      next-invoice-sequence:
+        type: i32
+        optional: true
+      phone:
+        type: string
+        optional: true
+      event-type:
+        type: enum
+        type-name: customer-event-type
+        oneOf:
+          customer-bank-account-created:
+            type: null
+            serialize:
+              rename: customer.bank_account.created
+            deserialize:
+              rename: customer.bank_account.created
+          customer-bank-account-deleted:
+            type: null
+            serialize:
+              rename: customer.bank_account.deleted
+            deserialize:
+              rename: customer.bank_account.deleted
+          customer-bank-account-updated:
+            type: null
+            serialize:
+              rename: customer.bank_account.updated
+            deserialize:
+              rename: customer.bank_account.updated
+          customer-card-created:
+            type: null
+            serialize:
+              rename: customer.card.created
+            deserialize:
+              rename: customer.card.created
+          customer-card-deleted:
+            type: null
+            serialize:
+              rename: customer.card.deleted
+            deserialize:
+              rename: customer.card.deleted
+          customer-card-updated:
+            type: null
+            serialize:
+              rename: customer.card.updated
+            deserialize:
+              rename: customer.card.updated
+          customer-created:
+            type: null
+            serialize:
+              rename: customer.created
+            deserialize:
+              rename: customer.created
+          customer-deleted:
+            type: null
+            serialize:
+              rename: customer.deleted
+            deserialize:
+              rename: customer.deleted
+          customer-subscription-created:
+            type: null
+            serialize:
+              rename: customer.subscription.created
+            deserialize:
+              rename: customer.subscription.created
+          customer-subscription-deleted:
+            type: null
+            serialize:
+              rename: customer.subscription.deleted
+            deserialize:
+              rename: customer.subscription.deleted
+          customer-subscription-paused:
+            type: null
+            serialize:
+              rename: customer.subscription.paused
+            deserialize:
+              rename: customer.subscription.paused
+          customer-subscription-pending-update-applied:
+            type: null
+            serialize:
+              rename: customer.subscription.pending_update_applied
+            deserialize:
+              rename: customer.subscription.pending_update_applied
+          customer-subscription-pending-update-expired:
+            type: null
+            serialize:
+              rename: customer.subscription.pending_update_expired
+            deserialize:
+              rename: customer.subscription.pending_update_expired
+          customer-subscription-resumed:
+            type: null
+            serialize:
+              rename: customer.subscription.resumed
+            deserialize:
+              rename: customer.subscription.resumed
+          customer-subscription-trial-will-end:
+            type: null
+            serialize:
+              rename: customer.subscription.trial_will_end
+            deserialize:
+              rename: customer.subscription.trial_will_end
+          customer-subscription-updated:
+            type: null
+            serialize:
+              rename: customer.subscription.updated
+            deserialize:
+              rename: customer.subscription.updated
+          customer-updated:
+            type: null
+            serialize:
+              rename: customer.updated
+            deserialize:
+              rename: customer.updated
+  payment-intent:
+    type: object
+    properties:
+      amount:
+        type: i32
+      amount-received:
+        type: i32
+        optional: true
+      canceled-at:
+        type: i32
+        optional: true
+      cancellation-reason:
+        type: enum
+        type-name: payment-intent-cancellation-reason
+        optional: true
+        oneOf:
+          abandoned:
+            type: null
+          automatic:
+            type: null
+          duplicate:
+            type: null
+          failed_invoice:
+            type: null
+          fraudulent:
+            type: null
+          requested_by_customer:
+            type: null
+          void_invoice:
+            type: null
+      capture-method:
+        type: enum
+        type-name: payment-intent-capture-method
+        oneOf:
+          automatic:
+            type: null
+          automatic_async:
+            type: null
+          manual:
+            type: null
+      confirmation-method:
+        type: enum
+        type-name: payment-intent-confirmation-method
+        oneOf:
+          automatic:
+            type: null
+          manual:
+            type: null
+      created:
+        type: i32
+      currency:
+        type: string
+      customer:
+        type: string
+        optional: true
+      description:
+        type: string
+        optional: true
+      id:
+        type: string
+      invoice:
+        type: string
+        optional: true
+      payment-method-types:
+        type: list
+        type-name: payment-intent-payment-method-types
+        items:
+          type: string
+      receipt-email:
+        type: string
+        optional: true
+      status:
+        type: enum
+        type-name: payment-intent-status
+        oneOf:
+          canceled:
+            type: null
+          processing:
+            type: null
+          requires_action:
+            type: null
+          requires_capture:
+            type: null
+          requires_confirmation:
+            type: null
+          requires_payment_method:
+            type: null
+          succeeded:
+            type: null
+      event-type:
+        type: enum
+        type-name: payment-intent-event-type
+        oneOf:
+          payment-intent-amount-capturable-updated:
+            type: null
+            serialize:
+              rename: payment_intent.amount_capturable_updated
+            deserialize:
+              rename: payment_intent.amount_capturable_updated
+          payment-intent-canceled:
+            type: null
+            serialize:
+              rename: payment_intent.canceled
+            deserialize:
+              rename: payment_intent.canceled
+          payment-intent-created:
+            type: null
+            serialize:
+              rename: payment_intent.created
+            deserialize:
+              rename: payment_intent.created
+          payment-intent-partially-funded:
+            type: null
+            serialize:
+              rename: payment_intent.partially_funded
+            deserialize:
+              rename: payment_intent.partially_funded
+          payment-intent-payment-failed:
+            type: null
+            serialize:
+              rename: payment_intent.payment_failed
+            deserialize:
+              rename: payment_intent.payment_failed
+          payment-intent-processing:
+            type: null
+            serialize:
+              rename: payment_intent.processing
+            deserialize:
+              rename: payment_intent.processing
+          payment-intent-requires-action:
+            type: null
+            serialize:
+              rename: payment_intent.requires_action
+            deserialize:
+              rename: payment_intent.requires_action
+          payment-intent-succeeded:
+            type: null
+            serialize:
+              rename: payment_intent.succeeded
+            deserialize:
+              rename: payment_intent.succeeded
+  subscription-schedule:
+    type: object
+    properties:
+      canceled-at:
+        type: i32
+        optional: true
+      completed-at:
+        type: i32
+        optional: true
+      created:
+        type: i32
+      customer:
+        type: string
+      default-settings:
+        type: subscription-default-settings
+      end-behavior:
+        type: enum
+        type-name: subscription-schedule-end-behavior
+        oneOf:
+          cancel:
+            type: null
+          none:
+            type: null
+          release:
+            type: null
+          renew:
+            type: null
+      id:
+        type: string
+      released-at:
+        type: i32
+        optional: true
+      status:
+        type: enum
+        type-name: subscription-schedule-status
+        oneOf:
+          active:
+            type: null
+          canceled:
+            type: null
+          completed:
+            type: null
+          not_started:
+            type: null
+          released:
+            type: null
+      event-type:
+        type: enum
+        type-name: subscription-schedule-event-type
+        oneOf:
+          subscription-schedule-aborted:
+            type: null
+            serialize:
+              rename: subscription_schedule.aborted
+            deserialize:
+              rename: subscription_schedule.aborted
+          subscription-schedule-canceled:
+            type: null
+            serialize:
+              rename: subscription_schedule.canceled
+            deserialize:
+              rename: subscription_schedule.canceled
+          subscription-schedule-completed:
+            type: null
+            serialize:
+              rename: subscription_schedule.completed
+            deserialize:
+              rename: subscription_schedule.completed
+          subscription-schedule-created:
+            type: null
+            serialize:
+              rename: subscription_schedule.created
+            deserialize:
+              rename: subscription_schedule.created
+          subscription-schedule-expiring:
+            type: null
+            serialize:
+              rename: subscription_schedule.expiring
+            deserialize:
+              rename: subscription_schedule.expiring
+          subscription-schedule-released:
+            type: null
+            serialize:
+              rename: subscription_schedule.released
+            deserialize:
+              rename: subscription_schedule.released
+          subscription-schedule-updated:
+            type: null
+            serialize:
+              rename: subscription_schedule.updated
+            deserialize:
+              rename: subscription_schedule.updated
+  issuing-cardholder:
+    type: object
+    properties:
+      billing:
+        type: address
+      created:
+        type: i32
+      email:
+        type: string
+        optional: true
+      id:
+        type: string
+      individual:
+        type: object
+        type-name: issuing-cardholder-individual
+        optional: true
+        properties:
+          dob:
+            type: object
+            type-name: issuing-cardholder-dob
+            optional: true
+            properties:
+              day:
+                type: i32
+                optional: true
+              month:
+                type: i32
+                optional: true
+              year:
+                type: i32
+                optional: true
+          first-name:
+            type: string
+            optional: true
+          last-name:
+            type: string
+            optional: true
+      name:
+        type: string
+      phone-number:
+        type: string
+        optional: true
+      status:
+        type: enum
+        type-name: issuing-cardholder-status
+        oneOf:
+          active:
+            type: null
+          blocked:
+            type: null
+          inactive:
+            type: null
+      type:
+        type: enum
+        type-name: issuing-cardholder-type
+        oneOf:
+          company:
+            type: null
+          individual:
+            type: null
+      event-type:
+        type: enum
+        type-name: issuing-cardholder-event-type
+        oneOf:
+          issuing-cardholder-created:
+            type: null
+            serialize:
+              rename: issuing_cardholder.created
+            deserialize:
+              rename: issuing_cardholder.created
+          issuing-cardholder-updated:
+            type: null
+            serialize:
+              rename: issuing_cardholder.updated
+            deserialize:
+              rename: issuing_cardholder.updated
+  issuing-card:
+    type: object
+    properties:
+      brand:
+        type: string
+      cancellation-reason:
+        type: enum
+        type-name: issuing-card-cancellation-reason
+        optional: true
+        oneOf:
+          design_rejected:
+            type: null
+          lost:
+            type: null
+          stolen:
+            type: null
+      cardholder:
+        type: object
+        type-name: issuing-card-cardholder
+        properties:
+          email:
+            type: string
+            optional: true
+          id:
+            type: string
+            optional: true
+      created:
+        type: i32
+      currency:
+        type: string
+      cvc:
+        type: string
+        optional: true
+      exp-month:
+        type: i32
+      exp-year:
+        type: i32
+      financial-account:
+        type: string
+        optional: true
+      id:
+        type: string
+      last4:
+        type: string
+      status:
+        type: enum
+        type-name: issuing-card-status
+        oneOf:
+          active:
+            type: null
+          canceled:
+            type: null
+          inactive:
+            type: null
+      type:
+        type: enum
+        type-name: issuing-card-type
+        oneOf:
+          physical:
+            type: null
+          virtual:
+            type: null
+      event-type:
+        type: enum
+        type-name: issuing-card-event-type
+        oneOf:
+          issuing-card-created:
+            type: null
+            serialize:
+              rename: issuing_card.created
+            deserialize:
+              rename: issuing_card.created
+          issuing-card-updated:
+            type: null
+            serialize:
+              rename: issuing_card.updated
+            deserialize:
+              rename: issuing_card.updated
+  issuing-authorization:
+    type: object
+    properties:
+      amount:
+        type: i32
+      amount-details:
+        type: object
+        type-name: issuing-authorization-amount-details
+        optional: true
+        properties:
+          atm-fee:
+            type: i32
+            optional: true
+          cashback-amount:
+            type: i32
+            optional: true
+      approved:
+        type: bool
+      authorization-method:
+        type: enum
+        type-name: issuing-authorization-authorization-method
+        oneOf:
+          chip:
+            type: null
+          contactless:
+            type: null
+          keyed_in:
+            type: null
+          online:
+            type: null
+          swipe:
+            type: null
+      card:
+        type: string
+      cardholder:
+        type: string
+        optional: true
+      created:
+        type: i32
+      currency:
+        type: string
+      id:
+        type: string
+      merchant-amount:
+        type: i32
+      merchant-currency:
+        type: string
+      merchant-data:
+        type: merchant-data
+      status:
+        type: enum
+        type-name: issuing-authorization-status
+        oneOf:
+          closed:
+            type: null
+          pending:
+            type: null
+          reversed:
+            type: null
+      wallet:
+        type: string
+        optional: true
+      event-type:
+        type: enum
+        type-name: issuing-authorization-event-type
+        oneOf:
+          issuing-authorization-created:
+            type: null
+            serialize:
+              rename: issuing_authorization.created
+            deserialize:
+              rename: issuing_authorization.created
+          issuing-authorization-updated:
+            type: null
+            serialize:
+              rename: issuing_authorization.updated
+            deserialize:
+              rename: issuing_authorization.updated
+  issuing-dispute:
+    type: object
+    properties:
+      amount:
+        type: i32
+      created:
+        type: i32
+      currency:
+        type: string
+      id:
+        type: string
+      loss-reason:
+        type: enum
+        type-name: issuing-dispute-loss-reason
+        optional: true
+        oneOf:
+          cardholder_authentication_issuer_liability:
+            type: null
+          eci5_token_transaction_with_tavv:
+            type: null
+          excess_disputes_in_timeframe:
+            type: null
+          has_not_met_the_minimum_dispute_amount_requirements:
+            type: null
+          invalid_duplicate_dispute:
+            type: null
+          invalid_incorrect_amount_dispute:
+            type: null
+          invalid_no_authorization:
+            type: null
+          invalid_use_of_disputes:
+            type: null
+          merchandise_delivered_or_shipped:
+            type: null
+          merchandise_or_service_as_described:
+            type: null
+          not_cancelled:
+            type: null
+          other:
+            type: null
+          refund_issued:
+            type: null
+          submitted_beyond_allowable_time_limit:
+            type: null
+          transaction_3ds_required:
+            type: null
+          transaction_approved_after_prior_fraud_dispute:
+            type: null
+          transaction_authorized:
+            type: null
+          transaction_electronically_read:
+            type: null
+          transaction_qualifies_for_visa_easy_payment_service:
+            type: null
+          transaction_unattended:
+            type: null
+      reason:
+        type: enum
+        type-name: issuing-dispute-reason
+        oneOf:
+          canceled:
+            type: null
+          duplicate:
+            type: null
+          fraudulent:
+            type: null
+          merchandise_not_as_described:
+            type: null
+          no_valid_authorization:
+            type: null
+          not_received:
+            type: null
+          other:
+            type: null
+          service_not_as_described:
+            type: null
+      status:
+        type: enum
+        type-name: issuing-dispute-status
+        oneOf:
+          expired:
+            type: null
+          lost:
+            type: null
+          submitted:
+            type: null
+          unsubmitted:
+            type: null
+          won:
+            type: null
+      event-type:
+        type: enum
+        type-name: issuing-dispute-event-type
+        oneOf:
+          issuing-dispute-created:
+            type: null
+            serialize:
+              rename: issuing_dispute.created
+            deserialize:
+              rename: issuing_dispute.created
+          issuing-dispute-closed:
+            type: null
+            serialize:
+              rename: issuing_dispute.closed
+            deserialize:
+              rename: issuing_dispute.closed
+          issuing-dispute-funds-reinstated:
+            type: null
+            serialize:
+              rename: issuing_dispute.funds_reinstated
+            deserialize:
+              rename: issuing_dispute.funds_reinstated
+          issuing-dispute-funds-rescinded:
+            type: null
+            serialize:
+              rename: issuing_dispute.funds_rescinded
+            deserialize:
+              rename: issuing_dispute.funds_rescinded
+          issuing-dispute-submitted:
+            type: null
+            serialize:
+              rename: issuing_dispute.submitted
+            deserialize:
+              rename: issuing_dispute.submitted
+          issuing-dispute-updated:
+            type: null
+            serialize:
+              rename: issuing_dispute.updated
+            deserialize:
+              rename: issuing_dispute.updated
+  topup:
+    type: object
+    properties:
+      amount:
+        type: i32
+      created:
+        type: i32
+      currency:
+        type: string
+      description:
+        type: string
+        optional: true
+      expected-availability-date:
+        type: i32
+        optional: true
+      failure-code:
+        type: string
+        optional: true
+      failure-message:
+        type: string
+        optional: true
+      id:
+        type: string
+      status:
+        type: enum
+        type-name: topup-status
+        oneOf:
+          canceled:
+            type: null
+          failed:
+            type: null
+          pending:
+            type: null
+          reversed:
+            type: null
+          succeeded:
+            type: null
+      event-type:
+        type: enum
+        type-name: topup-event-type
+        oneOf:
+          topup-canceled:
+            type: null
+            serialize:
+              rename: topup.canceled
+            deserialize:
+              rename: topup.canceled
+          topup-created:
+            type: null
+            serialize:
+              rename: topup.created
+            deserialize:
+              rename: topup.created
+          topup-failed:
+            type: null
+            serialize:
+              rename: topup.failed
+            deserialize:
+              rename: topup.failed
+          topup-reversed:
+            type: null
+            serialize:
+              rename: topup.reversed
+            deserialize:
+              rename: topup.reversed
+          topup-succeeded:
+            type: null
+            serialize:
+              rename: topup.succeeded
+            deserialize:
+              rename: topup.succeeded
+  line-item:
+    type: object
+    properties:
+      amount:
+        type: i32
+      currency:
+        type: string
+      description:
+        type: string
+  period:
+    type: object
+    properties:
+      end:
+        type: i32
+      start:
+        type: i32
+  subscription-default-settings:
+    type: object
+    properties:
+      billing-cycle-anchor:
+        type: enum
+        type-name: subscription-default-settings-billing-cycle-anchor
+        oneOf:
+          automatic:
+            type: null
+          phase_start:
+            type: null
+      collection-method:
+        type: enum
+        type-name: subscription-default-settings-collection-method
+        optional: true
+        oneOf:
+          charge_automatically:
+            type: null
+          send_invoice:
+            type: null
+  address:
+    type: object
+    properties:
+      city:
+        type: string
+        optional: true
+      country:
+        type: string
+        optional: true
+      line1:
+        type: string
+        optional: true
+      line2:
+        type: string
+        optional: true
+      postal-code:
+        type: string
+        optional: true
+      state:
+        type: string
+        optional: true
+  merchant-data:
+    type: object
+    properties:
+      category:
+        type: string
+      category-code:
+        type: string
+      city:
+        type: string
+        optional: true
+      country:
+        type: string
+        optional: true
+      name:
+        type: string
+        optional: true
+      network-id:
+        type: string
+      postal-code:
+        type: string
+        optional: true
+      state:
+        type: string
+        optional: true
+      tax-id:
+        type: string
+        optional: true
+      terminal-id:
+        type: string
+        optional: true
+      url:
+        type: string
+        optional: true
+

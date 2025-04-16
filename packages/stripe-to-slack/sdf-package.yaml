@@ -1,0 +1,30 @@
+apiVersion: 0.5.0
+
+meta:
+  name: stripe-slack
+  version: 0.0.1
+  namespace: examples
+
+imports:
+  - pkg: examples/stripe-types@0.0.1
+    types:
+      - name: stripe-event
+  - pkg: examples/slack-package@0.0.1
+    types:
+      - name: slack-event
+
+functions:
+  stripe-to-slack:
+    operator: map
+    inputs:
+      - name: se
+        type: stripe-event
+    output:
+      type: slack-event
+
+dev:
+  imports:
+    - pkg: examples/stripe-types@0.0.1
+      path: ../stripe
+    - pkg: examples/slack-package@0.0.1
+      path: ../slack

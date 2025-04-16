@@ -1,12 +1,11 @@
 use sdfg::Result;
 use sdfg::sdf;
+use crate::bindings::examples::slack_package_types::types::SlackObj;
 use crate::bindings::examples::slack_package_types::types::SlackEvent;
-use crate::bindings::examples::slack_package_types::types::FieldsObj;
 #[allow(unused_imports)]
 use crate::bindings::examples::slack_package_types::types::*;
-
 #[sdf(fn_name = "make-slack-fields-event")]
-pub(crate) fn make_slack_fields_event(obj: FieldsObj) -> Result<SlackEvent> {
+pub(crate) fn make_slack_fields_event(obj: SlackObj) -> Result<SlackEvent> {
     let mut blocks = vec![];
 
     // Add Title
@@ -16,7 +15,7 @@ pub(crate) fn make_slack_fields_event(obj: FieldsObj) -> Result<SlackEvent> {
                 text: obj.title.to_string(),
                 type_: TextObjectType::Mrkdwn,
             },
-            type_: SectionTextType::Section,
+            type_: TextSectionType::Section,
         }
     );
     blocks.push(title);
@@ -32,7 +31,7 @@ pub(crate) fn make_slack_fields_event(obj: FieldsObj) -> Result<SlackEvent> {
     let fields = SlackEventUntagged::FieldsSection(
         FieldsSection {
             fields: fields_list,
-            type_: SectionFieldsType::Section,
+            type_: FieldsSectionType::Section,
         }
     );
     blocks.push(fields);
@@ -47,7 +46,7 @@ mod tests {
 
     #[test]
     fn test_make_slack_fields_event() {
-        let obj = FieldsObj {
+        let obj = SlackObj {
             title: "Title".to_string(),
             fields: vec![
                 "Field1".to_string(),

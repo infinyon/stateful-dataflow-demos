@@ -1,0 +1,18 @@
+[package]
+name = "sdf-row-guest"
+version = "0.13.0"
+edition = "2021"
+license = "Apache-2.0"
+description = "guest crate for row resource test"
+authors = ["Fluvio Contributors <team@fluvio.io>"]
+readme = "README.md"
+keywords = ["sdf"]
+
+[lib]
+crate-type = ["lib"]
+
+[dependencies]
+anyhow = { workspace = true }
+serde = { workspace = true, features = ["derive"] }
+serde_json = { workspace = true }
+wit-bindgen = { workspace = true, features = ["macros"]}

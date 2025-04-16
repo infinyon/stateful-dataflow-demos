@@ -12,6 +12,14 @@ Test events parsing:
 sdf test function test-event --value-file sample-data/invoice-created.json
 ```
 
+### Generate Types
+
+To generate the types, download [sdf-types-generator](http://github.com/infinyon/sdf-types-generator) and perform the following commands:
+
+```bash
+cd ../../../sdf-types-generator && cargo run -- -s ../stateful-dataflow-demos/packages/stripe/stripe-schema.json -k /components/schemas/stripe_event > ../stateful-dataflow-demos/packages/stripe/types.yaml && cd ../stateful-dataflow-demos/packages/stripe
+```
+
 #### Generate SDF types
 
 ```bash

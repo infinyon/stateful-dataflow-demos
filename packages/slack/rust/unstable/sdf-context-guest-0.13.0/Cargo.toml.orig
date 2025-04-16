@@ -1,0 +1,23 @@
+[package]
+name = "sdf-context-guest"
+version = "0.13.0"
+edition = "2021"
+license = "Apache-2.0"
+description = "guest crate for sdf operator ctx"
+authors = ["Fluvio Contributors <team@fluvio.io>"]
+keywords = ["sdf"]
+
+[lib]
+crate-type = ["lib"]
+
+[features]
+row = ["dep:sdf-row-guest"]
+table = ["dep:sdf-df-guest"]
+
+[dependencies]
+anyhow = { workspace = true }
+cfg-if = { workspace = true }
+wit-bindgen = { workspace = true, features = ["macros"]}
+
+sdf-row-guest =  { workspace = true, optional = true }
+sdf-df-guest =  { workspace = true, optional = true }

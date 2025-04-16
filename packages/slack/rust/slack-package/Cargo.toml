@@ -29,12 +29,20 @@ opt-level = 3
 codegen-units = 1
 panic = "abort"
 
-
+[patch.crates-io]
+sdf-common = { path = "../unstable/sdf-common-0.13.0"}
+sdf-context-guest = { path = "../unstable/sdf-context-guest-0.13.0" }
+sdf-df-guest = { path = "../unstable/sdf-df-guest-0.13.0" }
+sdf-macros = { path = "../unstable/sdf-macros-0.13.0"}
+sdf-parser-core = { path = "../unstable/sdf-parser-core-0.13.0"}
+sdf-parser-package = { path = "../unstable/sdf-parser-package-0.13.0"}
+sdf-row-guest = { path = "../unstable/sdf-row-guest-0.13.0" }
+sdfg = { path = "../unstable/sdfg-0.13.0"}
 
 [dependencies]
 ## GENERATED DEPENDENCIES
 serde =  { version = "1", features = ["std", "derive"]}
-sdfg = { version = "0.12.0" , features=[ "row"]  }
+sdfg = { version = "0.13.0" , features=[ "row"]  }
 
 [dev-dependencies]
 serde_json = "1.0.140"

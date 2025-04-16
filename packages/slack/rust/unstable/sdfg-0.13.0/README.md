@@ -1,0 +1,1 @@
+SDF WASM32 guest library
