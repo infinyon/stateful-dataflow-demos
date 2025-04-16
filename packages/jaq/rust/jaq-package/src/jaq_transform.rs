@@ -100,7 +100,7 @@ mod test {
         println!("{}", result_value);
 
         let output_str = std::str::from_utf8(&output_file).expect("convert output to str");
-        let output_value = serde_json::from_slice::<Value>(output_str.as_ref()).expect("onvert output to value");
+        let output_value = serde_json::from_slice::<Value>(output_str.as_ref()).expect("convert output to value");
         println!("{}", output_value);
 
         assert_eq!(result_value, output_value);
