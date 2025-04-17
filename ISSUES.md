@@ -4,6 +4,7 @@
 * [#2. I should be able to write `raw` into a `typed` topic](#2-i-should-be-able-to-write-raw-into-a-typed-topic)
 * [#3. Suppoort for hierarchhical imports in packages](#3-support-for-hierarchical-imports-in-packages)
 * [#4. Add `init` support for packages](#4-add-init-support-for-packages)
+* [#5. Support for `raw` in `sdf build`](#5-support-for-raw-in-sdf-build)
 
 
 ### 1. Keywords with numbers are parsed with a `_`.
@@ -154,3 +155,7 @@ Right now, I add jaq transforms in a `rust constant`.
 We nee a way to import `jaq tranform filter` from a file. Adding it inside the SDF is going to create additional issues. 
 
 The file is big - [jaq-transform.rs](./packages/jaq/sample-transforms/stripe-transforms.jq).
+
+### 5. Add support for `--input` `--output` to `sdf test`
+
+* Issue [https://github.com/infinyon/sdf/issues/2475](https://github.com/infinyon/sdf/issues/2475)
