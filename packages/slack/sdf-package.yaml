@@ -1,7 +1,7 @@
 apiVersion: 0.6.0
 
 meta:
-  name: slack-package
+  name: slack
   version: 0.0.1
   namespace: examples
 

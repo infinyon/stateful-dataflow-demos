@@ -3,18 +3,31 @@
 The end-to-end use-case will be a webhook that listens to Stripe events, converts them to SDF types, and sends notification to Slack.
 
 
-#### 1. Start a Webhook
+#### 1. Create a webhook for Stripe 
 
-Start a webhook that Stripe will call - [stripe-webhook.toml](./use-cases/stripe/stripe-webhook.yaml).
+On InfinyOn cloud use the [stripe-webhook.toml](./stripe-webhook.yaml) to create a webhook:
 
   ```bash
   fluvio cloud webhook create -c use-cases/stripe/stripe-webhook.yaml
   ```
 
-**Note:** The webhook has the `jaq` transformations that convert the Stripe types into SDF types.
+Grab the webhook URL from the output and add it to Stripe as described in the [next section](#2-add-webhook-to-stripe).
 
 
-#### 2. Create a Slack Connector
+#### 2. Add Webhook to Stripe
+
+1. Open the Stripe webhook section - https://dashboard.stripe.com/test/webhooks
+  - Enable derised events
+  - Copy/Paste the webhook URL
+
+
+2. Generate some events and see them in the `stripe-origin-events` topic:
+
+  ```bash 
+  fluvio consume stripe-origin-events -Bd -O json
+  ```
+
+#### 3. Create a Slack Connector
 
 Create a Slack connector that notifies when a Stripe event is received.
 
@@ -42,13 +55,11 @@ sdf run
 
 #### 5. Test
 
-Generate a test event & show it display in Slack.
+Generate a test event from local file & show it display in Slack.
 
 ```bash
-fluvio produce stripe-e
-vents -f packages/stripe/sample-data/invoice-created.json
+fluvio produce stripe-origin-events -f packages/stripe/sample-data/invoice-created.json
  --raw
 ```
 
 Then use Stripe UI to trigger additional events.
-

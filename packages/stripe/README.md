@@ -9,7 +9,7 @@ Check the bottom of this file for the types re-generation.
 Test events parsing:
 
 ```bash
-sdf test function test-event --value-file sample-data/invoice-created.json
+sdf test function bytes-to-event --value-file sample-data/invoice-created.json
 ```
 
 ### Generate Types

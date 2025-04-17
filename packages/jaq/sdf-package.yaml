@@ -1,7 +1,7 @@
 apiVersion: 0.6.0
 
 meta:
-  name: jaq-package
+  name: jaq
   version: 0.0.1
   namespace: examples
 
@@ -13,3 +13,6 @@ functions:
         type: bytes
     output:
       type: bytes
+
+dev:
+  converter: raw 

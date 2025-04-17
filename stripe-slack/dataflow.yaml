@@ -12,10 +12,13 @@ config:
       position: End  
 
 imports:
-  - pkg: examples/stripe-types@0.0.1
+  - pkg: examples/jaq@0.0.1
+    functions:
+      - name: jaq-transform
+  - pkg: examples/stripe@0.0.1
     types:
       - name: stripe-event
-  - pkg: examples/slack-package@0.0.1
+  - pkg: examples/slack@0.0.1
     types:
       - name: slack-event
       - name: slack-obj
@@ -23,6 +26,12 @@ imports:
       - name: make-slack-fields-event
 
 topics:
+  stripe-origin-events:
+    schema:
+      value:
+        type: bytes
+      converter: raw
+
   stripe-events:
     schema:
       value:
@@ -34,14 +43,27 @@ topics:
         type: slack-event
 
 services:
-  map-service:
+  ## Transform stripe origin events to infinyon stripe events
+  origin-to-stripe:
+    sources:
+      - type: topic
+        id: stripe-origin-events
+
+    transforms:
+      - operator: map
+        uses: jaq-transform
+
+    sinks:
+      - type: topic
+        id: stripe-events
+
+  ## Transform stripe events to slack events  
+  stripe-to-slack:
     sources:
       - type: topic
         id: stripe-events
 
     transforms:
-      
-      ## Convert stripe to fields object
       - operator: map
         dependencies:
           - name: chrono
@@ -134,7 +156,9 @@ services:
 
 dev:
   imports:
-    - pkg: examples/stripe-types@0.0.1
+    - pkg: examples/jaq@0.0.1
+      path: ../packages/jaq
+    - pkg: examples/stripe@0.0.1
       path: ../packages/stripe
-    - pkg: examples/slack-package@0.0.1
+    - pkg: examples/slack@0.0.1
       path: ../packages/slack

@@ -1,7 +1,7 @@
-apiVersion: 0.5.0
+apiVersion: 0.6.0
 
 meta:
-  name: stripe-types
+  name: stripe
   version: 0.0.1
   namespace: examples
 
@@ -1630,12 +1630,12 @@ types:
         optional: true
 
 
-## Test function (not meant to be used outside of this package)
+## convert bytes to events
 functions:
-  test-event:
+  bytes-to-event:
     operator: map
     inputs:
-      - name: sev
-        type: stripe-event
+      - name: raw
+        type: bytes
     output:
       type: stripe-event
