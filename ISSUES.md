@@ -2,10 +2,9 @@
 
 * [#1. Keywords with numbers are parsed with a `_`.](#1-keywords-with-numbers-are-parsed-with-a-_)
 * [#2. I should be able to write `raw` into a `typed` topic](#2-i-should-be-able-to-write-raw-into-a-typed-topic)
-* [#3. Suppoort for hierarchhical imports in packages](#3-support-for-hierarchical-imports-in-packages)
+* [#3. Support for hierarchhical imports in packages](#3-support-for-hierarchical-imports-in-packages)
 * [#4. Add `init` support for packages](#4-add-init-support-for-packages)
-* [#5. Support for `raw` in `sdf build`](#5-support-for-raw-in-sdf-build)
-
+* [5. Add support for `--input` `--output` to `sdf test`](#5-add-support-for---input---output-to-sdf-test)
 
 ### 1. Keywords with numbers are parsed with a `_`.
 
