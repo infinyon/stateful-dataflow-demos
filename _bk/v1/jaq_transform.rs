@@ -1,6 +1,8 @@
 use sdfg::Result;
 use sdfg::sdf;
-use crate::bindings::examples::jaq_package_types::types::Bytes;
+use crate::bindings::examples::jaq_package_types::types::Raw;
+#[allow(unused_imports)]
+use crate::bindings::examples::jaq_package_types::types::*;
 
 use jaq_core::load::{Arena, File, Loader};
 use jaq_core::{Compiler, Ctx, RcIter};
@@ -10,12 +12,12 @@ use serde_json::Value;
 use crate::filter_rules::JAQ_FILTER;
 
 #[sdf(fn_name = "jaq-transform")]
-pub(crate) fn jaq_transform(input: Bytes) -> Result<Bytes> {
+pub(crate) fn jaq_transform(input: Raw) -> Result<Raw> {
     run_jaq_transform(input, JAQ_FILTER)
 }
 
 /// JAQ transform function
-fn run_jaq_transform(input: Bytes, filter_rules: &str) -> Result<Bytes> {
+fn run_jaq_transform(input: Raw, filter_rules: &str) -> Result<Raw> {
     let filter_file = File {
         code: filter_rules,
         path: (),

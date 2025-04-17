@@ -5,6 +5,12 @@ meta:
   version: 0.0.1
   namespace: examples
 
+types:
+  raw:
+    type: list
+    items:
+      type: u8
+
 functions:
   jaq-transform:
     operator: map
@@ -12,4 +18,7 @@ functions:
       - name: input
         type: bytes
     output:
-      type: bytes
+      type: raw
+
+dev:
+  converter: raw

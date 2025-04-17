@@ -40,11 +40,12 @@ sdf-row-guest = { path = "../unstable/sdf-row-guest-0.13.0" }
 sdfg = { path = "../unstable/sdfg-0.13.0"}
 
 [dependencies]
-jaq-core = "2.0.0"
-jaq-std = "2.0.0"
-jaq-json = { version = "1.0.0", features = ["serde_json"] }
-serde_json = {version = "1.0.81", features = ["preserve_order"]}
 ## GENERATED DEPENDENCIES
 serde =  { version = "1", features = ["std", "derive"]}
 sdfg = { version = "0.13.0" , features=[ "row"]  }
 ## END OF GENERATED DEPENDENCIES
+
+jaq-core = "2.0.0"
+jaq-std = "2.0.0"
+jaq-json = { version = "1.0.0", features = ["serde_json"] }
+serde_json = {version = "1.0.81", features = ["preserve_order"]}

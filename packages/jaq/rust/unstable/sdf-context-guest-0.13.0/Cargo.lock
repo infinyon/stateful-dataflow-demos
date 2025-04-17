@@ -317,9 +317,9 @@ dependencies = [
 
 [[package]]
 name = "proc-macro2"
-version = "1.0.94"
+version = "1.0.95"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "a31971752e70b8b2686d7e46ec17fb38dad4051d94024c88df49b667caea9c84"
+checksum = "02b3e5e68a3a1a02aad3ec490a98007cbc13c37cbe84a3cd7b8e406d76e7f778"
 dependencies = [
  "unicode-ident",
 ]
@@ -354,7 +354,7 @@ dependencies = [
 name = "sdf-df-guest"
 version = "0.13.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "f7fbf3f16dfa6f1dd3fa43c95eb3d69686604512131a9ac449e98ac76e56ee13"
+checksum = "bffa45c7a8f4051617b2c2b9a145ed301227853309183d017c43d08b40ccf682"
 dependencies = [
  "anyhow",
  "wit-bindgen",
@@ -364,7 +364,7 @@ dependencies = [
 name = "sdf-row-guest"
 version = "0.13.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "ab2215f334324fb6a5043c87fa4e6a59b52bac644cd28e3bbf66869762f60f07"
+checksum = "b91a47c3029081186f134af6e4460b7021a63ba194af1e68e1c1086b5db495c2"
 dependencies = [
  "anyhow",
  "serde",
