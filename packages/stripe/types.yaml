@@ -28,8 +28,12 @@ types:
         type: invoiceitem
       customer:
         type: customer
+      charge:
+        type: charge
       payment-intent:
         type: payment-intent
+      payout:
+        type: payout
       subscription-schedule:
         type: subscription-schedule
       issuing-cardholder:
@@ -438,6 +442,145 @@ types:
               rename: customer.updated
             deserialize:
               rename: customer.updated
+  charge:
+    type: object
+    properties:
+      amount:
+        type: i32
+      amount-captured:
+        type: i32
+      amount-refunded:
+        type: i32
+      balance-transaction:
+        type: string
+        optional: true
+      calculated-statement-descriptor:
+        type: string
+        optional: true
+      captured:
+        type: bool
+      created:
+        type: i32
+      currency:
+        type: string
+      customer:
+        type: string
+        optional: true
+      description:
+        type: string
+        optional: true
+      disputed:
+        type: bool
+      failure-code:
+        type: string
+        optional: true
+      failure-message:
+        type: string
+        optional: true
+      id:
+        type: string
+      invoice:
+        type: string
+        optional: true
+      paid:
+        type: bool
+      receipt-url:
+        type: string
+        optional: true
+      refunded:
+        type: bool
+      status:
+        type: enum
+        type-name: charge-status
+        oneOf:
+          failed:
+            type: null
+          pending:
+            type: null
+          succeeded:
+            type: null
+      event-type:
+        type: enum
+        type-name: charge-event-type
+        oneOf:
+          charge-captured:
+            type: null
+            serialize:
+              rename: charge.captured
+            deserialize:
+              rename: charge.captured
+          charge-dispute-closed:
+            type: null
+            serialize:
+              rename: charge.dispute.closed
+            deserialize:
+              rename: charge.dispute.closed
+          charge-dispute-created:
+            type: null
+            serialize:
+              rename: charge.dispute.created
+            deserialize:
+              rename: charge.dispute.created
+          charge-dispute-funds-reinstated:
+            type: null
+            serialize:
+              rename: charge.dispute.funds_reinstated
+            deserialize:
+              rename: charge.dispute.funds_reinstated
+          charge-dispute-funds-withdrawn:
+            type: null
+            serialize:
+              rename: charge.dispute.funds_withdrawn
+            deserialize:
+              rename: charge.dispute.funds_withdrawn
+          charge-dispute-updated:
+            type: null
+            serialize:
+              rename: charge.dispute.updated
+            deserialize:
+              rename: charge.dispute.updated
+          charge-expired:
+            type: null
+            serialize:
+              rename: charge.expired
+            deserialize:
+              rename: charge.expired
+          charge-failed:
+            type: null
+            serialize:
+              rename: charge.failed
+            deserialize:
+              rename: charge.failed
+          charge-pending:
+            type: null
+            serialize:
+              rename: charge.pending
+            deserialize:
+              rename: charge.pending
+          charge-refund-updated:
+            type: null
+            serialize:
+              rename: charge.refund.updated
+            deserialize:
+              rename: charge.refund.updated
+          charge-refunded:
+            type: null
+            serialize:
+              rename: charge.refunded
+            deserialize:
+              rename: charge.refunded
+          charge-succeeded:
+            type: null
+            serialize:
+              rename: charge.succeeded
+            deserialize:
+              rename: charge.succeeded
+          charge-updated:
+            type: null
+            serialize:
+              rename: charge.updated
+            deserialize:
+              rename: charge.updated
   payment-intent:
     type: object
     properties:
@@ -579,6 +722,100 @@ types:
               rename: payment_intent.succeeded
             deserialize:
               rename: payment_intent.succeeded
+  payout:
+    type: object
+    properties:
+      amount:
+        type: i32
+      arrival-date:
+        type: i32
+      automatic:
+        type: bool
+      balance-transaction:
+        type: string
+        optional: true
+      created:
+        type: i32
+      currency:
+        type: string
+      description:
+        type: string
+        optional: true
+      failure-code:
+        type: string
+        optional: true
+      failure-message:
+        type: string
+        optional: true
+      id:
+        type: string
+      method:
+        type: string
+      reconciliation-status:
+        type: enum
+        type-name: payout-reconciliation-status
+        oneOf:
+          completed:
+            type: null
+          in_progress:
+            type: null
+          not_applicable:
+            type: null
+      source-type:
+        type: string
+      statement-descriptor:
+        type: string
+        optional: true
+      status:
+        type: string
+      type:
+        type: enum
+        type-name: payout-type
+        oneOf:
+          bank_account:
+            type: null
+          card:
+            type: null
+      event-type:
+        type: enum
+        type-name: payout-event-type
+        oneOf:
+          payout-canceled:
+            type: null
+            serialize:
+              rename: payout.canceled
+            deserialize:
+              rename: payout.canceled
+          payout-created:
+            type: null
+            serialize:
+              rename: payout.created
+            deserialize:
+              rename: payout.created
+          payout-failed:
+            type: null
+            serialize:
+              rename: payout.failed
+            deserialize:
+              rename: payout.failed
+          payout-paid:
+            type: null
+            serialize:
+              rename: payout.paid
+            deserialize:
+              rename: payout.paid
+          payout-reconciliation-completed:
+            type: null
+            serialize:
+              rename: payout.reconciliation_completed
+            deserialize:
+              rename: payout.reconciliation_completed
+          payout-updated:
+            type: null
+            serialize:
+              rename: payout.updated
+            deserialize:
+              rename: payout.updated
   subscription-schedule:
     type: object
     properties:
@@ -1194,4 +1431,3 @@ types:
       url:
         type: string
         optional: true
-

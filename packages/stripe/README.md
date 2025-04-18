@@ -20,6 +20,8 @@ To generate the types, download [sdf-types-generator](http://github.com/infinyon
 cd ../../../sdf-types-generator && cargo run -- -s ../stateful-dataflow-demos/packages/stripe/stripe-schema.json -k /components/schemas/stripe_event > ../stateful-dataflow-demos/packages/stripe/types.yaml && cd ../stateful-dataflow-demos/packages/stripe
 ```
 
+Checout the [types.yaml](types.yaml) file.
+
 #### Generate SDF types
 
 ```bash

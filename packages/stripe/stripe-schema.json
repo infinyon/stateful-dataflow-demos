@@ -48,7 +48,9 @@
           { "$ref": "#/components/schemas/invoice" },
           { "$ref": "#/components/schemas/invoiceitem" },
           { "$ref": "#/components/schemas/customer" },
+          { "$ref": "#/components/schemas/charge" },
           { "$ref": "#/components/schemas/payment_intent" },
+          { "$ref": "#/components/schemas/payout" },
           { "$ref": "#/components/schemas/subscription_schedule" },
           { "$ref": "#/components/schemas/issuing_cardholder" },
           { "$ref": "#/components/schemas/issuing_card" },
@@ -140,6 +142,35 @@
           }
         ]
       },
+      "charge": {
+        "allOf": [
+          { "$ref": "#/components/schemas/base_charge" },
+          {
+            "type": "object",
+            "properties": {
+              "event_type": {
+                "enum": [ 
+                  "charge.captured",
+                  "charge.dispute.closed",
+                  "charge.dispute.created",
+                  "charge.dispute.funds_reinstated",
+                  "charge.dispute.funds_withdrawn",
+                  "charge.dispute.updated",
+                  "charge.expired",
+                  "charge.failed",
+                  "charge.pending",
+                  "charge.refund.updated",
+                  "charge.refunded",
+                  "charge.succeeded",
+                  "charge.updated"
+                ],
+                "type": "string"
+              }
+            },
+            "required": ["event_type"]  
+          }
+        ]
+      },       
       "payment_intent": {
         "allOf": [
           { "$ref": "#/components/schemas/base_payment_intent" },
@@ -163,7 +194,29 @@
             "required": ["event_type"]  
           }
         ]
-      }, 
+      },
+      "payout": {
+        "allOf": [
+          { "$ref": "#/components/schemas/base_payout" },
+          {
+            "type": "object",
+            "properties": {
+              "event_type": {
+                "enum": [ 
+                  "payout.canceled",
+                  "payout.created",
+                  "payout.failed",
+                  "payout.paid",
+                  "payout.reconciliation_completed",
+                  "payout.updated"
+                ],
+                "type": "string"
+              }
+            },
+            "required": ["event_type"]  
+          }
+        ]
+      },      
       "subscription_schedule": {
         "allOf": [
           { "$ref": "#/components/schemas/base_subscription_schedule" },
@@ -554,6 +607,117 @@
         "title": "Customer",
         "type": "object"
       },
+      "base_charge": {
+        "description": "The `Charge` object represents a single attempt to move money into your Stripe account.",
+        "properties": {
+          "amount": {
+            "description": "Amount intended to be collected by this payment in",
+            "type": "integer"
+          },
+          "amount_captured": {
+            "description": "Amount in cents captured can be less than the amount attribute on the charge.",
+            "type": "integer"
+          },
+          "amount_refunded": {
+            "description": "Amount in cents refunded can be less than the amount attribute on the charge.",
+            "type": "integer"
+          },
+          "balance_transaction": {
+            "type": "string",
+            "description": "ID of the balance transaction that describes the impact of this charge.",
+            "nullable": true
+          },
+          "calculated_statement_descriptor": {
+            "description": "The full statement descriptor that is passed to card networks.",
+            "nullable": true,
+            "type": "string"
+          },
+          "captured": {
+            "description": "If the charge was created without capturing",
+            "type": "boolean"
+          },
+          "created": {
+            "description": "Time at which the object was created. Measured in seconds since the Unix epoch.",
+            "format": "unix-time",
+            "type": "integer"
+          },
+          "currency": {
+            "description": "Three-letter ISO currency code.",
+            "format": "currency",
+            "type": "string"
+          },
+          "customer": {
+            "type": "string",
+            "description": "ID of the customer this charge is for if one exists.",
+            "nullable": true
+          },
+          "description": {
+            "description": "An arbitrary string attached to the object. Often useful for displaying to users.",
+            "nullable": true,
+            "type": "string"
+          },
+          "disputed": {
+            "description": "Whether the charge has been disputed.",
+            "type": "boolean"
+          },
+          "failure_code": {
+            "description": "Error code explaining reason for charge failure if available.",
+            "nullable": true,
+            "type": "string"
+          },
+          "failure_message": {
+            "description": "Message to user further explaining reason for charge failure if available.",
+            "nullable": true,
+            "type": "string"
+          },
+          "id": {
+            "description": "Unique identifier for the object.",
+            "type": "string"
+          },
+          "invoice": {
+            "type": "string",
+            "description": "ID of the invoice this charge is for if one exists.",
+            "nullable": true
+          },
+          "paid": {
+            "description": "`true` if the charge succeeded, or was successfully authorized for later capture.",
+            "type": "boolean"
+          },
+          "receipt_url": {
+            "description": "This is the URL to view the receipt for this charge.",
+            "nullable": true,
+            "type": "string"
+          },
+          "refunded": {
+            "description": "Whether the charge has been fully refunded. If the charge is only partially refunded, this attribute will still be false.",
+            "type": "boolean"
+          },
+          "status": {
+            "description": "The status of the payment is either `succeeded`, `pending`, or `failed`.",
+            "enum": [
+              "failed",
+              "pending",
+              "succeeded"
+            ],
+            "type": "string"
+          }
+        },
+        "required": [
+          "amount",
+          "amount_captured",
+          "amount_refunded",
+          "captured",
+          "created",
+          "currency",
+          "disputed",
+          "id",
+          "paid",
+          "refunded",
+          "status"
+        ],
+        "title": "Charge",
+        "type": "object"
+      },      
       "base_payment_intent": {
         "description": "A PaymentIntent guides you through the process of collecting a payment from your customer.",
         "properties": {
@@ -667,7 +831,108 @@
         ],
         "title": "PaymentIntent",
         "type": "object"
-      },      
+      },
+      "base_payout": {
+        "description": "A `Payout` object is created when you receive funds from Stripe",
+        "properties": {
+          "amount": {
+            "description": "The amount in cents that transfers to your bank account or debit card.",
+            "type": "integer"
+          },
+          "arrival_date": {
+            "description": "Date that you can expect the payout to arrive in the bank.",
+            "format": "unix-time",
+            "type": "integer"
+          },
+          "automatic": {
+            "description": "Returns `true` if the payout is created by an automated payout schedule.",
+            "type": "boolean"
+          },
+          "balance_transaction": {
+            "description": "ID of the balance transaction that describes the impact of this payout.",
+            "type": "string",
+            "nullable": true
+          },
+          "created": {
+            "description": "Time at which the object was created. Measured in seconds since the Unix epoch.",
+            "format": "unix-time",
+            "type": "integer"
+          },
+          "currency": {
+            "description": "Three-letter ISO currency code",
+            "format": "currency",
+            "type": "string"
+          },
+          "description": {
+            "description": "An arbitrary string attached to the object. Often useful for displaying to users.",
+            "nullable": true,
+            "type": "string"
+          },
+          "failure_code": {
+            "description": "Error code that provides a reason for a payout failure.",
+            "nullable": true,
+            "type": "string"
+          },
+          "failure_message": {
+            "description": "Message that provides the reason for a payout failure, if available.",
+            "nullable": true,
+            "type": "string"
+          },
+          "id": {
+            "description": "Unique identifier for the object.",
+            "type": "string"
+          },
+          "method": {
+            "description": "The method used to send this payout, which can be `standard` or `instant`",
+            "type": "string"
+          },
+          "reconciliation_status": {
+            "description": "If `completed`, you can list all balance transactions that are paid out.",
+            "enum": [
+              "completed",
+              "in_progress",
+              "not_applicable"
+            ],
+            "type": "string"
+          },
+          "source_type": {
+            "description": "The source balance this payout came from: `card`, `fpx`, or `bank_account`.",
+            "type": "string"
+          },
+          "statement_descriptor": {
+            "description": "Extra information about a payout that displays on the user's bank statement.",
+            "type": "string",
+            "nullable": true
+          },
+          "status": {
+            "description": "Current status of the payout: `paid`, `pending`, `in_transit`, `canceled` or `failed`.",
+            "type": "string"
+          },
+          "type": {
+            "description": "Can be `bank_account` or `card`.",
+            "enum": [
+              "bank_account",
+              "card"
+            ],
+            "type": "string"
+          }
+        },
+        "required": [
+          "amount",
+          "arrival_date",
+          "automatic",
+          "created",
+          "currency",
+          "id",
+          "method",
+          "reconciliation_status",
+          "source_type",
+          "status",
+          "type"
+        ],
+        "title": "Payout",
+        "type": "object"
+      },          
       "base_subscription_schedule": {
         "description": "A subscription schedule allows you to create and manage the lifecycle of a subscription",
         "properties": {

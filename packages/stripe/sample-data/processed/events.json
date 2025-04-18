@@ -1,0 +1,2582 @@
+{
+  "api_version": "2022-11-15",
+  "created": 1742320845,
+  "data": {
+    "account_country": "US",
+    "account_name": "InfinyOn",
+    "amount_due": 0,
+    "amount_paid": 0,
+    "amount_remaining": 0,
+    "amount_shipping": 0,
+    "attempt_count": 0,
+    "attempted": false,
+    "billing_reason": "manual",
+    "collection_method": "send_invoice",
+    "created": 1742320845,
+    "currency": "usd",
+    "customer": "cus_OFwBYCNrfB3TFy",
+    "customer_email": "nick+fc1@infinyon.com",
+    "customer_name": "Infinyon",
+    "event_type": "invoice.created",
+    "id": "in_1R44RVIXrfseZ4WFoxzKWQZj",
+    "lines": [],
+    "paid": false,
+    "paid_out_of_band": false,
+    "period_end": 1742320845,
+    "period_start": 1742320845,
+    "status": "draft",
+    "subtotal": 0,
+    "total": 0
+  },
+  "fluvio_version": "0.1",
+  "id": "evt_1R44RVIXrfseZ4WFJyVHkI9G",
+  "livemode": false,
+  "pending_webhooks": 4
+}
+{
+  "api_version": "2022-11-15",
+  "created": 1742320849,
+  "data": {
+    "account_country": "US",
+    "account_name": "InfinyOn",
+    "amount_due": 0,
+    "amount_paid": 0,
+    "amount_remaining": 0,
+    "amount_shipping": 0,
+    "attempt_count": 0,
+    "attempted": false,
+    "billing_reason": "manual",
+    "collection_method": "send_invoice",
+    "created": 1742320845,
+    "currency": "usd",
+    "customer": "cus_OFwBYCNrfB3TFy",
+    "customer_email": "nick+fc1@infinyon.com",
+    "customer_name": "Infinyon",
+    "event_type": "invoice.updated",
+    "id": "in_1R44RVIXrfseZ4WFoxzKWQZj",
+    "lines": [],
+    "paid": false,
+    "paid_out_of_band": false,
+    "period_end": 1742320845,
+    "period_start": 1742320845,
+    "status": "draft",
+    "subtotal": 0,
+    "total": 0
+  },
+  "fluvio_version": "0.1",
+  "id": "evt_1R44RaIXrfseZ4WFmPAvbHKY",
+  "livemode": false,
+  "pending_webhooks": 4
+}
+{
+  "api_version": "2022-11-15",
+  "created": 1742320850,
+  "data": {
+    "account_country": "US",
+    "account_name": "InfinyOn",
+    "amount_due": 0,
+    "amount_paid": 0,
+    "amount_remaining": 0,
+    "amount_shipping": 0,
+    "attempt_count": 0,
+    "attempted": true,
+    "billing_reason": "manual",
+    "collection_method": "send_invoice",
+    "created": 1742320845,
+    "currency": "usd",
+    "customer": "cus_OFwBYCNrfB3TFy",
+    "customer_email": "nick+fc1@infinyon.com",
+    "customer_name": "Infinyon",
+    "event_type": "invoice.updated",
+    "hosted_invoice_url": "https://invoice.stripe.com/i/acct_1MCW7AIXrfseZ4WF/test_YWNjdF8xTUNXN0FJWHJmc2VaNFdGLF9SeTBTRE83aTg2OHZVZGRHaHZTa2Mya2RLbE9rYkpVLDEzMjg2MTY1MA0200Y5Asz24D?s=ap",
+    "id": "in_1R44RVIXrfseZ4WFoxzKWQZj",
+    "lines": [],
+    "paid": true,
+    "paid_out_of_band": false,
+    "period_end": 1742320845,
+    "period_start": 1742320845,
+    "status": "paid",
+    "subtotal": 0,
+    "total": 0
+  },
+  "fluvio_version": "0.1",
+  "id": "evt_1R44RaIXrfseZ4WFZtObJmA0",
+  "livemode": false,
+  "pending_webhooks": 4
+}
+{
+  "api_version": "2022-11-15",
+  "created": 1742320850,
+  "data": {
+    "account_country": "US",
+    "account_name": "InfinyOn",
+    "amount_due": 0,
+    "amount_paid": 0,
+    "amount_remaining": 0,
+    "amount_shipping": 0,
+    "attempt_count": 0,
+    "attempted": true,
+    "billing_reason": "manual",
+    "collection_method": "send_invoice",
+    "created": 1742320845,
+    "currency": "usd",
+    "customer": "cus_OFwBYCNrfB3TFy",
+    "customer_email": "nick+fc1@infinyon.com",
+    "customer_name": "Infinyon",
+    "event_type": "invoice.finalized",
+    "hosted_invoice_url": "https://invoice.stripe.com/i/acct_1MCW7AIXrfseZ4WF/test_YWNjdF8xTUNXN0FJWHJmc2VaNFdGLF9SeTBTRE83aTg2OHZVZGRHaHZTa2Mya2RLbE9rYkpVLDEzMjg2MTY1MQ0200vCekmVrB?s=ap",
+    "id": "in_1R44RVIXrfseZ4WFoxzKWQZj",
+    "lines": [],
+    "paid": true,
+    "paid_out_of_band": false,
+    "period_end": 1742320845,
+    "period_start": 1742320845,
+    "status": "paid",
+    "subtotal": 0,
+    "total": 0
+  },
+  "fluvio_version": "0.1",
+  "id": "evt_1R44RbIXrfseZ4WFHoRv0ZhC",
+  "livemode": false,
+  "pending_webhooks": 4
+}
+{
+  "api_version": "2022-11-15",
+  "created": 1742320850,
+  "data": {
+    "account_country": "US",
+    "account_name": "InfinyOn",
+    "amount_due": 0,
+    "amount_paid": 0,
+    "amount_remaining": 0,
+    "amount_shipping": 0,
+    "attempt_count": 0,
+    "attempted": true,
+    "billing_reason": "manual",
+    "collection_method": "send_invoice",
+    "created": 1742320845,
+    "currency": "usd",
+    "customer": "cus_OFwBYCNrfB3TFy",
+    "customer_email": "nick+fc1@infinyon.com",
+    "customer_name": "Infinyon",
+    "event_type": "invoice.paid",
+    "hosted_invoice_url": "https://invoice.stripe.com/i/acct_1MCW7AIXrfseZ4WF/test_YWNjdF8xTUNXN0FJWHJmc2VaNFdGLF9SeTBTRE83aTg2OHZVZGRHaHZTa2Mya2RLbE9rYkpVLDEzMjg2MTY1MQ0200vCekmVrB?s=ap",
+    "id": "in_1R44RVIXrfseZ4WFoxzKWQZj",
+    "lines": [],
+    "paid": true,
+    "paid_out_of_band": false,
+    "period_end": 1742320845,
+    "period_start": 1742320845,
+    "status": "paid",
+    "subtotal": 0,
+    "total": 0
+  },
+  "fluvio_version": "0.1",
+  "id": "evt_1R44RbIXrfseZ4WFBaeUuaQr",
+  "livemode": false,
+  "pending_webhooks": 4
+}
+{
+  "api_version": "2022-11-15",
+  "created": 1742320850,
+  "data": {
+    "account_country": "US",
+    "account_name": "InfinyOn",
+    "amount_due": 0,
+    "amount_paid": 0,
+    "amount_remaining": 0,
+    "amount_shipping": 0,
+    "attempt_count": 0,
+    "attempted": true,
+    "billing_reason": "manual",
+    "collection_method": "send_invoice",
+    "created": 1742320845,
+    "currency": "usd",
+    "customer": "cus_OFwBYCNrfB3TFy",
+    "customer_email": "nick+fc1@infinyon.com",
+    "customer_name": "Infinyon",
+    "event_type": "invoice.payment_succeeded",
+    "hosted_invoice_url": "https://invoice.stripe.com/i/acct_1MCW7AIXrfseZ4WF/test_YWNjdF8xTUNXN0FJWHJmc2VaNFdGLF9SeTBTRE83aTg2OHZVZGRHaHZTa2Mya2RLbE9rYkpVLDEzMjg2MTY1MQ0200vCekmVrB?s=ap",
+    "id": "in_1R44RVIXrfseZ4WFoxzKWQZj",
+    "lines": [],
+    "paid": true,
+    "paid_out_of_band": false,
+    "period_end": 1742320845,
+    "period_start": 1742320845,
+    "status": "paid",
+    "subtotal": 0,
+    "total": 0
+  },
+  "fluvio_version": "0.1",
+  "id": "evt_1R44RbIXrfseZ4WFkN7lFlPn",
+  "livemode": false,
+  "pending_webhooks": 4
+}
+{
+  "api_version": "2022-11-15",
+  "created": 1742320850,
+  "data": {
+    "account_country": "US",
+    "account_name": "InfinyOn",
+    "amount_due": 0,
+    "amount_paid": 0,
+    "amount_remaining": 0,
+    "amount_shipping": 0,
+    "attempt_count": 0,
+    "attempted": true,
+    "billing_reason": "manual",
+    "collection_method": "send_invoice",
+    "created": 1742320845,
+    "currency": "usd",
+    "customer": "cus_OFwBYCNrfB3TFy",
+    "customer_email": "nick+fc1@infinyon.com",
+    "customer_name": "Infinyon",
+    "event_type": "invoice.sent",
+    "hosted_invoice_url": "https://invoice.stripe.com/i/acct_1MCW7AIXrfseZ4WF/test_YWNjdF8xTUNXN0FJWHJmc2VaNFdGLF9SeTBTRE83aTg2OHZVZGRHaHZTa2Mya2RLbE9rYkpVLDEzMjg2MTY1MQ0200vCekmVrB?s=ap",
+    "id": "in_1R44RVIXrfseZ4WFoxzKWQZj",
+    "lines": [],
+    "paid": true,
+    "paid_out_of_band": false,
+    "period_end": 1742320845,
+    "period_start": 1742320845,
+    "status": "paid",
+    "subtotal": 0,
+    "total": 0
+  },
+  "fluvio_version": "0.1",
+  "id": "evt_1R44RbIXrfseZ4WFRUNHucx3",
+  "livemode": false,
+  "pending_webhooks": 4
+}
+{
+  "api_version": "2022-11-15",
+  "created": 1742320736,
+  "data": {
+    "account_country": "US",
+    "account_name": "InfinyOn",
+    "amount_due": 10000,
+    "amount_paid": 0,
+    "amount_remaining": 10000,
+    "amount_shipping": 0,
+    "attempt_count": 0,
+    "attempted": false,
+    "billing_reason": "manual",
+    "collection_method": "send_invoice",
+    "created": 1742320715,
+    "currency": "usd",
+    "customer": "cus_OFwBYCNrfB3TFy",
+    "customer_email": "nick+fc1@infinyon.com",
+    "customer_name": "Infinyon",
+    "event_type": "invoice.finalized",
+    "hosted_invoice_url": "https://invoice.stripe.com/i/acct_1MCW7AIXrfseZ4WF/test_YWNjdF8xTUNXN0FJWHJmc2VaNFdGLF9SeTBRa3V6cEw3MExWQW9USzM1Q0w3bVlPVHFiU1hNLDEzMjg2MTUzNw0200XxKzIw75?s=ap",
+    "id": "in_1R44PPIXrfseZ4WFtF51YXS5",
+    "lines": [
+      {
+        "amount": 10000,
+        "currency": "usd",
+        "description": "Professional Service"
+      }
+    ],
+    "paid": false,
+    "paid_out_of_band": false,
+    "period_end": 1742320715,
+    "period_start": 1742320715,
+    "status": "open",
+    "subtotal": 10000,
+    "total": 10000
+  },
+  "fluvio_version": "0.1",
+  "id": "evt_1R44PlIXrfseZ4WF2ZDeQqFS",
+  "livemode": false,
+  "pending_webhooks": 1
+}
+{
+  "api_version": "2022-11-15",
+  "created": 1742320735,
+  "data": {
+    "account_country": "US",
+    "account_name": "InfinyOn",
+    "amount_due": 10000,
+    "amount_paid": 0,
+    "amount_remaining": 10000,
+    "amount_shipping": 0,
+    "attempt_count": 0,
+    "attempted": false,
+    "billing_reason": "manual",
+    "collection_method": "send_invoice",
+    "created": 1742320715,
+    "currency": "usd",
+    "customer": "cus_OFwBYCNrfB3TFy",
+    "customer_email": "nick+fc1@infinyon.com",
+    "customer_name": "Infinyon",
+    "event_type": "invoice.updated",
+    "id": "in_1R44PPIXrfseZ4WFtF51YXS5",
+    "lines": [
+      {
+        "amount": 10000,
+        "currency": "usd",
+        "description": "Professional Service"
+      }
+    ],
+    "paid": false,
+    "paid_out_of_band": false,
+    "period_end": 1742320715,
+    "period_start": 1742320715,
+    "status": "draft",
+    "subtotal": 10000,
+    "total": 10000
+  },
+  "fluvio_version": "0.1",
+  "id": "evt_1R44PjIXrfseZ4WFzLF7atHA",
+  "livemode": false,
+  "pending_webhooks": 1
+}
+{
+  "api_version": "2022-11-15",
+  "created": 1742320736,
+  "data": {
+    "amount": 10000,
+    "amount_received": 0,
+    "canceled_at": null,
+    "cancellation_reason": null,
+    "capture_method": "automatic",
+    "confirmation_method": "automatic",
+    "created": 1742320736,
+    "currency": "usd",
+    "customer": "cus_OFwBYCNrfB3TFy",
+    "description": "Payment for Invoice",
+    "event_type": "payment_intent.created",
+    "id": "pi_3R44PkIXrfseZ4WF106z6Xeg",
+    "invoice": "in_1R44PPIXrfseZ4WFtF51YXS5",
+    "payment_method_types": [
+      "card",
+      "link"
+    ],
+    "receipt_email": null,
+    "status": "requires_payment_method"
+  },
+  "fluvio_version": "0.1",
+  "id": "evt_3R44PkIXrfseZ4WF1SK0VvJS",
+  "livemode": false,
+  "pending_webhooks": 1
+}
+{
+  "api_version": "2022-11-15",
+  "created": 1742320736,
+  "data": {
+    "account_country": "US",
+    "account_name": "InfinyOn",
+    "amount_due": 10000,
+    "amount_paid": 0,
+    "amount_remaining": 10000,
+    "amount_shipping": 0,
+    "attempt_count": 0,
+    "attempted": false,
+    "billing_reason": "manual",
+    "collection_method": "send_invoice",
+    "created": 1742320715,
+    "currency": "usd",
+    "customer": "cus_OFwBYCNrfB3TFy",
+    "customer_email": "nick+fc1@infinyon.com",
+    "customer_name": "Infinyon",
+    "event_type": "invoice.updated",
+    "hosted_invoice_url": "https://invoice.stripe.com/i/acct_1MCW7AIXrfseZ4WF/test_YWNjdF8xTUNXN0FJWHJmc2VaNFdGLF9SeTBRa3V6cEw3MExWQW9USzM1Q0w3bVlPVHFiU1hNLDEzMjg2MTUzNw0200XxKzIw75?s=ap",
+    "id": "in_1R44PPIXrfseZ4WFtF51YXS5",
+    "lines": [
+      {
+        "amount": 10000,
+        "currency": "usd",
+        "description": "Professional Service"
+      }
+    ],
+    "paid": false,
+    "paid_out_of_band": false,
+    "period_end": 1742320715,
+    "period_start": 1742320715,
+    "status": "open",
+    "subtotal": 10000,
+    "total": 10000
+  },
+  "fluvio_version": "0.1",
+  "id": "evt_1R44PlIXrfseZ4WFuf8dKYLv",
+  "livemode": false,
+  "pending_webhooks": 1
+}
+{
+  "api_version": "2022-11-15",
+  "created": 1742320724,
+  "data": {
+    "amount": 10000,
+    "currency": "usd",
+    "customer": "cus_OFwBYCNrfB3TFy",
+    "date": 1742320724,
+    "description": "Professional Service",
+    "event_type": "invoiceitem.created",
+    "id": "ii_1R44PYIXrfseZ4WFgt0449QH",
+    "period": {
+      "end": 1742320724,
+      "start": 1742320724
+    },
+    "quantity": 1
+  },
+  "fluvio_version": "0.1",
+  "id": "evt_1R44PZIXrfseZ4WFE2FBB8Q7",
+  "livemode": false,
+  "pending_webhooks": 1
+}
+{
+  "api_version": "2022-11-15",
+  "created": 1742320715,
+  "data": {
+    "account_country": "US",
+    "account_name": "InfinyOn",
+    "amount_due": 0,
+    "amount_paid": 0,
+    "amount_remaining": 0,
+    "amount_shipping": 0,
+    "attempt_count": 0,
+    "attempted": false,
+    "billing_reason": "manual",
+    "collection_method": "send_invoice",
+    "created": 1742320715,
+    "currency": "usd",
+    "customer": "cus_OFwBYCNrfB3TFy",
+    "customer_email": "nick+fc1@infinyon.com",
+    "customer_name": "Infinyon",
+    "event_type": "invoice.created",
+    "id": "in_1R44PPIXrfseZ4WFtF51YXS5",
+    "lines": [],
+    "paid": false,
+    "paid_out_of_band": false,
+    "period_end": 1742320715,
+    "period_start": 1742320715,
+    "status": "draft",
+    "subtotal": 0,
+    "total": 0
+  },
+  "fluvio_version": "0.1",
+  "id": "evt_1R44PPIXrfseZ4WFUYRnUNo6",
+  "livemode": false,
+  "pending_webhooks": 1
+}
+{
+  "api_version": "2022-11-15",
+  "created": 1742320736,
+  "data": {
+    "account_country": "US",
+    "account_name": "InfinyOn",
+    "amount_due": 10000,
+    "amount_paid": 0,
+    "amount_remaining": 10000,
+    "amount_shipping": 0,
+    "attempt_count": 0,
+    "attempted": false,
+    "billing_reason": "manual",
+    "collection_method": "send_invoice",
+    "created": 1742320715,
+    "currency": "usd",
+    "customer": "cus_OFwBYCNrfB3TFy",
+    "customer_email": "nick+fc1@infinyon.com",
+    "customer_name": "Infinyon",
+    "event_type": "invoice.sent",
+    "hosted_invoice_url": "https://invoice.stripe.com/i/acct_1MCW7AIXrfseZ4WF/test_YWNjdF8xTUNXN0FJWHJmc2VaNFdGLF9SeTBRa3V6cEw3MExWQW9USzM1Q0w3bVlPVHFiU1hNLDEzMjg2MTUzNw0200XxKzIw75?s=ap",
+    "id": "in_1R44PPIXrfseZ4WFtF51YXS5",
+    "lines": [
+      {
+        "amount": 10000,
+        "currency": "usd",
+        "description": "Professional Service"
+      }
+    ],
+    "paid": false,
+    "paid_out_of_band": false,
+    "period_end": 1742320715,
+    "period_start": 1742320715,
+    "status": "open",
+    "subtotal": 10000,
+    "total": 10000
+  },
+  "fluvio_version": "0.1",
+  "id": "evt_1R44PlIXrfseZ4WFKIXdSIyp",
+  "livemode": false,
+  "pending_webhooks": 1
+}
+{
+  "api_version": "2022-11-15",
+  "created": 1742320724,
+  "data": {
+    "account_country": "US",
+    "account_name": "InfinyOn",
+    "amount_due": 10000,
+    "amount_paid": 0,
+    "amount_remaining": 10000,
+    "amount_shipping": 0,
+    "attempt_count": 0,
+    "attempted": false,
+    "billing_reason": "manual",
+    "collection_method": "send_invoice",
+    "created": 1742320715,
+    "currency": "usd",
+    "customer": "cus_OFwBYCNrfB3TFy",
+    "customer_email": "nick+fc1@infinyon.com",
+    "customer_name": "Infinyon",
+    "event_type": "invoice.updated",
+    "id": "in_1R44PPIXrfseZ4WFtF51YXS5",
+    "lines": [
+      {
+        "amount": 10000,
+        "currency": "usd",
+        "description": "Professional Service"
+      }
+    ],
+    "paid": false,
+    "paid_out_of_band": false,
+    "period_end": 1742320715,
+    "period_start": 1742320715,
+    "status": "draft",
+    "subtotal": 10000,
+    "total": 10000
+  },
+  "fluvio_version": "0.1",
+  "id": "evt_1R44PYIXrfseZ4WFdqzJNw3L",
+  "livemode": false,
+  "pending_webhooks": 1
+}
+{
+  "api_version": "2022-11-15",
+  "created": 1742320715,
+  "data": {
+    "balance": 0,
+    "created": 1689257742,
+    "currency": "usd",
+    "delinquent": false,
+    "description": null,
+    "email": "nick+fc1@infinyon.com",
+    "event_type": "customer.updated",
+    "id": "cus_OFwBYCNrfB3TFy",
+    "invoice_prefix": "A420CEBA",
+    "name": "Infinyon",
+    "next_invoice_sequence": 1,
+    "phone": null
+  },
+  "fluvio_version": "0.1",
+  "id": "evt_1R44PPIXrfseZ4WFfl4sj1bw",
+  "livemode": false,
+  "pending_webhooks": 1
+}
+{
+  "api_version": "2022-11-15",
+  "created": 1742413370,
+  "data": {
+    "address": {
+      "city": "Santa Clara",
+      "country": "US",
+      "line1": "2445 Augustine Drive",
+      "line2": "Suite 249",
+      "postal-code": null,
+      "state": "CA"
+    },
+    "balance": 0,
+    "created": 1739208137,
+    "currency": "usd",
+    "delinquent": true,
+    "description": null,
+    "email": "alan+stc@infinyon.com",
+    "event_type": "customer.updated",
+    "id": "cus_RkVhAHfBaXIo77",
+    "invoice_prefix": "8B82AA08",
+    "name": "Alan Corp",
+    "next_invoice_sequence": 8,
+    "phone": null
+  },
+  "fluvio_version": "0.1",
+  "id": "evt_1R4SVrIXrfseZ4WFka2o5Q3C",
+  "livemode": false,
+  "pending_webhooks": 2
+}
+{
+  "api_version": "2022-11-15",
+  "created": 1742483877,
+  "data": {
+    "account_country": "US",
+    "account_name": "InfinyOn",
+    "amount_due": 20000,
+    "amount_paid": 0,
+    "amount_remaining": 20000,
+    "amount_shipping": 0,
+    "attempt_count": 2,
+    "attempted": true,
+    "billing_reason": "subscription_create",
+    "collection_method": "charge_automatically",
+    "created": 1742022008,
+    "currency": "usd",
+    "customer": "cus_Rt8tP9rGHq5Mbn",
+    "customer_email": "nick@infinyon.com",
+    "customer_name": "Customer 2",
+    "event_type": "invoice.updated",
+    "hosted_invoice_url": "https://invoice.stripe.com/i/acct_1MCW7AIXrfseZ4WF/test_YWNjdF8xTUNXN0FJWHJmc2VaNFdGLF9Sd2k3d2RvRFg3OVJLQkxCa3diVnZ0Y2dMdjlPS1R6LDEzMzAyNDY3OA0200e3E7gX9N?s=ap",
+    "id": "in_1R2ohYIXrfseZ4WF1FlZXRuD",
+    "lines": [
+      {
+        "amount": 10000,
+        "currency": "usd",
+        "description": "1 × Professional Service (at $100.00 / month)"
+      },
+      {
+        "amount": 10000,
+        "currency": "usd",
+        "description": "1 × Startup Plan - 1 Month (at $100.00 / month)"
+      }
+    ],
+    "paid": false,
+    "paid_out_of_band": false,
+    "period_end": 1742022000,
+    "period_start": 1742022000,
+    "status": "open",
+    "subtotal": 20000,
+    "total": 20000
+  },
+  "fluvio_version": "0.1",
+  "id": "evt_1R4kr4IXrfseZ4WFvFx7pvO1",
+  "livemode": false,
+  "pending_webhooks": 2
+}
+{
+  "api_version": "2022-11-15",
+  "created": 1742483879,
+  "data": {
+    "account_country": "US",
+    "account_name": "InfinyOn",
+    "amount_due": 20000,
+    "amount_paid": 0,
+    "amount_remaining": 20000,
+    "amount_shipping": 0,
+    "attempt_count": 2,
+    "attempted": true,
+    "billing_reason": "subscription_create",
+    "collection_method": "charge_automatically",
+    "created": 1742022008,
+    "currency": "usd",
+    "customer": "cus_Rt8tP9rGHq5Mbn",
+    "customer_email": "nick@infinyon.com",
+    "customer_name": "Customer 2",
+    "event_type": "invoice.payment_failed",
+    "hosted_invoice_url": "https://invoice.stripe.com/i/acct_1MCW7AIXrfseZ4WF/test_YWNjdF8xTUNXN0FJWHJmc2VaNFdGLF9Sd2k3d2RvRFg3OVJLQkxCa3diVnZ0Y2dMdjlPS1R6LDEzMzAyNDY3OQ0200RaqtUsR0?s=ap",
+    "id": "in_1R2ohYIXrfseZ4WF1FlZXRuD",
+    "lines": [
+      {
+        "amount": 10000,
+        "currency": "usd",
+        "description": "1 × Professional Service (at $100.00 / month)"
+      },
+      {
+        "amount": 10000,
+        "currency": "usd",
+        "description": "1 × Startup Plan - 1 Month (at $100.00 / month)"
+      }
+    ],
+    "paid": false,
+    "paid_out_of_band": false,
+    "period_end": 1742022000,
+    "period_start": 1742022000,
+    "status": "open",
+    "subtotal": 20000,
+    "total": 20000
+  },
+  "fluvio_version": "0.1",
+  "id": "evt_1R4kr5IXrfseZ4WFzI0HhXnH",
+  "livemode": false,
+  "pending_webhooks": 2
+}
+{
+  "api_version": "2022-11-15",
+  "created": 1742483879,
+  "data": {
+    "account_country": "US",
+    "account_name": "InfinyOn",
+    "amount_due": 20000,
+    "amount_paid": 0,
+    "amount_remaining": 20000,
+    "amount_shipping": 0,
+    "attempt_count": 2,
+    "attempted": true,
+    "billing_reason": "subscription_create",
+    "collection_method": "charge_automatically",
+    "created": 1742022008,
+    "currency": "usd",
+    "customer": "cus_Rt8tP9rGHq5Mbn",
+    "customer_email": "nick@infinyon.com",
+    "customer_name": "Customer 2",
+    "event_type": "invoice.updated",
+    "hosted_invoice_url": "https://invoice.stripe.com/i/acct_1MCW7AIXrfseZ4WF/test_YWNjdF8xTUNXN0FJWHJmc2VaNFdGLF9Sd2k3d2RvRFg3OVJLQkxCa3diVnZ0Y2dMdjlPS1R6LDEzMzAyNDY3OQ0200RaqtUsR0?s=ap",
+    "id": "in_1R2ohYIXrfseZ4WF1FlZXRuD",
+    "lines": [
+      {
+        "amount": 10000,
+        "currency": "usd",
+        "description": "1 × Professional Service (at $100.00 / month)"
+      },
+      {
+        "amount": 10000,
+        "currency": "usd",
+        "description": "1 × Startup Plan - 1 Month (at $100.00 / month)"
+      }
+    ],
+    "paid": false,
+    "paid_out_of_band": false,
+    "period_end": 1742022000,
+    "period_start": 1742022000,
+    "status": "open",
+    "subtotal": 20000,
+    "total": 20000
+  },
+  "fluvio_version": "0.1",
+  "id": "evt_1R4kr5IXrfseZ4WFI6KTgLAA",
+  "livemode": false,
+  "pending_webhooks": 2
+}
+{
+  "api_version": "2022-11-15",
+  "created": 1742950995,
+  "data": {
+    "account_country": "US",
+    "account_name": "InfinyOn",
+    "amount_due": 20000,
+    "amount_paid": 0,
+    "amount_remaining": 20000,
+    "amount_shipping": 0,
+    "attempt_count": 3,
+    "attempted": true,
+    "billing_reason": "subscription_create",
+    "collection_method": "charge_automatically",
+    "created": 1742022008,
+    "currency": "usd",
+    "customer": "cus_Rt8tP9rGHq5Mbn",
+    "customer_email": "nick@infinyon.com",
+    "customer_name": "Customer 2",
+    "event_type": "invoice.updated",
+    "hosted_invoice_url": "https://invoice.stripe.com/i/acct_1MCW7AIXrfseZ4WF/test_YWNjdF8xTUNXN0FJWHJmc2VaNFdGLF9Sd2k3d2RvRFg3OVJLQkxCa3diVnZ0Y2dMdjlPS1R6LDEzMzQ5MTc5Ng02000RfUg5Kw?s=ap",
+    "id": "in_1R2ohYIXrfseZ4WF1FlZXRuD",
+    "lines": [
+      {
+        "amount": 10000,
+        "currency": "usd",
+        "description": "1 × Professional Service (at $100.00 / month)"
+      },
+      {
+        "amount": 10000,
+        "currency": "usd",
+        "description": "1 × Startup Plan - 1 Month (at $100.00 / month)"
+      }
+    ],
+    "paid": false,
+    "paid_out_of_band": false,
+    "period_end": 1742022000,
+    "period_start": 1742022000,
+    "status": "open",
+    "subtotal": 20000,
+    "total": 20000
+  },
+  "fluvio_version": "0.1",
+  "id": "evt_1R6iNEIXrfseZ4WF2K3qdW6v",
+  "livemode": false,
+  "pending_webhooks": 2
+}
+{
+  "api_version": "2022-11-15",
+  "created": 1742950996,
+  "data": {
+    "account_country": "US",
+    "account_name": "InfinyOn",
+    "amount_due": 20000,
+    "amount_paid": 0,
+    "amount_remaining": 20000,
+    "amount_shipping": 0,
+    "attempt_count": 3,
+    "attempted": true,
+    "billing_reason": "subscription_create",
+    "collection_method": "charge_automatically",
+    "created": 1742022008,
+    "currency": "usd",
+    "customer": "cus_Rt8tP9rGHq5Mbn",
+    "customer_email": "nick@infinyon.com",
+    "customer_name": "Customer 2",
+    "event_type": "invoice.updated",
+    "hosted_invoice_url": "https://invoice.stripe.com/i/acct_1MCW7AIXrfseZ4WF/test_YWNjdF8xTUNXN0FJWHJmc2VaNFdGLF9Sd2k3d2RvRFg3OVJLQkxCa3diVnZ0Y2dMdjlPS1R6LDEzMzQ5MTc5Nw0200gBfrwXtU?s=ap",
+    "id": "in_1R2ohYIXrfseZ4WF1FlZXRuD",
+    "lines": [
+      {
+        "amount": 10000,
+        "currency": "usd",
+        "description": "1 × Professional Service (at $100.00 / month)"
+      },
+      {
+        "amount": 10000,
+        "currency": "usd",
+        "description": "1 × Startup Plan - 1 Month (at $100.00 / month)"
+      }
+    ],
+    "paid": false,
+    "paid_out_of_band": false,
+    "period_end": 1742022000,
+    "period_start": 1742022000,
+    "status": "open",
+    "subtotal": 20000,
+    "total": 20000
+  },
+  "fluvio_version": "0.1",
+  "id": "evt_1R6iNFIXrfseZ4WFKs1FNpKP",
+  "livemode": false,
+  "pending_webhooks": 2
+}
+{
+  "api_version": "2022-11-15",
+  "created": 1742950996,
+  "data": {
+    "account_country": "US",
+    "account_name": "InfinyOn",
+    "amount_due": 20000,
+    "amount_paid": 0,
+    "amount_remaining": 20000,
+    "amount_shipping": 0,
+    "attempt_count": 3,
+    "attempted": true,
+    "billing_reason": "subscription_create",
+    "collection_method": "charge_automatically",
+    "created": 1742022008,
+    "currency": "usd",
+    "customer": "cus_Rt8tP9rGHq5Mbn",
+    "customer_email": "nick@infinyon.com",
+    "customer_name": "Customer 2",
+    "event_type": "invoice.payment_failed",
+    "hosted_invoice_url": "https://invoice.stripe.com/i/acct_1MCW7AIXrfseZ4WF/test_YWNjdF8xTUNXN0FJWHJmc2VaNFdGLF9Sd2k3d2RvRFg3OVJLQkxCa3diVnZ0Y2dMdjlPS1R6LDEzMzQ5MTc5Nw0200gBfrwXtU?s=ap",
+    "id": "in_1R2ohYIXrfseZ4WF1FlZXRuD",
+    "lines": [
+      {
+        "amount": 10000,
+        "currency": "usd",
+        "description": "1 × Professional Service (at $100.00 / month)"
+      },
+      {
+        "amount": 10000,
+        "currency": "usd",
+        "description": "1 × Startup Plan - 1 Month (at $100.00 / month)"
+      }
+    ],
+    "paid": false,
+    "paid_out_of_band": false,
+    "period_end": 1742022000,
+    "period_start": 1742022000,
+    "status": "open",
+    "subtotal": 20000,
+    "total": 20000
+  },
+  "fluvio_version": "0.1",
+  "id": "evt_1R6iNFIXrfseZ4WFRZLLtUsr",
+  "livemode": false,
+  "pending_webhooks": 2
+}
+{
+  "api_version": "2022-11-15",
+  "created": 1743030553,
+  "data": {
+    "address": {
+      "city": "",
+      "country": "CA",
+      "line1": "",
+      "line2": "",
+      "postal-code": null,
+      "state": "BC"
+    },
+    "balance": 0,
+    "created": 1743030553,
+    "currency": null,
+    "delinquent": false,
+    "description": "Accountant",
+    "email": "jenny.rosen@example.com",
+    "event_type": "customer.created",
+    "id": "cus_S15ElUuJ0dtChM",
+    "invoice_prefix": "7EC52D38",
+    "name": "Jenny Rosen",
+    "next_invoice_sequence": 1,
+    "phone": null
+  },
+  "fluvio_version": "0.1",
+  "id": "evt_1R734PIXrfseZ4WFtvhu2AEz",
+  "livemode": false,
+  "pending_webhooks": 2
+}
+{
+  "api_version": "2022-11-15",
+  "created": 1743030854,
+  "data": {
+    "account_country": "US",
+    "account_name": "InfinyOn",
+    "amount_due": 0,
+    "amount_paid": 0,
+    "amount_remaining": 0,
+    "amount_shipping": 0,
+    "attempt_count": 0,
+    "attempted": false,
+    "billing_reason": "manual",
+    "collection_method": "send_invoice",
+    "created": 1743030854,
+    "currency": "usd",
+    "customer": "cus_S15ElUuJ0dtChM",
+    "customer_email": "jenny.rosen@example.com",
+    "customer_name": "Jenny Rosen",
+    "event_type": "invoice.created",
+    "id": "in_1R739GIXrfseZ4WFSNCdT9Zl",
+    "lines": [],
+    "paid": false,
+    "paid_out_of_band": false,
+    "period_end": 1743030854,
+    "period_start": 1743030854,
+    "status": "draft",
+    "subtotal": 0,
+    "total": 0
+  },
+  "fluvio_version": "0.1",
+  "id": "evt_1R739HIXrfseZ4WFsjJEz7m4",
+  "livemode": false,
+  "pending_webhooks": 2
+}
+{
+  "api_version": "2022-11-15",
+  "created": 1743030854,
+  "data": {
+    "address": {
+      "city": "",
+      "country": "CA",
+      "line1": "",
+      "line2": "",
+      "postal-code": null,
+      "state": "BC"
+    },
+    "balance": 0,
+    "created": 1743030553,
+    "currency": "usd",
+    "delinquent": false,
+    "description": "Accountant",
+    "email": "jenny.rosen@example.com",
+    "event_type": "customer.updated",
+    "id": "cus_S15ElUuJ0dtChM",
+    "invoice_prefix": "7EC52D38",
+    "name": "Jenny Rosen",
+    "next_invoice_sequence": 1,
+    "phone": null
+  },
+  "fluvio_version": "0.1",
+  "id": "evt_1R739HIXrfseZ4WFqvOzpID5",
+  "livemode": false,
+  "pending_webhooks": 2
+}
+{
+  "api_version": "2022-11-15",
+  "created": 1743030877,
+  "data": {
+    "account_country": "US",
+    "account_name": "InfinyOn",
+    "amount_due": 0,
+    "amount_paid": 0,
+    "amount_remaining": 0,
+    "amount_shipping": 0,
+    "attempt_count": 0,
+    "attempted": false,
+    "billing_reason": "manual",
+    "collection_method": "send_invoice",
+    "created": 1743030854,
+    "currency": "usd",
+    "customer": "cus_S15ElUuJ0dtChM",
+    "customer_email": "jenny.rosen@example.com",
+    "customer_name": "Jenny Rosen",
+    "event_type": "invoice.updated",
+    "id": "in_1R739GIXrfseZ4WFSNCdT9Zl",
+    "lines": [],
+    "paid": false,
+    "paid_out_of_band": false,
+    "period_end": 1743030854,
+    "period_start": 1743030854,
+    "status": "draft",
+    "subtotal": 0,
+    "total": 0
+  },
+  "fluvio_version": "0.1",
+  "id": "evt_1R739dIXrfseZ4WFOallp4QJ",
+  "livemode": false,
+  "pending_webhooks": 2
+}
+{
+  "api_version": "2022-11-15",
+  "created": 1743030884,
+  "data": {
+    "account_country": "US",
+    "account_name": "InfinyOn",
+    "amount_due": 0,
+    "amount_paid": 0,
+    "amount_remaining": 0,
+    "amount_shipping": 0,
+    "attempt_count": 0,
+    "attempted": false,
+    "billing_reason": "manual",
+    "collection_method": "send_invoice",
+    "created": 1743030854,
+    "currency": "usd",
+    "customer": "cus_S15ElUuJ0dtChM",
+    "customer_email": "jenny.rosen@example.com",
+    "customer_name": "Jenny Rosen",
+    "event_type": "invoice.updated",
+    "id": "in_1R739GIXrfseZ4WFSNCdT9Zl",
+    "lines": [],
+    "paid": false,
+    "paid_out_of_band": false,
+    "period_end": 1743030854,
+    "period_start": 1743030854,
+    "status": "draft",
+    "subtotal": 0,
+    "total": 0
+  },
+  "fluvio_version": "0.1",
+  "id": "evt_1R739kIXrfseZ4WFyWSJGGHx",
+  "livemode": false,
+  "pending_webhooks": 2
+}
+{
+  "api_version": "2022-11-15",
+  "created": 1743030885,
+  "data": {
+    "account_country": "US",
+    "account_name": "InfinyOn",
+    "amount_due": 0,
+    "amount_paid": 0,
+    "amount_remaining": 0,
+    "amount_shipping": 0,
+    "attempt_count": 0,
+    "attempted": true,
+    "billing_reason": "manual",
+    "collection_method": "send_invoice",
+    "created": 1743030854,
+    "currency": "usd",
+    "customer": "cus_S15ElUuJ0dtChM",
+    "customer_email": "jenny.rosen@example.com",
+    "customer_name": "Jenny Rosen",
+    "event_type": "invoice.finalized",
+    "hosted_invoice_url": "https://invoice.stripe.com/i/acct_1MCW7AIXrfseZ4WF/test_YWNjdF8xTUNXN0FJWHJmc2VaNFdGLF9TMTVKcUJ0Rm9SVDk5VG91OVdycnFxbE5EQnpsS21GLDEzMzU3MTY4NQ0200IOm48GqU?s=ap",
+    "id": "in_1R739GIXrfseZ4WFSNCdT9Zl",
+    "lines": [],
+    "paid": true,
+    "paid_out_of_band": false,
+    "period_end": 1743030854,
+    "period_start": 1743030854,
+    "status": "paid",
+    "subtotal": 0,
+    "total": 0
+  },
+  "fluvio_version": "0.1",
+  "id": "evt_1R739lIXrfseZ4WFf6roqv7i",
+  "livemode": false,
+  "pending_webhooks": 2
+}
+{
+  "api_version": "2022-11-15",
+  "created": 1743030885,
+  "data": {
+    "account_country": "US",
+    "account_name": "InfinyOn",
+    "amount_due": 0,
+    "amount_paid": 0,
+    "amount_remaining": 0,
+    "amount_shipping": 0,
+    "attempt_count": 0,
+    "attempted": true,
+    "billing_reason": "manual",
+    "collection_method": "send_invoice",
+    "created": 1743030854,
+    "currency": "usd",
+    "customer": "cus_S15ElUuJ0dtChM",
+    "customer_email": "jenny.rosen@example.com",
+    "customer_name": "Jenny Rosen",
+    "event_type": "invoice.updated",
+    "hosted_invoice_url": "https://invoice.stripe.com/i/acct_1MCW7AIXrfseZ4WF/test_YWNjdF8xTUNXN0FJWHJmc2VaNFdGLF9TMTVKcUJ0Rm9SVDk5VG91OVdycnFxbE5EQnpsS21GLDEzMzU3MTY4NQ0200IOm48GqU?s=ap",
+    "id": "in_1R739GIXrfseZ4WFSNCdT9Zl",
+    "lines": [],
+    "paid": true,
+    "paid_out_of_band": false,
+    "period_end": 1743030854,
+    "period_start": 1743030854,
+    "status": "paid",
+    "subtotal": 0,
+    "total": 0
+  },
+  "fluvio_version": "0.1",
+  "id": "evt_1R739lIXrfseZ4WFwqITNXeQ",
+  "livemode": false,
+  "pending_webhooks": 2
+}
+{
+  "api_version": "2022-11-15",
+  "created": 1743030885,
+  "data": {
+    "account_country": "US",
+    "account_name": "InfinyOn",
+    "amount_due": 0,
+    "amount_paid": 0,
+    "amount_remaining": 0,
+    "amount_shipping": 0,
+    "attempt_count": 0,
+    "attempted": true,
+    "billing_reason": "manual",
+    "collection_method": "send_invoice",
+    "created": 1743030854,
+    "currency": "usd",
+    "customer": "cus_S15ElUuJ0dtChM",
+    "customer_email": "jenny.rosen@example.com",
+    "customer_name": "Jenny Rosen",
+    "event_type": "invoice.payment_succeeded",
+    "hosted_invoice_url": "https://invoice.stripe.com/i/acct_1MCW7AIXrfseZ4WF/test_YWNjdF8xTUNXN0FJWHJmc2VaNFdGLF9TMTVKcUJ0Rm9SVDk5VG91OVdycnFxbE5EQnpsS21GLDEzMzU3MTY4Ng0200IgVd2Ss1?s=ap",
+    "id": "in_1R739GIXrfseZ4WFSNCdT9Zl",
+    "lines": [],
+    "paid": true,
+    "paid_out_of_band": false,
+    "period_end": 1743030854,
+    "period_start": 1743030854,
+    "status": "paid",
+    "subtotal": 0,
+    "total": 0
+  },
+  "fluvio_version": "0.1",
+  "id": "evt_1R739mIXrfseZ4WFomNSQpB5",
+  "livemode": false,
+  "pending_webhooks": 2
+}
+{
+  "api_version": "2022-11-15",
+  "created": 1743030885,
+  "data": {
+    "account_country": "US",
+    "account_name": "InfinyOn",
+    "amount_due": 0,
+    "amount_paid": 0,
+    "amount_remaining": 0,
+    "amount_shipping": 0,
+    "attempt_count": 0,
+    "attempted": true,
+    "billing_reason": "manual",
+    "collection_method": "send_invoice",
+    "created": 1743030854,
+    "currency": "usd",
+    "customer": "cus_S15ElUuJ0dtChM",
+    "customer_email": "jenny.rosen@example.com",
+    "customer_name": "Jenny Rosen",
+    "event_type": "invoice.paid",
+    "hosted_invoice_url": "https://invoice.stripe.com/i/acct_1MCW7AIXrfseZ4WF/test_YWNjdF8xTUNXN0FJWHJmc2VaNFdGLF9TMTVKcUJ0Rm9SVDk5VG91OVdycnFxbE5EQnpsS21GLDEzMzU3MTY4Ng0200IgVd2Ss1?s=ap",
+    "id": "in_1R739GIXrfseZ4WFSNCdT9Zl",
+    "lines": [],
+    "paid": true,
+    "paid_out_of_band": false,
+    "period_end": 1743030854,
+    "period_start": 1743030854,
+    "status": "paid",
+    "subtotal": 0,
+    "total": 0
+  },
+  "fluvio_version": "0.1",
+  "id": "evt_1R739mIXrfseZ4WFryRQWimn",
+  "livemode": false,
+  "pending_webhooks": 2
+}
+{
+  "api_version": "2022-11-15",
+  "created": 1743030885,
+  "data": {
+    "account_country": "US",
+    "account_name": "InfinyOn",
+    "amount_due": 0,
+    "amount_paid": 0,
+    "amount_remaining": 0,
+    "amount_shipping": 0,
+    "attempt_count": 0,
+    "attempted": true,
+    "billing_reason": "manual",
+    "collection_method": "send_invoice",
+    "created": 1743030854,
+    "currency": "usd",
+    "customer": "cus_S15ElUuJ0dtChM",
+    "customer_email": "jenny.rosen@example.com",
+    "customer_name": "Jenny Rosen",
+    "event_type": "invoice.sent",
+    "hosted_invoice_url": "https://invoice.stripe.com/i/acct_1MCW7AIXrfseZ4WF/test_YWNjdF8xTUNXN0FJWHJmc2VaNFdGLF9TMTVKcUJ0Rm9SVDk5VG91OVdycnFxbE5EQnpsS21GLDEzMzU3MTY4Ng0200IgVd2Ss1?s=ap",
+    "id": "in_1R739GIXrfseZ4WFSNCdT9Zl",
+    "lines": [],
+    "paid": true,
+    "paid_out_of_band": false,
+    "period_end": 1743030854,
+    "period_start": 1743030854,
+    "status": "paid",
+    "subtotal": 0,
+    "total": 0
+  },
+  "fluvio_version": "0.1",
+  "id": "evt_1R739mIXrfseZ4WFfj1y1DXj",
+  "livemode": false,
+  "pending_webhooks": 2
+}
+{
+  "api_version": "2022-11-15",
+  "created": 1743031076,
+  "data": {
+    "balance": 0,
+    "created": 1729539450,
+    "currency": "usd",
+    "delinquent": false,
+    "description": null,
+    "email": "batman@justiceleague.com",
+    "event_type": "customer.updated",
+    "id": "cus_R4abRUeVuB9Gif",
+    "invoice_prefix": "9E0E9A1B",
+    "name": null,
+    "next_invoice_sequence": 1,
+    "phone": null
+  },
+  "fluvio_version": "0.1",
+  "id": "evt_1R73CqIXrfseZ4WFi9qNCeEw",
+  "livemode": false,
+  "pending_webhooks": 2
+}
+{
+  "api_version": "2022-11-15",
+  "created": 1743031076,
+  "data": {
+    "canceled_at": null,
+    "completed_at": null,
+    "created": 1743031076,
+    "customer": "cus_R4abRUeVuB9Gif",
+    "default_settings": {
+      "billing_cycle_anchor": "automatic",
+      "collection_method": "charge_automatically"
+    },
+    "end_behavior": "release",
+    "event_type": "subscription_schedule.created",
+    "id": "sub_sched_1R73CqIXrfseZ4WFu3iXgdyb",
+    "released_at": null,
+    "status": "not_started"
+  },
+  "fluvio_version": "0.1",
+  "id": "evt_1R73CqIXrfseZ4WF6pMBTpC8",
+  "livemode": false,
+  "pending_webhooks": 1
+}
+{
+  "api_version": "2022-11-15",
+  "created": 1743177466,
+  "data": {
+    "billing": {
+      "city": "Salt Lake City",
+      "country": "US",
+      "line1": "233 doe avenue",
+      "line2": null,
+      "postal_code": "93534",
+      "state": "UT"
+    },
+    "created": 1743177465,
+    "email": "john.due@test.com",
+    "event_type": "issuing_cardholder.created",
+    "id": "ich_1R7fHxIXrfseZ4WFtJt87G9q",
+    "individual": {
+      "dob": {
+        "day": 30,
+        "month": 3,
+        "year": 1978
+      },
+      "first_name": "John",
+      "last_name": "Doe"
+    },
+    "name": "John Doe",
+    "phone_number": "+14455551212",
+    "status": "active",
+    "type_": "individual"
+  },
+  "fluvio_version": "0.1",
+  "id": "evt_1R7fHyIXrfseZ4WFvKC1maLh",
+  "livemode": false,
+  "pending_webhooks": 1
+}
+{
+  "api_version": "2022-11-15",
+  "created": 1743177468,
+  "data": {
+    "billing": {
+      "city": "Salt Lake City",
+      "country": "US",
+      "line1": "233 doe avenue",
+      "line2": null,
+      "postal_code": "93534",
+      "state": "UT"
+    },
+    "created": 1743177465,
+    "email": "john.due@test.com",
+    "event_type": "issuing_cardholder.updated",
+    "id": "ich_1R7fHxIXrfseZ4WFtJt87G9q",
+    "individual": {
+      "dob": {
+        "day": 30,
+        "month": 3,
+        "year": 1978
+      },
+      "first_name": "John",
+      "last_name": "Doe"
+    },
+    "name": "John Doe",
+    "phone_number": "+14455551212",
+    "status": "active",
+    "type_": "individual"
+  },
+  "fluvio_version": "0.1",
+  "id": "evt_1R7fI0IXrfseZ4WFBvzm2wKB",
+  "livemode": false,
+  "pending_webhooks": 1
+}
+{
+  "api_version": "2022-11-15",
+  "created": 1743177658,
+  "data": {
+    "brand": "Visa",
+    "cancellation_reason": null,
+    "cardholder": {
+      "email": "john.due@test.com",
+      "id": "ich_1R7fHxIXrfseZ4WFtJt87G9q"
+    },
+    "created": 1743177658,
+    "currency": "usd",
+    "cvc": null,
+    "event_type": "issuing_card.created",
+    "exp_month": 2,
+    "exp_year": 2028,
+    "financial_account": null,
+    "id": "ic_1R7fL4IXrfseZ4WFg7m33oMx",
+    "last4": "0005",
+    "status": "active",
+    "type_": "virtual"
+  },
+  "fluvio_version": "0.1",
+  "id": "evt_1R7fL4IXrfseZ4WFxVu4Kop9",
+  "livemode": false,
+  "pending_webhooks": 1
+}
+{
+  "api_version": "2022-11-15",
+  "created": 1743184235,
+  "data": {
+    "amount": 1000,
+    "amount_details": {
+      "atm_fee": null,
+      "cashback_amount": 0
+    },
+    "approved": false,
+    "authorization_method": "online",
+    "card": "ic_1R7fL4IXrfseZ4WFg7m33oMx",
+    "cardholder": "ich_1R7fHxIXrfseZ4WFtJt87G9q",
+    "created": 1743184235,
+    "currency": "usd",
+    "event_type": "issuing_authorization.created",
+    "id": "iauth_1R7h39IXrfseZ4WFOmqja5Lz",
+    "merchant_amount": 1000,
+    "merchant_currency": "usd",
+    "merchant_data": {
+      "category": "transportation_services",
+      "category_code": "4789",
+      "city": "San Francisco",
+      "country": "US",
+      "name": "Rocket Rides",
+      "network_id": "1234567890",
+      "postal_code": "94103",
+      "state": "CA",
+      "tax_id": null,
+      "terminal_id": "99999999",
+      "url": null
+    },
+    "status": "closed",
+    "wallet": null
+  },
+  "fluvio_version": "0.1",
+  "id": "evt_1R7h39IXrfseZ4WF2Q4bP2P9",
+  "livemode": false,
+  "pending_webhooks": 1
+}
+{
+  "api_version": "2022-11-15",
+  "created": 1743184699,
+  "data": {
+    "amount": 50000,
+    "created": 1743184698,
+    "currency": "usd",
+    "description": "",
+    "event_type": "topup.created",
+    "expected_availability_date": 1743184698,
+    "failure_code": null,
+    "failure_message": null,
+    "id": "tu_1R7hAcIXrfseZ4WFjKgLjc1k",
+    "status": "pending"
+  },
+  "fluvio_version": "0.1",
+  "id": "evt_1R7hAdIXrfseZ4WF75ZchhQ6",
+  "livemode": false,
+  "pending_webhooks": 1
+}
+{
+  "api_version": "2022-11-15",
+  "created": 1743184698,
+  "data": {
+    "amount": null,
+    "client_secret": "src_client_secret_fGmKqE06v0ksx5bDntD2pjLp",
+    "created": 1743184698,
+    "currency": "usd",
+    "customer": null,
+    "event_type": "source.chargeable",
+    "flow": "code_verification",
+    "id": "src_1R7hAcIXrfseZ4WFVqxxLCqm",
+    "object": "source",
+    "owner": {
+      "address": {
+        "city": null,
+        "country": "US",
+        "line1": null,
+        "line2": null,
+        "postal_code": null,
+        "state": null
+      },
+      "email": null,
+      "name": "Jenny Rosen",
+      "phone": null
+    },
+    "statement_descriptor": null,
+    "status": "chargeable",
+    "type": "ach_debit"
+  },
+  "fluvio_version": "0.1",
+  "id": "evt_1R7hAdIXrfseZ4WFxbRRHenJ",
+  "livemode": false,
+  "pending_webhooks": 1
+}
+{
+  "api_version": "2022-11-15",
+  "created": 1743185014,
+  "data": {
+    "amount": 1500,
+    "amount_details": {
+      "atm_fee": null,
+      "cashback_amount": 0
+    },
+    "approved": false,
+    "authorization_method": "online",
+    "card": "ic_1R7fL4IXrfseZ4WFg7m33oMx",
+    "cardholder": "ich_1R7fHxIXrfseZ4WFtJt87G9q",
+    "created": 1743185014,
+    "currency": "usd",
+    "event_type": "issuing_authorization.created",
+    "id": "iauth_1R7hFiIXrfseZ4WFSq1N1SlP",
+    "merchant_amount": 1500,
+    "merchant_currency": "usd",
+    "merchant_data": {
+      "category": "automotive_parts_and_accessories_stores",
+      "category_code": "5533",
+      "city": "Lewisburg",
+      "country": "US",
+      "name": "Johnny's Car Shop",
+      "network_id": "1234567890",
+      "postal_code": "94103",
+      "state": "PA",
+      "tax_id": null,
+      "terminal_id": "99999999",
+      "url": null
+    },
+    "status": "closed",
+    "wallet": "google_pay"
+  },
+  "fluvio_version": "0.1",
+  "id": "evt_1R7hFiIXrfseZ4WFf4o25MR5",
+  "livemode": false,
+  "pending_webhooks": 1
+}
+{
+  "api_version": "2022-11-15",
+  "created": 1743185097,
+  "data": {
+    "brand": "Visa",
+    "cancellation_reason": null,
+    "cardholder": {
+      "email": "john.due@test.com",
+      "id": "ich_1R7fHxIXrfseZ4WFtJt87G9q"
+    },
+    "created": 1743177658,
+    "currency": "usd",
+    "cvc": null,
+    "event_type": "issuing_card.updated",
+    "exp_month": 2,
+    "exp_year": 2028,
+    "financial_account": null,
+    "id": "ic_1R7fL4IXrfseZ4WFg7m33oMx",
+    "last4": "0005",
+    "status": "active",
+    "type_": "virtual"
+  },
+  "fluvio_version": "0.1",
+  "id": "evt_1R7hH3IXrfseZ4WFR49lwtX2",
+  "livemode": false,
+  "pending_webhooks": 1
+}
+{
+  "api_version": "2022-11-15",
+  "created": 1743185300,
+  "data": {
+    "amount": 50000,
+    "created": 1743184698,
+    "currency": "usd",
+    "description": "",
+    "event_type": "topup.succeeded",
+    "expected_availability_date": 1743184698,
+    "failure_code": null,
+    "failure_message": null,
+    "id": "tu_1R7hAcIXrfseZ4WFjKgLjc1k",
+    "status": "succeeded"
+  },
+  "fluvio_version": "0.1",
+  "id": "evt_1R7hKKIXrfseZ4WFKGOU4WlA",
+  "livemode": false,
+  "pending_webhooks": 1
+}
+{
+  "api_version": "2022-11-15",
+  "created": 1743185634,
+  "data": {
+    "brand": "Visa",
+    "cancellation_reason": "stolen",
+    "cardholder": {
+      "email": "john.due@test.com",
+      "id": "ich_1R7fHxIXrfseZ4WFtJt87G9q"
+    },
+    "created": 1743177658,
+    "currency": "usd",
+    "cvc": null,
+    "event_type": "issuing_card.updated",
+    "exp_month": 2,
+    "exp_year": 2028,
+    "financial_account": null,
+    "id": "ic_1R7fL4IXrfseZ4WFg7m33oMx",
+    "last4": "0005",
+    "status": "canceled",
+    "type_": "virtual"
+  },
+  "fluvio_version": "0.1",
+  "id": "evt_1R7hPiIXrfseZ4WFbHRaPv3n",
+  "livemode": false,
+  "pending_webhooks": 1
+}
+{
+  "api_version": "2022-11-15",
+  "created": 1743185635,
+  "data": {
+    "brand": "Visa",
+    "cancellation_reason": "stolen",
+    "cardholder": {
+      "email": "john.due@test.com",
+      "id": "ich_1R7fHxIXrfseZ4WFtJt87G9q"
+    },
+    "created": 1743177658,
+    "currency": "usd",
+    "cvc": null,
+    "event_type": "issuing_card.updated",
+    "exp_month": 2,
+    "exp_year": 2028,
+    "financial_account": null,
+    "id": "ic_1R7fL4IXrfseZ4WFg7m33oMx",
+    "last4": "0005",
+    "status": "canceled",
+    "type_": "virtual"
+  },
+  "fluvio_version": "0.1",
+  "id": "evt_1R7hPjIXrfseZ4WF9HoASTPR",
+  "livemode": false,
+  "pending_webhooks": 1
+}
+{
+  "api_version": "2022-11-15",
+  "created": 1743185635,
+  "data": {
+    "brand": "Visa",
+    "cancellation_reason": null,
+    "cardholder": {
+      "email": "john.due@test.com",
+      "id": "ich_1R7fHxIXrfseZ4WFtJt87G9q"
+    },
+    "created": 1743185635,
+    "currency": "usd",
+    "cvc": null,
+    "event_type": "issuing_card.created",
+    "exp_month": 2,
+    "exp_year": 2028,
+    "financial_account": null,
+    "id": "ic_1R7hPjIXrfseZ4WF9Tk71WXh",
+    "last4": "0013",
+    "status": "active",
+    "type_": "virtual"
+  },
+  "fluvio_version": "0.1",
+  "id": "evt_1R7hPjIXrfseZ4WFvoLm5bFr",
+  "livemode": false,
+  "pending_webhooks": 1
+}
+{
+  "api_version": "2022-11-15",
+  "created": 1743185635,
+  "data": {
+    "amount": 1000,
+    "created": 1743185635,
+    "currency": "usd",
+    "event_type": "issuing_dispute.created",
+    "id": "idp_1R7hPjIXrfseZ4WFQT0CpSqL",
+    "loss_reason": null,
+    "reason": "fraudulent",
+    "status": "unsubmitted"
+  },
+  "fluvio_version": "0.1",
+  "id": "evt_1R7hPkIXrfseZ4WF7LET1c39",
+  "livemode": false,
+  "pending_webhooks": 1
+}
+{
+  "api_version": "2022-11-15",
+  "created": 1743185636,
+  "data": {
+    "amount": 1000,
+    "created": 1743185635,
+    "currency": "usd",
+    "event_type": "issuing_dispute.submitted",
+    "id": "idp_1R7hPjIXrfseZ4WFQT0CpSqL",
+    "loss_reason": null,
+    "reason": "fraudulent",
+    "status": "submitted"
+  },
+  "fluvio_version": "0.1",
+  "id": "evt_1R7hPkIXrfseZ4WF0ymI8MO4",
+  "livemode": false,
+  "pending_webhooks": 1
+}
+{
+  "api_version": "2022-11-15",
+  "created": 1743186103,
+  "data": {
+    "brand": "Visa",
+    "cancellation_reason": null,
+    "cardholder": {
+      "email": "john.due@test.com",
+      "id": "ich_1R7fHxIXrfseZ4WFtJt87G9q"
+    },
+    "created": 1743186102,
+    "currency": "usd",
+    "cvc": null,
+    "event_type": "issuing_card.created",
+    "exp_month": 2,
+    "exp_year": 2028,
+    "financial_account": null,
+    "id": "ic_1R7hXGIXrfseZ4WFK4T1R2NW",
+    "last4": "0021",
+    "status": "inactive",
+    "type_": "virtual"
+  },
+  "fluvio_version": "0.1",
+  "id": "evt_1R7hXHIXrfseZ4WFFSsM8dNF",
+  "livemode": false,
+  "pending_webhooks": 1
+}
+{
+  "api_version": "2022-11-15",
+  "created": 1743383693,
+  "data": {
+    "address": {
+      "city": "Salem",
+      "country": "US",
+      "line1": "1772 Center St NE",
+      "line2": "",
+      "postal-code": null,
+      "state": "OR"
+    },
+    "balance": 0,
+    "created": 1740780898,
+    "currency": "usd",
+    "delinquent": true,
+    "description": "\"Safe\"",
+    "email": "vish@safe.app",
+    "event_type": "customer.updated",
+    "id": "cus_RrKUpTtCwwagwl",
+    "invoice_prefix": "1F0F1E66",
+    "name": "Curiously Tech LLC",
+    "next_invoice_sequence": 2,
+    "phone": null
+  },
+  "fluvio_version": "0.1",
+  "id": "evt_1R8WwEIXrfseZ4WF4Ly2i14G",
+  "livemode": true,
+  "pending_webhooks": 2
+}
+{
+  "api_version": "2022-11-15",
+  "created": 1743404428,
+  "data": {
+    "balance": null,
+    "created": 1743404400,
+    "currency": "usd",
+    "delinquent": null,
+    "description": null,
+    "email": null,
+    "event_type": "customer.subscription.created",
+    "id": "sub_1R8cKcIXrfseZ4WFUJm54bjI",
+    "invoice_prefix": null,
+    "name": null,
+    "next_invoice_sequence": null,
+    "phone": null
+  },
+  "fluvio_version": "0.1",
+  "id": "evt_1R8cKeIXrfseZ4WFw3JkBfAD",
+  "livemode": false,
+  "pending_webhooks": 2
+}
+{
+  "api_version": "2022-11-15",
+  "created": 1743404428,
+  "data": {
+    "account_country": "US",
+    "account_name": "InfinyOn",
+    "amount_due": 20000,
+    "amount_paid": 0,
+    "amount_remaining": 20000,
+    "amount_shipping": 0,
+    "attempt_count": 0,
+    "attempted": false,
+    "billing_reason": "subscription_create",
+    "collection_method": "charge_automatically",
+    "created": 1743404427,
+    "currency": "usd",
+    "customer": "cus_R4abRUeVuB9Gif",
+    "customer_email": "batman@justiceleague.com",
+    "customer_name": null,
+    "event_type": "invoice.created",
+    "id": "in_1R8cKdIXrfseZ4WFnTYiq4Gv",
+    "lines": [
+      {
+        "amount": 10000,
+        "currency": "usd",
+        "description": "1 × Professional Service (at $100.00 / month)"
+      },
+      {
+        "amount": 10000,
+        "currency": "usd",
+        "description": "1 × Startup Plan - 1 Month (at $100.00 / month)"
+      }
+    ],
+    "paid": false,
+    "paid_out_of_band": false,
+    "period_end": 1743404400,
+    "period_start": 1743404400,
+    "status": "draft",
+    "subtotal": 20000,
+    "total": 20000
+  },
+  "fluvio_version": "0.1",
+  "id": "evt_1R8cKeIXrfseZ4WFmg3ljTF3",
+  "livemode": false,
+  "pending_webhooks": 2
+}
+{
+  "api_version": "2022-11-15",
+  "created": 1743404428,
+  "data": {
+    "canceled_at": null,
+    "completed_at": null,
+    "created": 1743031076,
+    "customer": "cus_R4abRUeVuB9Gif",
+    "default_settings": {
+      "billing_cycle_anchor": "automatic",
+      "collection_method": "charge_automatically"
+    },
+    "end_behavior": "release",
+    "event_type": "subscription_schedule.updated",
+    "id": "sub_sched_1R73CqIXrfseZ4WFu3iXgdyb",
+    "released_at": null,
+    "status": "active"
+  },
+  "fluvio_version": "0.1",
+  "id": "evt_1R8cKfIXrfseZ4WFKWb8O0zD",
+  "livemode": false,
+  "pending_webhooks": 1
+}
+{
+  "api_version": "2022-11-15",
+  "created": 1743406769,
+  "data": {
+    "account_country": "US",
+    "account_name": "InfinyOn",
+    "amount_due": 20000,
+    "amount_paid": 0,
+    "amount_remaining": 20000,
+    "amount_shipping": 0,
+    "attempt_count": 4,
+    "attempted": true,
+    "billing_reason": "subscription_create",
+    "collection_method": "charge_automatically",
+    "created": 1742022008,
+    "currency": "usd",
+    "customer": "cus_Rt8tP9rGHq5Mbn",
+    "customer_email": "nick@infinyon.com",
+    "customer_name": "Customer 2",
+    "event_type": "invoice.updated",
+    "hosted_invoice_url": "https://invoice.stripe.com/i/acct_1MCW7AIXrfseZ4WF/test_YWNjdF8xTUNXN0FJWHJmc2VaNFdGLF9Sd2k3d2RvRFg3OVJLQkxCa3diVnZ0Y2dMdjlPS1R6LDEzMzk0NzU2OQ0200PtBAcwAt?s=ap",
+    "id": "in_1R2ohYIXrfseZ4WF1FlZXRuD",
+    "lines": [
+      {
+        "amount": 10000,
+        "currency": "usd",
+        "description": "1 × Professional Service (at $100.00 / month)"
+      },
+      {
+        "amount": 10000,
+        "currency": "usd",
+        "description": "1 × Startup Plan - 1 Month (at $100.00 / month)"
+      }
+    ],
+    "paid": false,
+    "paid_out_of_band": false,
+    "period_end": 1742022000,
+    "period_start": 1742022000,
+    "status": "open",
+    "subtotal": 20000,
+    "total": 20000
+  },
+  "fluvio_version": "0.1",
+  "id": "evt_1R8cwPIXrfseZ4WF24aOYM5E",
+  "livemode": false,
+  "pending_webhooks": 2
+}
+{
+  "api_version": "2022-11-15",
+  "created": 1743406770,
+  "data": {
+    "account_country": "US",
+    "account_name": "InfinyOn",
+    "amount_due": 20000,
+    "amount_paid": 0,
+    "amount_remaining": 20000,
+    "amount_shipping": 0,
+    "attempt_count": 4,
+    "attempted": true,
+    "billing_reason": "subscription_create",
+    "collection_method": "charge_automatically",
+    "created": 1742022008,
+    "currency": "usd",
+    "customer": "cus_Rt8tP9rGHq5Mbn",
+    "customer_email": "nick@infinyon.com",
+    "customer_name": "Customer 2",
+    "event_type": "invoice.updated",
+    "hosted_invoice_url": "https://invoice.stripe.com/i/acct_1MCW7AIXrfseZ4WF/test_YWNjdF8xTUNXN0FJWHJmc2VaNFdGLF9Sd2k3d2RvRFg3OVJLQkxCa3diVnZ0Y2dMdjlPS1R6LDEzMzk0NzU3MA02003ntCxJEH?s=ap",
+    "id": "in_1R2ohYIXrfseZ4WF1FlZXRuD",
+    "lines": [
+      {
+        "amount": 10000,
+        "currency": "usd",
+        "description": "1 × Professional Service (at $100.00 / month)"
+      },
+      {
+        "amount": 10000,
+        "currency": "usd",
+        "description": "1 × Startup Plan - 1 Month (at $100.00 / month)"
+      }
+    ],
+    "paid": false,
+    "paid_out_of_band": false,
+    "period_end": 1742022000,
+    "period_start": 1742022000,
+    "status": "open",
+    "subtotal": 20000,
+    "total": 20000
+  },
+  "fluvio_version": "0.1",
+  "id": "evt_1R8cwQIXrfseZ4WF2FejzEBP",
+  "livemode": false,
+  "pending_webhooks": 2
+}
+{
+  "api_version": "2022-11-15",
+  "created": 1743406770,
+  "data": {
+    "account_country": "US",
+    "account_name": "InfinyOn",
+    "amount_due": 20000,
+    "amount_paid": 0,
+    "amount_remaining": 20000,
+    "amount_shipping": 0,
+    "attempt_count": 4,
+    "attempted": true,
+    "billing_reason": "subscription_create",
+    "collection_method": "charge_automatically",
+    "created": 1742022008,
+    "currency": "usd",
+    "customer": "cus_Rt8tP9rGHq5Mbn",
+    "customer_email": "nick@infinyon.com",
+    "customer_name": "Customer 2",
+    "event_type": "invoice.payment_failed",
+    "hosted_invoice_url": "https://invoice.stripe.com/i/acct_1MCW7AIXrfseZ4WF/test_YWNjdF8xTUNXN0FJWHJmc2VaNFdGLF9Sd2k3d2RvRFg3OVJLQkxCa3diVnZ0Y2dMdjlPS1R6LDEzMzk0NzU3MQ0200wiRfB3Aj?s=ap",
+    "id": "in_1R2ohYIXrfseZ4WF1FlZXRuD",
+    "lines": [
+      {
+        "amount": 10000,
+        "currency": "usd",
+        "description": "1 × Professional Service (at $100.00 / month)"
+      },
+      {
+        "amount": 10000,
+        "currency": "usd",
+        "description": "1 × Startup Plan - 1 Month (at $100.00 / month)"
+      }
+    ],
+    "paid": false,
+    "paid_out_of_band": false,
+    "period_end": 1742022000,
+    "period_start": 1742022000,
+    "status": "open",
+    "subtotal": 20000,
+    "total": 20000
+  },
+  "fluvio_version": "0.1",
+  "id": "evt_1R8cwRIXrfseZ4WFTiTv8FUP",
+  "livemode": false,
+  "pending_webhooks": 2
+}
+{
+  "api_version": "2022-11-15",
+  "created": 1743408050,
+  "data": {
+    "amount": 20000,
+    "amount_received": 0,
+    "canceled_at": null,
+    "cancellation_reason": null,
+    "capture_method": "automatic",
+    "confirmation_method": "automatic",
+    "created": 1743408048,
+    "currency": "usd",
+    "customer": "cus_R4abRUeVuB9Gif",
+    "description": "Subscription creation",
+    "event_type": "payment_intent.created",
+    "id": "pi_3R8dH2IXrfseZ4WF2kHnBOo7",
+    "invoice": "in_1R8cKdIXrfseZ4WFnTYiq4Gv",
+    "payment_method_types": [
+      "card",
+      "link"
+    ],
+    "receipt_email": null,
+    "status": "requires_payment_method"
+  },
+  "fluvio_version": "0.1",
+  "id": "evt_3R8dH2IXrfseZ4WF2G0IyL2D",
+  "livemode": false,
+  "pending_webhooks": 1
+}
+{
+  "api_version": "2022-11-15",
+  "created": 1743408050,
+  "data": {
+    "balance": 0,
+    "created": 1729539450,
+    "currency": "usd",
+    "delinquent": true,
+    "description": null,
+    "email": "batman@justiceleague.com",
+    "event_type": "customer.updated",
+    "id": "cus_R4abRUeVuB9Gif",
+    "invoice_prefix": "9E0E9A1B",
+    "name": null,
+    "next_invoice_sequence": 2,
+    "phone": null
+  },
+  "fluvio_version": "0.1",
+  "id": "evt_1R8dH4IXrfseZ4WFykYeO1IK",
+  "livemode": false,
+  "pending_webhooks": 2
+}
+{
+  "api_version": "2022-11-15",
+  "created": 1743408050,
+  "data": {
+    "account_country": "US",
+    "account_name": "InfinyOn",
+    "amount_due": 20000,
+    "amount_paid": 0,
+    "amount_remaining": 20000,
+    "amount_shipping": 0,
+    "attempt_count": 1,
+    "attempted": true,
+    "billing_reason": "subscription_create",
+    "collection_method": "charge_automatically",
+    "created": 1743404427,
+    "currency": "usd",
+    "customer": "cus_R4abRUeVuB9Gif",
+    "customer_email": "batman@justiceleague.com",
+    "customer_name": null,
+    "event_type": "invoice.updated",
+    "hosted_invoice_url": "https://invoice.stripe.com/i/acct_1MCW7AIXrfseZ4WF/test_YWNjdF8xTUNXN0FJWHJmc2VaNFdGLF9TMmhra25JaFJWQm5PWm80NjBqbnpFTkVQdGpMSlg5LDEzMzk0ODg1MQ0200YhZpOypJ?s=ap",
+    "id": "in_1R8cKdIXrfseZ4WFnTYiq4Gv",
+    "lines": [
+      {
+        "amount": 10000,
+        "currency": "usd",
+        "description": "1 × Professional Service (at $100.00 / month)"
+      },
+      {
+        "amount": 10000,
+        "currency": "usd",
+        "description": "1 × Startup Plan - 1 Month (at $100.00 / month)"
+      }
+    ],
+    "paid": false,
+    "paid_out_of_band": false,
+    "period_end": 1743404400,
+    "period_start": 1743404400,
+    "status": "open",
+    "subtotal": 20000,
+    "total": 20000
+  },
+  "fluvio_version": "0.1",
+  "id": "evt_1R8dH5IXrfseZ4WFdC2nPR1y",
+  "livemode": false,
+  "pending_webhooks": 2
+}
+{
+  "api_version": "2022-11-15",
+  "created": 1743408050,
+  "data": {
+    "account_country": "US",
+    "account_name": "InfinyOn",
+    "amount_due": 20000,
+    "amount_paid": 0,
+    "amount_remaining": 20000,
+    "amount_shipping": 0,
+    "attempt_count": 1,
+    "attempted": true,
+    "billing_reason": "subscription_create",
+    "collection_method": "charge_automatically",
+    "created": 1743404427,
+    "currency": "usd",
+    "customer": "cus_R4abRUeVuB9Gif",
+    "customer_email": "batman@justiceleague.com",
+    "customer_name": null,
+    "event_type": "invoice.finalized",
+    "hosted_invoice_url": "https://invoice.stripe.com/i/acct_1MCW7AIXrfseZ4WF/test_YWNjdF8xTUNXN0FJWHJmc2VaNFdGLF9TMmhra25JaFJWQm5PWm80NjBqbnpFTkVQdGpMSlg5LDEzMzk0ODg1MQ0200YhZpOypJ?s=ap",
+    "id": "in_1R8cKdIXrfseZ4WFnTYiq4Gv",
+    "lines": [
+      {
+        "amount": 10000,
+        "currency": "usd",
+        "description": "1 × Professional Service (at $100.00 / month)"
+      },
+      {
+        "amount": 10000,
+        "currency": "usd",
+        "description": "1 × Startup Plan - 1 Month (at $100.00 / month)"
+      }
+    ],
+    "paid": false,
+    "paid_out_of_band": false,
+    "period_end": 1743404400,
+    "period_start": 1743404400,
+    "status": "open",
+    "subtotal": 20000,
+    "total": 20000
+  },
+  "fluvio_version": "0.1",
+  "id": "evt_1R8dH5IXrfseZ4WF56NVxWaz",
+  "livemode": false,
+  "pending_webhooks": 2
+}
+{
+  "api_version": "2022-11-15",
+  "created": 1743408050,
+  "data": {
+    "balance": null,
+    "created": 1743404400,
+    "currency": "usd",
+    "delinquent": null,
+    "description": null,
+    "email": null,
+    "event_type": "customer.subscription.updated",
+    "id": "sub_1R8cKcIXrfseZ4WFUJm54bjI",
+    "invoice_prefix": null,
+    "name": null,
+    "next_invoice_sequence": null,
+    "phone": null
+  },
+  "fluvio_version": "0.1",
+  "id": "evt_1R8dH5IXrfseZ4WFNwRYPw7G",
+  "livemode": false,
+  "pending_webhooks": 2
+}
+{
+  "api_version": "2022-11-15",
+  "created": 1743408051,
+  "data": {
+    "account_country": "US",
+    "account_name": "InfinyOn",
+    "amount_due": 20000,
+    "amount_paid": 0,
+    "amount_remaining": 20000,
+    "amount_shipping": 0,
+    "attempt_count": 1,
+    "attempted": true,
+    "billing_reason": "subscription_create",
+    "collection_method": "charge_automatically",
+    "created": 1743404427,
+    "currency": "usd",
+    "customer": "cus_R4abRUeVuB9Gif",
+    "customer_email": "batman@justiceleague.com",
+    "customer_name": null,
+    "event_type": "invoice.updated",
+    "hosted_invoice_url": "https://invoice.stripe.com/i/acct_1MCW7AIXrfseZ4WF/test_YWNjdF8xTUNXN0FJWHJmc2VaNFdGLF9TMmhra25JaFJWQm5PWm80NjBqbnpFTkVQdGpMSlg5LDEzMzk0ODg1MQ0200YhZpOypJ?s=ap",
+    "id": "in_1R8cKdIXrfseZ4WFnTYiq4Gv",
+    "lines": [
+      {
+        "amount": 10000,
+        "currency": "usd",
+        "description": "1 × Professional Service (at $100.00 / month)"
+      },
+      {
+        "amount": 10000,
+        "currency": "usd",
+        "description": "1 × Startup Plan - 1 Month (at $100.00 / month)"
+      }
+    ],
+    "paid": false,
+    "paid_out_of_band": false,
+    "period_end": 1743404400,
+    "period_start": 1743404400,
+    "status": "open",
+    "subtotal": 20000,
+    "total": 20000
+  },
+  "fluvio_version": "0.1",
+  "id": "evt_1R8dH5IXrfseZ4WFUq6Yb2Eh",
+  "livemode": false,
+  "pending_webhooks": 2
+}
+{
+  "api_version": "2022-11-15",
+  "created": 1743408051,
+  "data": {
+    "account_country": "US",
+    "account_name": "InfinyOn",
+    "amount_due": 20000,
+    "amount_paid": 0,
+    "amount_remaining": 20000,
+    "amount_shipping": 0,
+    "attempt_count": 1,
+    "attempted": true,
+    "billing_reason": "subscription_create",
+    "collection_method": "charge_automatically",
+    "created": 1743404427,
+    "currency": "usd",
+    "customer": "cus_R4abRUeVuB9Gif",
+    "customer_email": "batman@justiceleague.com",
+    "customer_name": null,
+    "event_type": "invoice.payment_failed",
+    "hosted_invoice_url": "https://invoice.stripe.com/i/acct_1MCW7AIXrfseZ4WF/test_YWNjdF8xTUNXN0FJWHJmc2VaNFdGLF9TMmhra25JaFJWQm5PWm80NjBqbnpFTkVQdGpMSlg5LDEzMzk0ODg1MQ0200YhZpOypJ?s=ap",
+    "id": "in_1R8cKdIXrfseZ4WFnTYiq4Gv",
+    "lines": [
+      {
+        "amount": 10000,
+        "currency": "usd",
+        "description": "1 × Professional Service (at $100.00 / month)"
+      },
+      {
+        "amount": 10000,
+        "currency": "usd",
+        "description": "1 × Startup Plan - 1 Month (at $100.00 / month)"
+      }
+    ],
+    "paid": false,
+    "paid_out_of_band": false,
+    "period_end": 1743404400,
+    "period_start": 1743404400,
+    "status": "open",
+    "subtotal": 20000,
+    "total": 20000
+  },
+  "fluvio_version": "0.1",
+  "id": "evt_1R8dH5IXrfseZ4WFmU4mEg4D",
+  "livemode": false,
+  "pending_webhooks": 2
+}
+{
+  "api_version": "2022-11-15",
+  "created": 1743472797,
+  "data": {
+    "amount": 35000,
+    "amount_received": 35000,
+    "canceled_at": null,
+    "cancellation_reason": null,
+    "capture_method": "automatic",
+    "confirmation_method": "automatic",
+    "created": 1740791654,
+    "currency": "usd",
+    "customer": "cus_RrKUpTtCwwagwl",
+    "description": "Payment for Invoice",
+    "event_type": "payment_intent.succeeded",
+    "id": "pi_3Qxed8IXrfseZ4WF10NTcD0N",
+    "invoice": "in_1QxbtvIXrfseZ4WFZHUKSP9m",
+    "payment_method_types": [
+      "card",
+      "link"
+    ],
+    "receipt_email": null,
+    "status": "succeeded"
+  },
+  "fluvio_version": "0.1",
+  "id": "evt_3Qxed8IXrfseZ4WF1W2p8iLm",
+  "livemode": true,
+  "pending_webhooks": 2
+}
+{
+  "api_version": "2022-11-15",
+  "created": 1743472797,
+  "data": {
+    "amount": 35000,
+    "amount_captured": 35000,
+    "amount_refunded": 0,
+    "balance_transaction": "txn_3Qxed8IXrfseZ4WF1FHwRwyK",
+    "calculated_statement_descriptor": "INFINYON INC.",
+    "captured": true,
+    "created": 1743472796,
+    "currency": "usd",
+    "customer": "cus_RrKUpTtCwwagwl",
+    "description": "Payment for Invoice",
+    "disputed": false,
+    "event_type": "charge.succeeded",
+    "failure_code": null,
+    "failure_message": null,
+    "id": "ch_3Qxed8IXrfseZ4WF1jY5VE5k",
+    "invoice": "in_1QxbtvIXrfseZ4WFZHUKSP9m",
+    "paid": true,
+    "receipt_url": "https://pay.stripe.com/receipts/invoices/CAcQARoXChVhY2N0XzFNQ1c3QUlYcmZzZVo0V0YonpGtvwYyBsOb0tDE1TosFmStQDmrKjO55bl7rlCGx7f8u2X60uIs6hvZbcdjvFtofGTKSkacc0Jrn1g?s=ap",
+    "refunded": false,
+    "status": "succeeded"
+  },
+  "fluvio_version": "0.1",
+  "id": "evt_3Qxed8IXrfseZ4WF1Tb6K0pK",
+  "livemode": true,
+  "pending_webhooks": 1
+}
+{
+  "api_version": "2022-11-15",
+  "created": 1743472798,
+  "data": {
+    "account_country": "US",
+    "account_name": "InfinyOn",
+    "amount_due": 35000,
+    "amount_paid": 35000,
+    "amount_remaining": 0,
+    "amount_shipping": 0,
+    "attempt_count": 1,
+    "attempted": true,
+    "billing_reason": "manual",
+    "collection_method": "send_invoice",
+    "created": 1740781163,
+    "currency": "usd",
+    "customer": "cus_RrKUpTtCwwagwl",
+    "customer_email": "vish@safe.app",
+    "customer_name": "Curiously Tech LLC",
+    "event_type": "invoice.updated",
+    "hosted_invoice_url": "https://invoice.stripe.com/i/acct_1MCW7AIXrfseZ4WF/live_YWNjdF8xTUNXN0FJWHJmc2VaNFdGLF9ScktaY1BUMktqRFd3eUdxSDRMOVlPTE5nMDVVMTZtLDEzNDAxMzU5OQ0200PAEIWsu0?s=ap",
+    "id": "in_1QxbtvIXrfseZ4WFZHUKSP9m",
+    "lines": [
+      {
+        "amount": 25000,
+        "currency": "usd",
+        "description": "Pioneer Discount - credits, 1k"
+      },
+      {
+        "amount": 10000,
+        "currency": "usd",
+        "description": "Startup Plan - 1 Month"
+      }
+    ],
+    "paid": true,
+    "paid_out_of_band": false,
+    "period_end": 1740781163,
+    "period_start": 1740781163,
+    "status": "paid",
+    "subtotal": 35000,
+    "total": 35000
+  },
+  "fluvio_version": "0.1",
+  "id": "evt_1R8u7PIXrfseZ4WFz7J1tFQP",
+  "livemode": true,
+  "pending_webhooks": 2
+}
+{
+  "api_version": "2022-11-15",
+  "created": 1743472798,
+  "data": {
+    "address": {
+      "city": "Salem",
+      "country": "US",
+      "line1": "1772 Center St NE",
+      "line2": "",
+      "postal-code": null,
+      "state": "OR"
+    },
+    "balance": 0,
+    "created": 1740780898,
+    "currency": "usd",
+    "delinquent": false,
+    "description": "\"Safe\"",
+    "email": "vish@safe.app",
+    "event_type": "customer.updated",
+    "id": "cus_RrKUpTtCwwagwl",
+    "invoice_prefix": "1F0F1E66",
+    "name": "Curiously Tech LLC",
+    "next_invoice_sequence": 2,
+    "phone": null
+  },
+  "fluvio_version": "0.1",
+  "id": "evt_1R8u7OIXrfseZ4WFpvDHqeoT",
+  "livemode": true,
+  "pending_webhooks": 2
+}
+{
+  "api_version": "2022-11-15",
+  "created": 1743472798,
+  "data": {
+    "account_country": "US",
+    "account_name": "InfinyOn",
+    "amount_due": 35000,
+    "amount_paid": 35000,
+    "amount_remaining": 0,
+    "amount_shipping": 0,
+    "attempt_count": 1,
+    "attempted": true,
+    "billing_reason": "manual",
+    "collection_method": "send_invoice",
+    "created": 1740781163,
+    "currency": "usd",
+    "customer": "cus_RrKUpTtCwwagwl",
+    "customer_email": "vish@safe.app",
+    "customer_name": "Curiously Tech LLC",
+    "event_type": "invoice.paid",
+    "hosted_invoice_url": "https://invoice.stripe.com/i/acct_1MCW7AIXrfseZ4WF/live_YWNjdF8xTUNXN0FJWHJmc2VaNFdGLF9ScktaY1BUMktqRFd3eUdxSDRMOVlPTE5nMDVVMTZtLDEzNDAxMzU5OQ0200PAEIWsu0?s=ap",
+    "id": "in_1QxbtvIXrfseZ4WFZHUKSP9m",
+    "lines": [
+      {
+        "amount": 25000,
+        "currency": "usd",
+        "description": "Pioneer Discount - credits, 1k"
+      },
+      {
+        "amount": 10000,
+        "currency": "usd",
+        "description": "Startup Plan - 1 Month"
+      }
+    ],
+    "paid": true,
+    "paid_out_of_band": false,
+    "period_end": 1740781163,
+    "period_start": 1740781163,
+    "status": "paid",
+    "subtotal": 35000,
+    "total": 35000
+  },
+  "fluvio_version": "0.1",
+  "id": "evt_1R8u7PIXrfseZ4WFlSLjjZnU",
+  "livemode": true,
+  "pending_webhooks": 2
+}
+{
+  "api_version": "2022-11-15",
+  "created": 1743472798,
+  "data": {
+    "account_country": "US",
+    "account_name": "InfinyOn",
+    "amount_due": 35000,
+    "amount_paid": 35000,
+    "amount_remaining": 0,
+    "amount_shipping": 0,
+    "attempt_count": 1,
+    "attempted": true,
+    "billing_reason": "manual",
+    "collection_method": "send_invoice",
+    "created": 1740781163,
+    "currency": "usd",
+    "customer": "cus_RrKUpTtCwwagwl",
+    "customer_email": "vish@safe.app",
+    "customer_name": "Curiously Tech LLC",
+    "event_type": "invoice.payment_succeeded",
+    "hosted_invoice_url": "https://invoice.stripe.com/i/acct_1MCW7AIXrfseZ4WF/live_YWNjdF8xTUNXN0FJWHJmc2VaNFdGLF9ScktaY1BUMktqRFd3eUdxSDRMOVlPTE5nMDVVMTZtLDEzNDAxMzU5OQ0200PAEIWsu0?s=ap",
+    "id": "in_1QxbtvIXrfseZ4WFZHUKSP9m",
+    "lines": [
+      {
+        "amount": 25000,
+        "currency": "usd",
+        "description": "Pioneer Discount - credits, 1k"
+      },
+      {
+        "amount": 10000,
+        "currency": "usd",
+        "description": "Startup Plan - 1 Month"
+      }
+    ],
+    "paid": true,
+    "paid_out_of_band": false,
+    "period_end": 1740781163,
+    "period_start": 1740781163,
+    "status": "paid",
+    "subtotal": 35000,
+    "total": 35000
+  },
+  "fluvio_version": "0.1",
+  "id": "evt_1R8u7PIXrfseZ4WFZ9kKlrmV",
+  "livemode": true,
+  "pending_webhooks": 2
+}
+{
+  "api_version": "2022-11-15",
+  "created": 1743472800,
+  "data": {
+    "address": {
+      "city": "Salem",
+      "country": "US",
+      "line1": "1772 Center St NE",
+      "line2": "",
+      "postal-code": null,
+      "state": "OR"
+    },
+    "balance": 0,
+    "created": 1740780898,
+    "currency": "usd",
+    "delinquent": false,
+    "description": "\"Safe\"",
+    "email": "vish@safe.app",
+    "event_type": "customer.updated",
+    "id": "cus_RrKUpTtCwwagwl",
+    "invoice_prefix": "1F0F1E66",
+    "name": "Curiously Tech LLC",
+    "next_invoice_sequence": 2,
+    "phone": null
+  },
+  "fluvio_version": "0.1",
+  "id": "evt_1R8u7QIXrfseZ4WF1VBK22Lf",
+  "livemode": true,
+  "pending_webhooks": 2
+}
+{
+  "api_version": "2022-11-15",
+  "created": 1743555793,
+  "data": {
+    "amount": 33150,
+    "arrival_date": 1743638400,
+    "automatic": true,
+    "balance_transaction": "txn_1R9Fi1IXrfseZ4WFXjFRMRIp",
+    "created": 1743555792,
+    "currency": "usd",
+    "description": "STRIPE PAYOUT",
+    "event_type": "payout.created",
+    "failure_code": null,
+    "failure_message": null,
+    "id": "po_1R9Fi0IXrfseZ4WF9fJNAIBm",
+    "method": "standard",
+    "reconciliation_status": "completed",
+    "source_type": "card",
+    "statement_descriptor": null,
+    "status": "in_transit",
+    "type": "bank_account"
+  },
+  "fluvio_version": "0.1",
+  "id": "evt_1R9Fi1IXrfseZ4WFSnQCYt1y",
+  "livemode": true,
+  "pending_webhooks": 1
+}
+{
+  "api_version": "2022-11-15",
+  "created": 1743555794,
+  "data": {
+    "amount": 33150,
+    "arrival_date": 1743638400,
+    "automatic": true,
+    "balance_transaction": "txn_1R9Fi1IXrfseZ4WFXjFRMRIp",
+    "created": 1743555792,
+    "currency": "usd",
+    "description": "STRIPE PAYOUT",
+    "event_type": "payout.reconciliation_completed",
+    "failure_code": null,
+    "failure_message": null,
+    "id": "po_1R9Fi0IXrfseZ4WF9fJNAIBm",
+    "method": "standard",
+    "reconciliation_status": "completed",
+    "source_type": "card",
+    "statement_descriptor": null,
+    "status": "in_transit",
+    "type": "bank_account"
+  },
+  "fluvio_version": "0.1",
+  "id": "evt_1R9Fi2IXrfseZ4WF41s4auhq",
+  "livemode": true,
+  "pending_webhooks": 1
+}
+{
+  "api_version": "2022-11-15",
+  "created": 1743642260,
+  "data": {
+    "amount": 33150,
+    "arrival_date": 1743638400,
+    "automatic": true,
+    "balance_transaction": "txn_1R9Fi1IXrfseZ4WFXjFRMRIp",
+    "created": 1743555792,
+    "currency": "usd",
+    "description": "STRIPE PAYOUT",
+    "event_type": "payout.paid",
+    "failure_code": null,
+    "failure_message": null,
+    "id": "po_1R9Fi0IXrfseZ4WF9fJNAIBm",
+    "method": "standard",
+    "reconciliation_status": "completed",
+    "source_type": "card",
+    "statement_descriptor": null,
+    "status": "paid",
+    "type": "bank_account"
+  },
+  "fluvio_version": "0.1",
+  "id": "evt_1R9cCeIXrfseZ4WFJvxcHRRS",
+  "livemode": true,
+  "pending_webhooks": 1
+}
+{
+  "api_version": "2022-11-15",
+  "created": 1743642261,
+  "data": {
+    "amount": 33150,
+    "arrival_date": 1743638400,
+    "automatic": true,
+    "balance_transaction": "txn_1R9Fi1IXrfseZ4WFXjFRMRIp",
+    "created": 1743555792,
+    "currency": "usd",
+    "description": "STRIPE PAYOUT",
+    "event_type": "payout.updated",
+    "failure_code": null,
+    "failure_message": null,
+    "id": "po_1R9Fi0IXrfseZ4WF9fJNAIBm",
+    "method": "standard",
+    "reconciliation_status": "completed",
+    "source_type": "card",
+    "statement_descriptor": null,
+    "status": "paid",
+    "type": "bank_account"
+  },
+  "fluvio_version": "0.1",
+  "id": "evt_1R9cCfIXrfseZ4WFIVkcIltG",
+  "livemode": true,
+  "pending_webhooks": 1
+}

@@ -1,0 +1,48 @@
+apiVersion: 0.6.0
+meta:
+  name: test-df
+  version: 0.1.0
+  namespace: examples
+
+config:
+  converter: raw
+  consumer:
+    default_starting_offset:
+      value: 0
+      position: Beginning  
+
+imports:
+  - pkg: examples/jaq@0.0.1
+    functions:
+      - name: jaq-transform
+
+topics:
+  test:
+    schema:
+      value:
+        type: bytes
+
+  test-out:
+    schema:
+      value:
+        type: bytes
+
+services:
+  test-jaq:
+    sources:
+      - type: topic
+        id: test
+
+    transforms:
+      - operator: map
+        uses: jaq-transform
+
+    sinks:
+      - type: topic
+        id: test-out
+
+
+dev:
+  imports:
+    - pkg: examples/jaq@0.0.1
+      path: ../packages/jaq
