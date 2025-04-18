@@ -41,7 +41,6 @@ sdf test function test-event --value-file sample-data/topup-created.json
 sdf test function test-event --value-file sample-data/topup-succeeded.json
 ```
 
-
 ### Generate Types
 
 To generate the types, download [sdf-types-generator](http://github.com/infinyon/sdf-types-generator) and perform the following commands:
