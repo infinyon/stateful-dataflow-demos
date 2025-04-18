@@ -1,0 +1,47 @@
+{
+  "api_version": "2022-11-15",
+  "created": 1742483879,
+  "data": {
+    "account_country": "US",
+    "account_name": "InfinyOn",
+    "amount_due": 20000,
+    "amount_paid": 0,
+    "amount_remaining": 20000,
+    "amount_shipping": 0,
+    "attempt_count": 2,
+    "attempted": true,
+    "billing_reason": "subscription_create",
+    "collection_method": "charge_automatically",
+    "created": 1742022008,
+    "currency": "usd",
+    "customer": "cus_Rt8tP9rGHq5Mbn",
+    "customer_email": "nick@infinyon.com",
+    "customer_name": "Customer 2",
+    "event_type": "invoice.payment_failed",
+    "hosted_invoice_url": "https://invoice.stripe.com/i/acct_1MCW7AIXrfseZ4WF/test_YWNjdF8xTUNXN0FJWHJmc2VaNFdGLF9Sd2k3d2RvRFg3OVJLQkxCa3diVnZ0Y2dMdjlPS1R6LDEzMzAyNDY3OQ0200RaqtUsR0?s=ap",
+    "id": "in_1R2ohYIXrfseZ4WF1FlZXRuD",
+    "lines": [
+      {
+        "amount": 10000,
+        "currency": "usd",
+        "description": "1 × Professional Service (at $100.00 / month)"
+      },
+      {
+        "amount": 10000,
+        "currency": "usd",
+        "description": "1 × Startup Plan - 1 Month (at $100.00 / month)"
+      }
+    ],
+    "paid": false,
+    "paid_out_of_band": false,
+    "period_end": 1742022000,
+    "period_start": 1742022000,
+    "status": "open",
+    "subtotal": 20000,
+    "total": 20000
+  },
+  "fluvio_version": "0.1",
+  "id": "evt_1R4kr5IXrfseZ4WFzI0HhXnH",
+  "livemode": false,
+  "pending_webhooks": 2
+}

@@ -1,6 +1,6 @@
 apiVersion: 0.6.0
 meta:
-  name: test-df
+  name: stripe-clean
   version: 0.1.0
   namespace: examples
 
@@ -9,7 +9,7 @@ config:
   consumer:
     default_starting_offset:
       value: 0
-      position: Beginning  
+      position: End  
 
 imports:
   - pkg: examples/jaq@0.0.1
@@ -17,21 +17,21 @@ imports:
       - name: jaq-transform
 
 topics:
-  test:
+  stripe-origin-events:
     schema:
       value:
         type: bytes
 
-  test-out:
+  stripe-events:
     schema:
       value:
         type: bytes
 
 services:
-  test-jaq:
+  convert-stripe-events:
     sources:
       - type: topic
-        id: test
+        id: stripe-origin-events
 
     transforms:
       - operator: map
@@ -39,8 +39,7 @@ services:
 
     sinks:
       - type: topic
-        id: test-out
-
+        id: stripe-events
 
 dev:
   imports:

@@ -1,0 +1,23 @@
+{
+  "api_version": "2022-11-15",
+  "created": 1743404428,
+  "data": {
+    "canceled_at": null,
+    "completed_at": null,
+    "created": 1743031076,
+    "customer": "cus_R4abRUeVuB9Gif",
+    "default_settings": {
+      "billing_cycle_anchor": "automatic",
+      "collection_method": "charge_automatically"
+    },
+    "end_behavior": "release",
+    "event_type": "subscription_schedule.updated",
+    "id": "sub_sched_1R73CqIXrfseZ4WFu3iXgdyb",
+    "released_at": null,
+    "status": "active"
+  },
+  "fluvio_version": "0.1",
+  "id": "evt_1R8cKfIXrfseZ4WFKWb8O0zD",
+  "livemode": false,
+  "pending_webhooks": 1
+}

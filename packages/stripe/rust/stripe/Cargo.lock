@@ -843,7 +843,6 @@ version = "0.0.0"
 dependencies = [
  "sdfg",
  "serde",
- "serde_json",
 ]
 
 [[package]]

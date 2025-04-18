@@ -84,26 +84,7 @@
             "type": "string"
           }
         }
-      }
-      ,
-      "slack_obj": {
-        "type": "object",
-        "properties": {
-          "title": {
-            "type": "string"
-          },
-          "fields": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
-          }        
-        },
-        "required": [
-          "title",
-          "fields"
-        ]        
-      }      
+      }  
     }
   }
 }

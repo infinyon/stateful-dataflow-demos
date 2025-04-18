@@ -1,0 +1,29 @@
+{
+  "api_version": "2022-11-15",
+  "created": 1742320736,
+  "data": {
+    "amount": 10000,
+    "amount_received": 0,
+    "canceled_at": null,
+    "cancellation_reason": null,
+    "capture_method": "automatic",
+    "confirmation_method": "automatic",
+    "created": 1742320736,
+    "currency": "usd",
+    "customer": "cus_OFwBYCNrfB3TFy",
+    "description": "Payment for Invoice",
+    "event_type": "payment_intent.created",
+    "id": "pi_3R44PkIXrfseZ4WF106z6Xeg",
+    "invoice": "in_1R44PPIXrfseZ4WFtF51YXS5",
+    "payment_method_types": [
+      "card",
+      "link"
+    ],
+    "receipt_email": null,
+    "status": "requires_payment_method"
+  },
+  "fluvio_version": "0.1",
+  "id": "evt_3R44PkIXrfseZ4WF1SK0VvJS",
+  "livemode": false,
+  "pending_webhooks": 1
+}

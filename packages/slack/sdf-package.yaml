@@ -21,16 +21,6 @@ types:
               type: text-section
             fields-section:
               type: fields-section
-  slack-obj:
-    type: object
-    properties:
-      fields:
-        type: list
-        type-name: slack-obj-fields
-        items:
-          type: string
-      title:
-        type: string
   text-section:
     type: object
     properties:
@@ -67,17 +57,8 @@ types:
         oneOf:
           mrkdwn:
             type: null
-
+            
 functions:
-  ## Function to turn fields-obj into a slack-event
-  make-slack-fields-event:
-    operator: map
-    inputs:
-      - name: obj
-        type: slack-obj
-    output:
-      type: slack-event
-
   ## Test API to ensure proper decoding/enocoding of Slack Events
   test-event:
     operator: map

@@ -19,7 +19,6 @@ types:
         type: i32
   event-data:
     type: enum
-    type-name: event-data-event-datauntagged
     tagging: untagged
     oneOf:
       invoice:
@@ -1158,8 +1157,12 @@ types:
         oneOf:
           cardholder_authentication_issuer_liability:
             type: null
-          eci5_token_transaction_with_tavv:
+          ecifive-token-transaction-with-tavv:
             type: null
+            serialize:
+              rename: eci5_token_transaction_with_tavv
+            deserialize:
+              rename: eci5_token_transaction_with_tavv
           excess_disputes_in_timeframe:
             type: null
           has_not_met_the_minimum_dispute_amount_requirements:
@@ -1184,8 +1187,12 @@ types:
             type: null
           submitted_beyond_allowable_time_limit:
             type: null
-          transaction_3ds_required:
+          transaction-three-ds-required:
             type: null
+            serialize:
+              rename: transaction_3ds_required
+            deserialize:
+              rename: transaction_3ds_required
           transaction_approved_after_prior_fraud_dispute:
             type: null
           transaction_authorized:
@@ -1431,3 +1438,4 @@ types:
       url:
         type: string
         optional: true
+

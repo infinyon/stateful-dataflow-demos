@@ -45,9 +45,16 @@ Create a Slack connector that notifies when a Stripe event is received.
   fluvio cloud connector create -c use-cases/stripe/slack-billing-connector.yaml
   ```
 
-#### 3. Start the Dataflow
+#### 3. Start the Dataflows
 
-Start the dataflow that listens for events from Stripe and converts them for Slack - [stripe-dataflow.yaml](./use-cases/stripe/stripe-dataflow.yaml)
+Start the `stripe-clean` dataflow that converts Stripe events to smaller relevant structures - [stripe-clean.yaml](../stripe-clean/dataflow.yaml)
+
+```bash
+cd ../stripe-clean
+sdf run
+```
+
+Start the dataflow that listens for events from Stripe and converts them for Slack - [stripe-dataflow.yaml](dataflow.yaml)
 
 ```
 sdf run

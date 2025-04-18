@@ -1,0 +1,30 @@
+{
+  "api_version": "2022-11-15",
+  "created": 1743472797,
+  "data": {
+    "amount": 35000,
+    "amount_captured": 35000,
+    "amount_refunded": 0,
+    "balance_transaction": "txn_3Qxed8IXrfseZ4WF1FHwRwyK",
+    "calculated_statement_descriptor": "INFINYON INC.",
+    "captured": true,
+    "created": 1743472796,
+    "currency": "usd",
+    "customer": "cus_RrKUpTtCwwagwl",
+    "description": "Payment for Invoice",
+    "disputed": false,
+    "event_type": "charge.succeeded",
+    "failure_code": null,
+    "failure_message": null,
+    "id": "ch_3Qxed8IXrfseZ4WF1jY5VE5k",
+    "invoice": "in_1QxbtvIXrfseZ4WFZHUKSP9m",
+    "paid": true,
+    "receipt_url": "https://pay.stripe.com/receipts/invoices/CAcQARoXChVhY2N0XzFNQ1c3QUlYcmZzZVo0V0YonpGtvwYyBsOb0tDE1TosFmStQDmrKjO55bl7rlCGx7f8u2X60uIs6hvZbcdjvFtofGTKSkacc0Jrn1g?s=ap",
+    "refunded": false,
+    "status": "succeeded"
+  },
+  "fluvio_version": "0.1",
+  "id": "evt_3Qxed8IXrfseZ4WF1Tb6K0pK",
+  "livemode": true,
+  "pending_webhooks": 1
+}

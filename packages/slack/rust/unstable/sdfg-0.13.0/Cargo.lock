@@ -590,9 +590,9 @@ checksum = "09edd9e8b54e49e587e4f6295a7d29c3ea94d469cb40ab8ca70b288248a81db2"
 
 [[package]]
 name = "libc"
-version = "0.2.171"
+version = "0.2.172"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "c19937216e9d3aa9956d9bb8dfc0b0c8beb6058fc4f7a4dc4d850edf86a237d6"
+checksum = "d750af042f7ef4f724306de029d18836c26c1765a54a6a3f094cbd23a7267ffa"
 
 [[package]]
 name = "litemap"
@@ -717,9 +717,9 @@ dependencies = [
 
 [[package]]
 name = "proc-macro2"
-version = "1.0.94"
+version = "1.0.95"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "a31971752e70b8b2686d7e46ec17fb38dad4051d94024c88df49b667caea9c84"
+checksum = "02b3e5e68a3a1a02aad3ec490a98007cbc13c37cbe84a3cd7b8e406d76e7f778"
 dependencies = [
  "unicode-ident",
 ]
@@ -805,7 +805,7 @@ checksum = "28d3b2b1366ec20994f1fd18c3c594f05c5dd4bc44d8bb0c1c632c8d6829481f"
 name = "sdf-common"
 version = "0.13.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "a18024e453bbfff73647cbad75b30b98f1425e100c808f363da4c0106db260f6"
+checksum = "5f799cf736dbbefc0f982b63695075f56615466265f7b321cc52b1a23ebbce73"
 dependencies = [
  "anyhow",
  "check_keyword",
@@ -816,7 +816,7 @@ dependencies = [
 name = "sdf-context-guest"
 version = "0.13.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "947d4e622f165d3e18ea3579f73afce7f826198ea25b51341f9306286c413b1c"
+checksum = "22cdf701f05a12e536cb12c88a18cf0a3589ba8ff0a3330cec6fb3274de13655"
 dependencies = [
  "anyhow",
  "cfg-if",
@@ -829,7 +829,7 @@ dependencies = [
 name = "sdf-df-guest"
 version = "0.13.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "f7fbf3f16dfa6f1dd3fa43c95eb3d69686604512131a9ac449e98ac76e56ee13"
+checksum = "bffa45c7a8f4051617b2c2b9a145ed301227853309183d017c43d08b40ccf682"
 dependencies = [
  "anyhow",
  "wit-bindgen",
@@ -839,7 +839,7 @@ dependencies = [
 name = "sdf-macros"
 version = "0.13.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "6f80d3dec2349cbe002f82b85444476b07703f0e353728d5c5148c7e266cd376"
+checksum = "ef44a8b23e071273413dc2bb24f6ff9e05a242a408f02708b58d27ee9609578e"
 dependencies = [
  "proc-macro2",
  "quote",
@@ -852,7 +852,7 @@ dependencies = [
 name = "sdf-parser-core"
 version = "0.13.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "e38179d12097a2d8d2d39a26c0d4dad035ea82b30d4ec6a5ff82957f03d789d3"
+checksum = "aca5ea4bbeed0e6428c2ff801fefbf3f9d4f0546eb1b196a25fa30aa913e391c"
 dependencies = [
  "anyhow",
  "humantime",
@@ -866,7 +866,7 @@ dependencies = [
 name = "sdf-parser-package"
 version = "0.13.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "d94f63633fe92bcd6e187d4f6b31d64b68e31aeb0a0fa9955403ad88dd5a2de5"
+checksum = "ddce46f10ee042dc1b0bb24feb2898c9fd1949cbdaee0095ec6c01b743fcc313"
 dependencies = [
  "anyhow",
  "sdf-parser-core",
@@ -880,7 +880,7 @@ dependencies = [
 name = "sdf-row-guest"
 version = "0.13.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "ab2215f334324fb6a5043c87fa4e6a59b52bac644cd28e3bbf66869762f60f07"
+checksum = "b91a47c3029081186f134af6e4460b7021a63ba194af1e68e1c1086b5db495c2"
 dependencies = [
  "anyhow",
  "serde",

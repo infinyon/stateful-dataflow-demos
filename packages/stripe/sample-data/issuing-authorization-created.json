@@ -1,0 +1,40 @@
+{
+  "api_version": "2022-11-15",
+  "created": 1743184235,
+  "data": {
+    "amount": 1000,
+    "amount_details": {
+      "atm_fee": null,
+      "cashback_amount": 0
+    },
+    "approved": false,
+    "authorization_method": "online",
+    "card": "ic_1R7fL4IXrfseZ4WFg7m33oMx",
+    "cardholder": "ich_1R7fHxIXrfseZ4WFtJt87G9q",
+    "created": 1743184235,
+    "currency": "usd",
+    "event_type": "issuing_authorization.created",
+    "id": "iauth_1R7h39IXrfseZ4WFOmqja5Lz",
+    "merchant_amount": 1000,
+    "merchant_currency": "usd",
+    "merchant_data": {
+      "category": "transportation_services",
+      "category_code": "4789",
+      "city": "San Francisco",
+      "country": "US",
+      "name": "Rocket Rides",
+      "network_id": "1234567890",
+      "postal_code": "94103",
+      "state": "CA",
+      "tax_id": null,
+      "terminal_id": "99999999",
+      "url": null
+    },
+    "status": "closed",
+    "wallet": null
+  },
+  "fluvio_version": "0.1",
+  "id": "evt_1R7h39IXrfseZ4WF2Q4bP2P9",
+  "livemode": false,
+  "pending_webhooks": 1
+}
