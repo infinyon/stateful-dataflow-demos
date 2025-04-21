@@ -9,20 +9,20 @@ types:
   stripe-event:
     type: object
     properties:
-      api-version:
+      api_version:
         type: string
         optional: true
       created:
         type: i32
       data:
         type: event-data
-      fluvio-version:
+      fluvio_version:
         type: string
       id:
         type: string
       livemode:
         type: bool
-      pending-webhooks:
+      pending_webhooks:
         type: i32
   event-data:
     type: enum
@@ -40,40 +40,40 @@ types:
         type: payment-intent
       payout:
         type: payout
-      subscription-schedule:
+      subscription_schedule:
         type: subscription-schedule
-      issuing-cardholder:
+      issuing_cardholder:
         type: issuing-cardholder
-      issuing-card:
+      issuing_card:
         type: issuing-card
-      issuing-authorization:
+      issuing_authorization:
         type: issuing-authorization
-      issuing-dispute:
+      issuing_dispute:
         type: issuing-dispute
       topup:
         type: topup
   invoice:
     type: object
     properties:
-      account-country:
+      account_country:
         type: string
         optional: true
-      account-name:
+      account_name:
         type: string
         optional: true
-      amount-due:
+      amount_due:
         type: i32
-      amount-paid:
+      amount_paid:
         type: i32
-      amount-remaining:
+      amount_remaining:
         type: i32
-      amount-shipping:
+      amount_shipping:
         type: i32
-      attempt-count:
+      attempt_count:
         type: i32
       attempted:
         type: bool
-      billing-reason:
+      billing_reason:
         type: enum
         type-name: invoice-billing-reason
         optional: true
@@ -96,7 +96,7 @@ types:
             type: null
           upcoming:
             type: null
-      collection-method:
+      collection_method:
         type: enum
         type-name: invoice-collection-method
         oneOf:
@@ -111,13 +111,13 @@ types:
       customer:
         type: string
         optional: true
-      customer-email:
+      customer_email:
         type: string
         optional: true
-      customer-name:
+      customer_name:
         type: string
         optional: true
-      hosted-invoice-url:
+      hosted_invoice_url:
         type: string
         optional: true
       id:
@@ -130,11 +130,11 @@ types:
           type: line-item
       paid:
         type: bool
-      paid-out-of-band:
+      paid_out_of_band:
         type: bool
-      period-end:
+      period_end:
         type: i32
-      period-start:
+      period_start:
         type: i32
       status:
         type: enum
@@ -163,7 +163,7 @@ types:
             type: null
             serialize:
               rename: invoice.created
-            deserialize:
+            deseri:qalize:
               rename: invoice.created
           invoice-deleted:
             type: null
@@ -269,7 +269,7 @@ types:
         type: period
       quantity:
         type: i32
-      event-type:
+      event_type:
         type: enum
         type-name: invoiceitem-event-type
         oneOf:
@@ -305,7 +305,7 @@ types:
           line2:
             type: string
             optional: true
-          postal-code:
+          postal_code:
             type: string
             optional: true
           state:
@@ -336,13 +336,13 @@ types:
       name:
         type: string
         optional: true
-      next-invoice-sequence:
+      next_invoice_sequence:
         type: i32
         optional: true
       phone:
         type: string
         optional: true
-      event-type:
+      event_type:
         type: enum
         type-name: customer-event-type
         oneOf:
@@ -453,14 +453,14 @@ types:
     properties:
       amount:
         type: i32
-      amount-captured:
+      amount_captured:
         type: i32
-      amount-refunded:
+      amount_refunded:
         type: i32
-      balance-transaction:
+      balance_transaction:
         type: string
         optional: true
-      calculated-statement-descriptor:
+      calculated_statement_descriptor:
         type: string
         optional: true
       captured:
@@ -477,10 +477,10 @@ types:
         optional: true
       disputed:
         type: bool
-      failure-code:
+      failure_code:
         type: string
         optional: true
-      failure-message:
+      failure_message:
         type: string
         optional: true
       id:
@@ -490,7 +490,7 @@ types:
         optional: true
       paid:
         type: bool
-      receipt-url:
+      receipt_url:
         type: string
         optional: true
       refunded:
@@ -505,7 +505,7 @@ types:
             type: null
           succeeded:
             type: null
-      event-type:
+      event_type:
         type: enum
         type-name: charge-event-type
         oneOf:
@@ -592,13 +592,13 @@ types:
     properties:
       amount:
         type: i32
-      amount-received:
+      amount_received:
         type: i32
         optional: true
-      canceled-at:
+      canceled_at:
         type: i32
         optional: true
-      cancellation-reason:
+      cancellation_reason:
         type: enum
         type-name: payment-intent-cancellation-reason
         optional: true
@@ -650,12 +650,12 @@ types:
       invoice:
         type: string
         optional: true
-      payment-method-types:
+      payment_method_types:
         type: list
         type-name: payment-intent-payment-method-types
         items:
           type: string
-      receipt-email:
+      receipt_email:
         type: string
         optional: true
       status:
@@ -676,7 +676,7 @@ types:
             type: null
           succeeded:
             type: null
-      event-type:
+      event_type:
         type: enum
         type-name: payment-intent-event-type
         oneOf:
@@ -733,11 +733,11 @@ types:
     properties:
       amount:
         type: i32
-      arrival-date:
+      arrival_date:
         type: i32
       automatic:
         type: bool
-      balance-transaction:
+      balance_transaction:
         type: string
         optional: true
       created:
@@ -747,17 +747,17 @@ types:
       description:
         type: string
         optional: true
-      failure-code:
+      failure_code:
         type: string
         optional: true
-      failure-message:
+      failure_message:
         type: string
         optional: true
       id:
         type: string
       method:
         type: string
-      reconciliation-status:
+      reconciliation_status:
         type: enum
         type-name: payout-reconciliation-status
         oneOf:
@@ -767,9 +767,9 @@ types:
             type: null
           not_applicable:
             type: null
-      source-type:
+      source_type:
         type: string
-      statement-descriptor:
+      statement_descriptor:
         type: string
         optional: true
       status:
@@ -782,7 +782,7 @@ types:
             type: null
           card:
             type: null
-      event-type:
+      event_type:
         type: enum
         type-name: payout-event-type
         oneOf:
@@ -825,19 +825,19 @@ types:
   subscription-schedule:
     type: object
     properties:
-      canceled-at:
+      canceled_at:
         type: i32
         optional: true
-      completed-at:
+      completed_at:
         type: i32
         optional: true
       created:
         type: i32
       customer:
         type: string
-      default-settings:
+      default_settings:
         type: subscription-default-settings
-      end-behavior:
+      end_behavior:
         type: enum
         type-name: subscription-schedule-end-behavior
         oneOf:
@@ -851,7 +851,7 @@ types:
             type: null
       id:
         type: string
-      released-at:
+      released_at:
         type: i32
         optional: true
       status:
@@ -868,7 +868,7 @@ types:
             type: null
           released:
             type: null
-      event-type:
+      event_type:
         type: enum
         type-name: subscription-schedule-event-type
         oneOf:
@@ -953,7 +953,7 @@ types:
             optional: true
       name:
         type: string
-      phone-number:
+      phone_number:
         type: string
         optional: true
       status:
@@ -974,7 +974,7 @@ types:
             type: null
           individual:
             type: null
-      event-type:
+      event_type:
         type: enum
         type-name: issuing-cardholder-event-type
         oneOf:
@@ -995,7 +995,7 @@ types:
     properties:
       brand:
         type: string
-      cancellation-reason:
+      cancellation_reason:
         type: enum
         type-name: issuing-card-cancellation-reason
         optional: true
@@ -1023,9 +1023,9 @@ types:
       cvc:
         type: string
         optional: true
-      exp-month:
+      exp_month:
         type: i32
-      exp-year:
+      exp_year:
         type: i32
       financial-account:
         type: string
@@ -1052,7 +1052,7 @@ types:
             type: null
           virtual:
             type: null
-      event-type:
+      event_type:
         type: enum
         type-name: issuing-card-event-type
         oneOf:
@@ -1157,7 +1157,7 @@ types:
         type: string
       id:
         type: string
-      loss-reason:
+      loss_reason:
         type: enum
         type-name: issuing-dispute-loss-reason
         optional: true
@@ -1244,7 +1244,7 @@ types:
             type: null
           won:
             type: null
-      event-type:
+      event_type:
         type: enum
         type-name: issuing-dispute-event-type
         oneOf:
@@ -1296,13 +1296,13 @@ types:
       description:
         type: string
         optional: true
-      expected-availability-date:
+      expected_availability_date:
         type: i32
         optional: true
-      failure-code:
+      failure_code:
         type: string
         optional: true
-      failure-message:
+      failure_message:
         type: string
         optional: true
       id:
@@ -1321,7 +1321,7 @@ types:
             type: null
           succeeded:
             type: null
-      event-type:
+      event_type:
         type: enum
         type-name: topup-event-type
         oneOf:
@@ -1374,7 +1374,7 @@ types:
   subscription-default-settings:
     type: object
     properties:
-      billing-cycle-anchor:
+      billing_cycle_anchor:
         type: enum
         type-name: subscription-default-settings-billing-cycle-anchor
         oneOf:
@@ -1382,7 +1382,7 @@ types:
             type: null
           phase_start:
             type: null
-      collection-method:
+      collection_method:
         type: enum
         type-name: subscription-default-settings-collection-method
         optional: true
@@ -1417,7 +1417,7 @@ types:
     properties:
       category:
         type: string
-      category-code:
+      category_code:
         type: string
       city:
         type: string
@@ -1428,24 +1428,23 @@ types:
       name:
         type: string
         optional: true
-      network-id:
+      network_id:
         type: string
-      postal-code:
+      postal_code:
         type: string
         optional: true
       state:
         type: string
         optional: true
-      tax-id:
+      tax_id:
         type: string
         optional: true
-      terminal-id:
+      terminal_id:
         type: string
         optional: true
       url:
         type: string
         optional: true
-
 
 functions:
   ## Test API to ensure proper decoding/enocoding of Stripe Events
