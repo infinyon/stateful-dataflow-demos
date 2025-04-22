@@ -6,10 +6,10 @@ meta:
   namespace: examples
 
 imports:
-  - pkg: examples/stripe-types@0.0.1
+  - pkg: examples/stripe@0.0.1
     types:
       - name: stripe-event
-  - pkg: examples/slack-package@0.0.1
+  - pkg: examples/slack@0.0.1
     types:
       - name: slack-event
 
@@ -24,7 +24,7 @@ functions:
 
 dev:
   imports:
-    - pkg: examples/stripe-types@0.0.1
+    - pkg: examples/stripe@0.0.1
       path: ../stripe
-    - pkg: examples/slack-package@0.0.1
+    - pkg: examples/slack@0.0.1
       path: ../slack

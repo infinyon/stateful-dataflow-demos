@@ -18,7 +18,7 @@ imports:
   - pkg: examples/slack@0.0.1
     types:
       - name: slack-event
-  - pkg: examples/stripe-to-slack@0.0.1
+  - pkg: examples/stripe-slack@0.0.1
     functions:
       - name: stripe-to-slack
 
@@ -53,5 +53,5 @@ dev:
       path: ../packages/stripe
     - pkg: examples/slack@0.0.1
       path: ../packages/slack
-    - pkg: examples/stripe-to-slack@0.0.1
+    - pkg: examples/stripe-slack@0.0.1
       path: ../packages/stripe-to-slack
