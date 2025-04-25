@@ -27,4 +27,8 @@ dev:
     - pkg: examples/stripe@0.0.1
       path: ../stripe
     - pkg: examples/slack@0.0.1
+<<<<<<< HEAD
       path: ../slack
+=======
+      path: ../slack
+>>>>>>> 5637b3f (updated)

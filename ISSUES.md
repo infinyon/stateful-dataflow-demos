@@ -4,7 +4,7 @@
 * [#2. I should be able to write `raw` into a `typed` topic](#2-i-should-be-able-to-write-raw-into-a-typed-topic)
 * [#3. Support for hierarchhical imports in packages](#3-support-for-hierarchical-imports-in-packages)
 * [#4. Add `init` support for packages](#4-add-init-support-for-packages)
-* [5. Add support for `--input` `--output` to `sdf test`](#5-add-support-for---input---output-to-sdf-test)
+* [#5. Add support for `--input` `--output` to `sdf test`](#5-add-support-for---input---output-to-sdf-test)
 
 ### 1. Keywords with numbers are parsed with a `_`.
 

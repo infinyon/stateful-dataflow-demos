@@ -1,0 +1,15 @@
+[package]
+name = "sdf-parser-core"
+version = "0.13.0"
+edition = "2021"
+description = "Core parser for the sdf yamls"
+license = "Apache-2.0"
+keywords = ["sdf"]
+
+[dependencies]
+anyhow.workspace = true
+humantime = { workspace = true }
+serde = { workspace = true, features = ["derive"] }
+serde_yaml = { workspace = true }
+serde_with = { workspace = true, features = ["std"] }
+sdf-common = { workspace = true }
