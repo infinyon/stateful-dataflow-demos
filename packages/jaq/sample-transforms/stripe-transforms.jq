@@ -354,7 +354,7 @@
       name: .body.data.object.name,
       phone_number: .body.data.object.phone_number,
       status: .body.data.object.status,
-      type_: .body.data.object.type,
+      type: .body.data.object.type,
       event_type: .body.type
     }
   }
@@ -384,7 +384,7 @@
       id: .body.data.object.id,
       last4: .body.data.object.last4,
       status: .body.data.object.status,
-      type_: .body.data.object.type,
+      type: .body.data.object.type,
       event_type: .body.type
     }
   }            

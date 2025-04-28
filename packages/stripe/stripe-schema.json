@@ -1469,32 +1469,25 @@
             "type": "string"
           },
           "owner": {
-            "address": {
-              "anyOf": [
-                {
-                  "$ref": "#/components/schemas/address"
-                }
-              ],
-              "description": "The customer's address.",
-              "nullable": true
-            },
-            "email": {
-              "description": "The customer's email.",
-              "nullable": true,
-              "type": "string"
-            },
-            "name": {
-              "description": "The customer's name.",
-              "nullable": true,
-              "type": "string"
-            }, 
-            "phone": {
-              "description": "The customer's phone number.",
-              "nullable": true,
-              "type": "string"
-            },                        
-            "description": "Information about the owner of the payment instruments.",
-            "nullable": true
+            "title": "Owner",
+            "type": "object",
+            "properties": {
+              "address": {
+                "$ref": "#/components/schemas/address"            
+              },
+              "email": {
+                "description": "The customer's email.",
+                "type": "string"
+              },
+              "name": {
+                "description": "The customer's name.",
+                "type": "string"
+              }, 
+              "phone": {
+                "description": "The customer's phone number.",
+                "type": "string"
+              }
+            }
           },
           "statement_descriptor": {
             "description": "Extra information about a source.",

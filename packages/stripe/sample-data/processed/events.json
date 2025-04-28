@@ -1294,7 +1294,7 @@
     "name": "John Doe",
     "phone_number": "+14455551212",
     "status": "active",
-    "type_": "individual"
+    "type": "individual"
   },
   "fluvio_version": "0.1",
   "id": "evt_1R7fHyIXrfseZ4WFvKC1maLh",
@@ -1329,7 +1329,7 @@
     "name": "John Doe",
     "phone_number": "+14455551212",
     "status": "active",
-    "type_": "individual"
+    "type": "individual"
   },
   "fluvio_version": "0.1",
   "id": "evt_1R7fI0IXrfseZ4WFBvzm2wKB",
@@ -1356,7 +1356,7 @@
     "id": "ic_1R7fL4IXrfseZ4WFg7m33oMx",
     "last4": "0005",
     "status": "active",
-    "type_": "virtual"
+    "type": "virtual"
   },
   "fluvio_version": "0.1",
   "id": "evt_1R7fL4IXrfseZ4WFxVu4Kop9",
@@ -1518,7 +1518,7 @@
     "id": "ic_1R7fL4IXrfseZ4WFg7m33oMx",
     "last4": "0005",
     "status": "active",
-    "type_": "virtual"
+    "type": "virtual"
   },
   "fluvio_version": "0.1",
   "id": "evt_1R7hH3IXrfseZ4WFR49lwtX2",
@@ -1565,7 +1565,7 @@
     "id": "ic_1R7fL4IXrfseZ4WFg7m33oMx",
     "last4": "0005",
     "status": "canceled",
-    "type_": "virtual"
+    "type": "virtual"
   },
   "fluvio_version": "0.1",
   "id": "evt_1R7hPiIXrfseZ4WFbHRaPv3n",
@@ -1592,7 +1592,7 @@
     "id": "ic_1R7fL4IXrfseZ4WFg7m33oMx",
     "last4": "0005",
     "status": "canceled",
-    "type_": "virtual"
+    "type": "virtual"
   },
   "fluvio_version": "0.1",
   "id": "evt_1R7hPjIXrfseZ4WF9HoASTPR",
@@ -1619,7 +1619,7 @@
     "id": "ic_1R7hPjIXrfseZ4WF9Tk71WXh",
     "last4": "0013",
     "status": "active",
-    "type_": "virtual"
+    "type": "virtual"
   },
   "fluvio_version": "0.1",
   "id": "evt_1R7hPjIXrfseZ4WFvoLm5bFr",
@@ -1682,7 +1682,7 @@
     "id": "ic_1R7hXGIXrfseZ4WFK4T1R2NW",
     "last4": "0021",
     "status": "inactive",
-    "type_": "virtual"
+    "type": "virtual"
   },
   "fluvio_version": "0.1",
   "id": "evt_1R7hXHIXrfseZ4WFFSsM8dNF",

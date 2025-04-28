@@ -1301,7 +1301,19 @@ types:
         type: object
         type_name: source_owner
         optional: true
-        properties: {}
+        properties:
+          address:
+            type: address
+            optional: true
+          email:
+            type: string
+            optional: true
+          name:
+            type: string
+            optional: true
+          phone:
+            type: string
+            optional: true
       statement_descriptor:
         type: string
         optional: true
@@ -1565,7 +1577,6 @@ types:
       url:
         type: string
         optional: true
-
 
 functions:
   ## Test API to ensure proper decoding/enocoding of Stripe Events

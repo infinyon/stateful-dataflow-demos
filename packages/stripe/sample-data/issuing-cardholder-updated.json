@@ -26,7 +26,7 @@
     "name": "John Doe",
     "phone_number": "+14455551212",
     "status": "active",
-    "type_": "individual"
+    "type": "individual"
   },
   "fluvio_version": "0.1",
   "id": "evt_1R7fI0IXrfseZ4WFBvzm2wKB",
