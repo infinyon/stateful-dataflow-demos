@@ -46,17 +46,18 @@
       "event_data": {
         "oneOf": [
           { "$ref": "#/components/schemas/invoice" },
-          { "$ref": "#/components/schemas/invoiceitem" },
           { "$ref": "#/components/schemas/customer" },
           { "$ref": "#/components/schemas/charge" },
+          { "$ref": "#/components/schemas/subscription_schedule" },
+          { "$ref": "#/components/schemas/invoiceitem" },
           { "$ref": "#/components/schemas/payment_intent" },
           { "$ref": "#/components/schemas/payout" },
-          { "$ref": "#/components/schemas/subscription_schedule" },
           { "$ref": "#/components/schemas/issuing_cardholder" },
           { "$ref": "#/components/schemas/issuing_card" },
-          { "$ref": "#/components/schemas/issuing_authorization" },
           { "$ref": "#/components/schemas/issuing_dispute" },
-          { "$ref": "#/components/schemas/topup" }
+          { "$ref": "#/components/schemas/topup" },
+          { "$ref": "#/components/schemas/source"},
+          { "$ref": "#/components/schemas/issuing_authorization" }
         ]
       },
       "invoice": {
@@ -336,7 +337,30 @@
             "required": ["event_type"]  
           }
         ]
-      },     
+      }, 
+      "source": {
+        "allOf": [
+          { "$ref": "#/components/schemas/base_source" },
+          {
+            "type": "object",
+            "properties": {
+              "event_type": {
+                "enum": [ 
+                  "source.canceled",
+                  "source.chargeable",
+                  "source.failed",
+                  "source.mandate_notification",
+                  "source.refund_attributes_required",
+                  "source.transaction.created",
+                  "source.transaction.updated"
+                ],
+                "type": "string"
+              }
+            },
+            "required": ["event_type"]  
+          }
+        ]
+      },  
       "base_invoice": {
         "type": "object",
         "required": [
@@ -1413,6 +1437,109 @@
         "title": "Topup",
         "type": "object"
       },
+      "base_source": {
+        "description": "`Source` objects allow you to accept a variety of payment methods.",
+        "properties": {
+          "amount": {
+            "description": "A positive integer in the smallest currency unit.",
+            "nullable": true,
+            "type": "integer"
+          },
+          "client_secret": {
+            "description": "The client secret of the source. Used for client-side retrieval using a publishable key.",
+            "type": "string"
+          },
+          "created": {
+            "description": "Time at which the object was created. Measured in seconds since the Unix epoch.",
+            "format": "unix-time",
+            "type": "integer"
+          },
+          "currency": {
+            "description": "Three-letter [ISO code for the currency].",
+            "format": "currency",
+            "nullable": true,
+            "type": "string"
+          },
+          "customer": {
+            "description": "The ID of the customer to which this source is attached.",
+            "type": "string"
+          },
+          "id": {
+            "description": "Unique identifier for the object.",
+            "type": "string"
+          },
+          "owner": {
+            "address": {
+              "anyOf": [
+                {
+                  "$ref": "#/components/schemas/address"
+                }
+              ],
+              "description": "The customer's address.",
+              "nullable": true
+            },
+            "email": {
+              "description": "The customer's email.",
+              "nullable": true,
+              "type": "string"
+            },
+            "name": {
+              "description": "The customer's name.",
+              "nullable": true,
+              "type": "string"
+            }, 
+            "phone": {
+              "description": "The customer's phone number.",
+              "nullable": true,
+              "type": "string"
+            },                        
+            "description": "Information about the owner of the payment instruments.",
+            "nullable": true
+          },
+          "statement_descriptor": {
+            "description": "Extra information about a source.",
+            "nullable": true,
+            "type": "string"
+          },
+          "status": {
+            "description": "One of: `canceled`, `chargeable`, `consumed`, `failed`, or `pending`",
+            "type": "string"
+          },
+          "type": {
+            "description": "The `type` of the source.",
+            "enum": [
+              "ach_credit_transfer",
+              "ach_debit",
+              "acss_debit",
+              "alipay",
+              "au_becs_debit",
+              "bancontact",
+              "card",
+              "card_present",
+              "eps",
+              "giropay",
+              "ideal",
+              "klarna",
+              "multibanco",
+              "p24",
+              "sepa_debit",
+              "sofort",
+              "three_d_secure",
+              "wechat"
+            ],
+            "type": "string"
+          }
+        },
+        "required": [
+          "client_secret",
+          "created",
+          "id",
+          "status",
+          "type"
+        ],
+        "title": "Source",
+        "type": "object"
+      },      
       "individual": {
         "description": "",
         "properties": {

@@ -1,0 +1,16 @@
+[package]
+name = "sdf-parser-host"
+version = "0.13.0"
+edition = "2021"
+description = "Host binding for YAML parser"
+license = "Apache-2.0"
+publish = false
+
+[dependencies]
+anyhow = { workspace = true }
+tracing = { workspace = true }
+wasmtime = { workspace = true, features = ["component-model"] }
+
+sdf-metadata = { workspace = true, features = ["yaml", "host"]}
+sdf-parser-df = { workspace = true }
+sdf-parser-package = { workspace = true }

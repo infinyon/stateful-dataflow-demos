@@ -16,3 +16,4 @@ syn = { workspace = true, features = ["full"] }
 
 sdf-common = { workspace = true }
 sdf-parser-package = { workspace = true }
+sdf-wit = { workspace = true, features = ["host"] }

@@ -194,11 +194,22 @@ pub enum MetadataTypeInner {
     None(NoneType),
 }
 
+impl MetadataTypeInner {
+    pub fn list_gen_name(&self) -> Option<String> {
+        if let MetadataTypeInner::MetadataTypeTagged(MetadataTypeTagged::List(list)) = self {
+            Some(format!("list-{}-gen-type", list.items.ty()))
+        } else {
+            None
+        }
+    }
+}
+
 #[derive(Serialize, Deserialize, Debug, Clone, PartialEq, Eq)]
 #[serde(rename_all = "kebab-case")]
 pub struct MetadataType {
     #[serde(flatten)]
     pub ty: MetadataTypeInner,
+    #[serde(alias = "type_name")]
     pub type_name: Option<String>,
 }
 

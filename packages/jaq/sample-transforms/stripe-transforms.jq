@@ -481,8 +481,6 @@
       statement_descriptor: .body.data.object.statement_descriptor,
       status: .body.data.object.status,
       type: .body.data.object.type,
-      flow: .body.data.object.flow,
-      object: .body.data.object.object,
       event_type: .body.type
     }
   }

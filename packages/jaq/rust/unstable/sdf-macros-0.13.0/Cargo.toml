@@ -42,6 +42,11 @@ default-features = false
 [dependencies.sdf-parser-package]
 version = "0.13.0"
 
+[dependencies.sdf-wit]
+version = "0.13.0"
+features = ["host"]
+default-features = false
+
 [dependencies.syn]
 version = "2.0"
 features = ["full"]

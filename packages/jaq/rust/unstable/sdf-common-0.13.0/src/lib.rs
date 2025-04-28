@@ -3,6 +3,8 @@ pub mod render;
 
 pub mod constants;
 
+pub mod display;
+
 #[cfg(feature = "version")]
 pub mod version;
 

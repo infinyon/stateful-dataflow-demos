@@ -51,4 +51,12 @@ cargo run -- -s ../stateful-dataflow-demos/packages/stripe/stripe-schema.json -k
 cd ../stateful-dataflow-demos/packages/stripe
 ```
 
+Troubleshooting command:
+
+```bash
+cd ../../../sdf-types-generator && \
+cargo run -- -s ../stateful-dataflow-demos/packages/stripe/stripe-schema.json -k /components/schemas/stripe_event -d > ../stateful-dataflow-demos/packages/stripe/dump-spec.json && \
+cd ../stateful-dataflow-demos/packages/stripe
+```
+
 Checout the [types.yaml](types.yaml) file.

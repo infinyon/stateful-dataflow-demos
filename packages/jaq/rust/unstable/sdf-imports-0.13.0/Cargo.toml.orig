@@ -1,0 +1,19 @@
+[package]
+name = "sdf-imports"
+version = "0.13.0"
+edition = "2021"
+description = "Stateful Dataflow import pkg utilities"
+license = "Apache-2.0"
+keywords = ["sdf"]
+publish = false
+
+[dependencies]
+anyhow = { workspace = true }
+tracing = { workspace = true }
+
+sdf-common = { workspace = true }
+sdf-metadata = { workspace = true }
+sdf-parser-host = { workspace = true }
+
+[dev-dependencies]
+fluvio-future = { workspace = true, features = ["fixture"] }

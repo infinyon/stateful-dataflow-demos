@@ -2,10 +2,12 @@ use std::path::PathBuf;
 
 use proc_macro2::{Span, TokenStream};
 use quote::quote;
-use sdf_parser_package::parse_package;
 use syn::parse::{Parse, ParseStream, Result};
 use syn::punctuated::Punctuated;
 use syn::{token, LitStr, Token};
+
+use sdf_parser_package::parse_package;
+use sdf_wit::package::WitGenerator;
 
 use crate::ast::create_ident;
 
@@ -13,6 +15,7 @@ pub struct PkgConfig {
     path: (Span, PathBuf),
     link_row: bool,
     link_df: bool,
+    hub: bool,
 }
 
 impl Parse for PkgConfig {
@@ -22,6 +25,7 @@ impl Parse for PkgConfig {
         let mut path = None;
         let mut link_row = false;
         let mut link_df = false;
+        let mut hub = false;
 
         if input.peek(token::Brace) {
             let content;
@@ -38,6 +42,9 @@ impl Parse for PkgConfig {
                     Opt::Df => {
                         link_df = true;
                     }
+                    Opt::Hub => {
+                        hub = true;
+                    }
                 }
             }
         }
@@ -53,6 +60,7 @@ impl Parse for PkgConfig {
             path,
             link_row,
             link_df,
+            hub,
         })
     }
 }
@@ -69,9 +77,22 @@ impl PkgConfig {
             )
         })?;
 
+        let dev_mode: bool = !self.hub;
+
         let sdf_package = parse_package(&file_content).map_err(|e| {
             syn::Error::new(self.path.0, format!("{}: {}", self.path.1.display(), e))
         })?;
+
+        let wit_dir_path = WitGenerator::builder()
+            .dev_mode(dev_mode)
+            .pkg_path(full_path)
+            .build()
+            .generate()
+            .map_err(|e| {
+                syn::Error::new(self.path.0, format!("Failed to generate wit files: {}", e))
+            })?;
+
+        let wit_dir_str = wit_dir_path.display().to_string();
 
         let meta = &sdf_package.meta;
 
@@ -129,7 +150,8 @@ impl PkgConfig {
 
             pub mod bindings {
                 ::sdfg::wit_bindgen::generate!({
-                    path: "../.sdf/.wit",
+                    // use out dir for generated files
+                    path: #wit_dir_str,
                     world: "default-world",
                     generate_all,
                     generate_unused_types: true,
@@ -155,7 +177,6 @@ impl PkgConfig {
             #[cfg(target_arch = "wasm32")]
             #[cfg(target_os = "wasi")]
             self::bindings::export!(Component with_types_in bindings);
-
         })
     }
 }
@@ -164,6 +185,7 @@ enum Opt {
     Path(Span, syn::LitStr),
     Row,
     Df,
+    Hub,
 }
 
 impl Parse for Opt {
@@ -180,6 +202,9 @@ impl Parse for Opt {
         } else if l.peek(kw::df) {
             input.parse::<kw::df>()?;
             Ok(Opt::Df)
+        } else if l.peek(kw::hub) {
+            input.parse::<kw::hub>()?;
+            Ok(Opt::Hub)
         } else {
             Err(l.error())
         }
@@ -190,4 +215,5 @@ mod kw {
     syn::custom_keyword!(path);
     syn::custom_keyword!(row);
     syn::custom_keyword!(df);
+    syn::custom_keyword!(hub);
 }

@@ -35,11 +35,17 @@ path = "src/lib.rs"
 version = "1.0.95"
 
 [dependencies.check_keyword]
-version = "0.3.1"
+version = "0.4.1"
 
 [dependencies.convert_case]
 version = "0.8.0"
 
+[dependencies.regex]
+version = "1.11.0"
+
 [dependencies.semver]
 version = "1.0.13"
 optional = true
+
+[dependencies.wit-encoder]
+version = "0.229"

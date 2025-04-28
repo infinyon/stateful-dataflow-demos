@@ -1,8 +1,15 @@
-use std::{fs::File, io::Write, path::Path};
+use std::{fs::File, io::Write, path::Path, sync::OnceLock};
 
 use anyhow::Result;
 use check_keyword::CheckKeyword;
 use convert_case::{Boundary, Case, Casing};
+use regex::Regex;
+
+static RE: OnceLock<Regex> = OnceLock::new();
+
+fn dash_or_underscore_digit_regex() -> &'static Regex {
+    RE.get_or_init(|| Regex::new(r"[-_](\d+)").unwrap())
+}
 
 pub fn rust_type_case(value: &str) -> String {
     if ["u8", "u16", "u32", "u64", "f32", "f64", "bool"].contains(&value) {
@@ -45,8 +52,12 @@ pub fn rust_name_case(value: &str) -> String {
 
     let value = value
         .from_case(case)
-        .without_boundaries(&[Boundary::DIGIT_UPPER, Boundary::DIGIT_LOWER])
+        .without_boundaries(&Boundary::letter_digit())
         .to_case(Case::Snake);
+
+    let value = dash_or_underscore_digit_regex()
+        .replace_all(&value, "$1")
+        .to_string();
 
     if value.is_keyword() {
         format!("{}_", value)
@@ -74,18 +85,20 @@ pub fn wit_name_case(name: &str) -> String {
         Case::Pascal
     } else if name.is_case(Case::Camel) {
         Case::Camel
+    } else if name.is_case(Case::Kebab) {
+        Case::Kebab
     } else {
         Case::Snake
     };
 
-    name.from_case(case)
-        .without_boundaries(&[
-            Boundary::DIGIT_UPPER,
-            Boundary::DIGIT_LOWER,
-            Boundary::UPPER_DIGIT,
-            Boundary::LOWER_DIGIT,
-        ])
-        .to_case(Case::Kebab)
+    let kebab_case_name = name
+        .from_case(case)
+        .without_boundaries(&Boundary::letter_digit())
+        .to_case(Case::Kebab);
+
+    dash_or_underscore_digit_regex()
+        .replace_all(&kebab_case_name, "$1")
+        .to_string()
 }
 
 pub fn upper_camel_case(value: &str) -> String {
@@ -137,6 +150,7 @@ pub fn create_sdf_gitignore(path: impl AsRef<Path>) -> Result<()> {
 
 #[cfg(test)]
 mod tests {
+
     use super::*;
 
     #[test]
@@ -159,12 +173,13 @@ mod tests {
 
     #[test]
     fn test_rust_case_name() {
-        assert_eq!(rust_name_case("MyType"), "mytype");
-        assert_eq!(rust_name_case("MyType2"), "mytype2");
+        assert_eq!(rust_name_case("MyType"), "my_type");
+        assert_eq!(rust_name_case("MyType2"), "my_type2");
         assert_eq!(rust_name_case("my-type"), "my_type");
         assert_eq!(rust_name_case("My_Type"), "my_type");
-        assert_eq!(rust_name_case("myType"), "mytype");
+        assert_eq!(rust_name_case("myType"), "my_type");
         assert_eq!(rust_name_case("type"), "type_");
+        assert_eq!(wit_name_case("line0"), "line0");
     }
 
     #[test]
@@ -178,6 +193,8 @@ mod tests {
         assert_eq!(wit_name_case("my_type"), "my-type");
         assert_eq!(wit_name_case("my-type"), "my-type");
         assert_eq!(wit_name_case("my-type0"), "my-type0");
+        assert_eq!(wit_name_case("line0"), "line0");
+        assert_eq!(wit_name_case("line-0"), "line0");
     }
 
     #[test]
