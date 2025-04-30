@@ -7,10 +7,6 @@ use crate::bindings::examples::stripe_slack_types::types::*;
 
 use chrono::{Utc, TimeZone};
 
-// ----- Constants -----
-
-const OUTPUT_ERR: &str = "Unsupported stripe event";
-
 // ----- Main function -----
 
 #[sdf(fn_name = "stripe-to-slack")]
@@ -24,7 +20,11 @@ pub(crate) fn stripe_to_slack(se: StripeEvent) -> Result<SlackEvent> {
         EventData::IssuingCard(ref ic)          => Ok(issuingcard_to_slack_event(ic, se.livemode)),
         EventData::IssuingCardholder(ref ih)    => Ok(issuingcardholder_to_slack_event(ih, se.livemode)),
         EventData::IssuingDispute(ref idp)      => Ok(issuingdispute_to_slack_event(idp, se.livemode)),
-        _ => Err(sdfg::anyhow::anyhow!(OUTPUT_ERR)),
+        EventData::PaymentIntent(ref pi)        => Ok(paymentintent_to_slack_event(pi, se.livemode)),
+        EventData::Payout(ref po)               => Ok(payout_to_slack_event(po, se.livemode)),
+        EventData::Source(ref so)               => Ok(source_to_slack_event(so, se.livemode)),
+        EventData::SubscriptionSchedule(ref ss) => Ok(subscriptionschedule_to_slack_event(ss, se.livemode)),
+        EventData::Topup(ref tu)                => Ok(topup_to_slack_event(tu, se.livemode))      
     }
 }
 
@@ -35,7 +35,7 @@ fn invoice_to_slack_event(inv: &Invoice, livemode: bool) -> SlackEvent {
     let event_clean = human_event_type(&inv.event_type);
 
     let live_mode = if !livemode { " :memo:" } else { ":white_check_mark:" };
-    let title_text = format!("New *Stripe* event – *{:?}* ({}){}", event_clean, status_text, live_mode);
+    let title_text = format!("New *Stripe* event – *{}* ({}){}", event_clean, status_text, live_mode);
 
     // Make title
     let title_block = SlackEventUntagged::TextSection(TextSection {
@@ -182,7 +182,7 @@ fn issuingauthorization_to_slack_event(ia: &IssuingAuthorization, livemode: bool
     fields.push(format!("*Authorization ID:* {}", ia.id));
     fields.push(format!("*Amount:* {:.2} {}", ia.amount as f64 / 100.0, ia.currency));
     fields.push(format!("*Merchant Amount:* {:.2} {}", ia.merchant_amount as f64 / 100.0, ia.merchant_currency));
-    fields.push(format!("*Status:* {:?}", ia.status));
+    fields.push(format!("*Status:* {}", human_event_type(&ia.status)));
     fields.push(format!("*Card:* {}", ia.card));
     fields.push(format!("*Approved:* {}", ia.approved));
 
@@ -219,7 +219,9 @@ fn issuingcard_to_slack_event(ic: &IssuingCard, livemode: bool) -> SlackEvent {
     let field_objs: FieldsSectionFields = fields.into_iter()
         .map(|t| TextObject { type_: TextObjectType::Mrkdwn, text: t })
         .collect();
-    let fields_block = SlackEventUntagged::FieldsSection(FieldsSection { type_: FieldsSectionType::Section, fields: field_objs });
+    let fields_block = SlackEventUntagged::FieldsSection(
+        FieldsSection { type_: FieldsSectionType::Section, fields: field_objs }
+    );
 
     SlackEvent { blocks: vec![title_block, fields_block] }
 }
@@ -245,7 +247,9 @@ fn issuingcardholder_to_slack_event(ih: &IssuingCardholder, livemode: bool) -> S
     let field_objs: FieldsSectionFields = fields.into_iter()
         .map(|t| TextObject { type_: TextObjectType::Mrkdwn, text: t })
         .collect();
-    let fields_block = SlackEventUntagged::FieldsSection(FieldsSection { type_: FieldsSectionType::Section, fields: field_objs });
+    let fields_block = SlackEventUntagged::FieldsSection(
+        FieldsSection { type_: FieldsSectionType::Section, fields: field_objs }
+    );
 
     SlackEvent { blocks: vec![title_block, fields_block] }
 }
@@ -274,7 +278,155 @@ fn issuingdispute_to_slack_event(idp: &IssuingDispute, livemode: bool) -> SlackE
     let field_objs: FieldsSectionFields = fields.into_iter()
         .map(|t| TextObject { type_: TextObjectType::Mrkdwn, text: t })
         .collect();
-    let fields_block = SlackEventUntagged::FieldsSection(FieldsSection { type_: FieldsSectionType::Section, fields: field_objs });
+    let fields_block = SlackEventUntagged::FieldsSection(
+        FieldsSection { type_: FieldsSectionType::Section, fields: field_objs }
+    );
+
+    SlackEvent { blocks: vec![title_block, fields_block] }
+}
+
+// ----- Payment Intent handling -----
+
+fn paymentintent_to_slack_event(pi: &PaymentIntent, livemode: bool) -> SlackEvent {
+    let event_clean = human_event_type(&pi.event_type);
+    let memo = if !livemode { " :memo:" } else { "" };
+    let title = format!("New *Stripe* payment intent - *{}*{}", event_clean, memo);
+
+    let title_block = SlackEventUntagged::TextSection(TextSection {
+        type_: TextSectionType::Section,
+        text: TextObject { type_: TextObjectType::Mrkdwn, text: title.clone() },
+    });
+
+    let mut fields = Vec::new();
+    fields.push(format!("*Intent ID:* {}", pi.id));
+    fields.push(format!("*Amount:* {:.2} {}", pi.amount as f64 / 100.0, pi.currency));
+    fields.push(format!("*Status:* {}", human_event_type(&pi.status)));
+    if let Some(received) = pi.amount_received { 
+        fields.push(format!("*Received:* {:.2} {}", received as f64 / 100.0, pi.currency)); 
+    }
+    if let Some(canceled) = pi.canceled_at { 
+        fields.push(format!("*Canceled At:* {}", format_timestamp(canceled))); 
+    }
+
+    let field_objs: FieldsSectionFields = fields.into_iter()
+        .map(|t| TextObject { type_: TextObjectType::Mrkdwn, text: t })
+        .collect();
+    let fields_block = SlackEventUntagged::FieldsSection(
+        FieldsSection { type_: FieldsSectionType::Section, fields: field_objs }
+    );
+
+    SlackEvent { blocks: vec![title_block, fields_block] }
+}
+
+// ----- Payout handling -----
+
+fn payout_to_slack_event(po: &Payout, livemode: bool) -> SlackEvent {
+    let event_clean = human_event_type(&po.event_type);
+    let memo = if !livemode { " :memo:" } else { "" };
+    let title = format!("New *Stripe* payout - *{}*{}", event_clean, memo);
+
+    let title_block = SlackEventUntagged::TextSection(TextSection {
+        type_: TextSectionType::Section,
+        text: TextObject { type_: TextObjectType::Mrkdwn, text: title.clone() },
+    });
+
+    let mut fields = Vec::new();
+    fields.push(format!("*Payout ID:* {}", po.id));
+    fields.push(format!("*Amount:* {:.2} {}", po.amount as f64 / 100.0, po.currency));
+    fields.push(format!("*Status:* {}", human_event_type(&po.status)));
+    fields.push(format!("*Arrival Date:* {}", format_timestamp(po.arrival_date)));
+
+    let field_objs: FieldsSectionFields = fields.into_iter()
+        .map(|t| TextObject { type_: TextObjectType::Mrkdwn, text: t })
+        .collect();
+    let fields_block = SlackEventUntagged::FieldsSection(
+        FieldsSection { type_: FieldsSectionType::Section, fields: field_objs }
+    );
+
+    SlackEvent { blocks: vec![title_block, fields_block] }
+}
+
+// ----- Source handling -----
+
+fn source_to_slack_event(so: &Source, livemode: bool) -> SlackEvent {
+    let event_clean = human_event_type(&so.event_type);
+    let memo = if !livemode { " :memo:" } else { "" };
+    let title = format!("New *Stripe* source - *{}*{}", event_clean, memo);
+
+    let title_block = SlackEventUntagged::TextSection(TextSection {
+        type_: TextSectionType::Section,
+        text: TextObject { type_: TextObjectType::Mrkdwn, text: title.clone() },
+    });
+
+    let mut fields = Vec::new();
+    fields.push(format!("*Source ID:* {}", so.id));
+    if let Some(amount) = so.amount { 
+        fields.push(format!("*Amount:* {:.2} {}", amount as f64 / 100.0, so.currency.clone().unwrap_or("USD".into()))); 
+    }
+    fields.push(format!("*Status:* {}", so.status));
+    fields.push(format!("*Type:* {}", human_event_type(&so.type_)));
+
+    let field_objs: FieldsSectionFields = fields.into_iter()
+        .map(|t| TextObject { type_: TextObjectType::Mrkdwn, text: t })
+        .collect();
+    let fields_block = SlackEventUntagged::FieldsSection(
+        FieldsSection { type_: FieldsSectionType::Section, fields: field_objs }
+    );
+
+    SlackEvent { blocks: vec![title_block, fields_block] }
+}
+
+// ----- Subscription Schedule handling -----
+
+fn subscriptionschedule_to_slack_event(ss: &SubscriptionSchedule, livemode: bool) -> SlackEvent {
+    let event_clean = human_event_type(&ss.event_type);
+    let memo = if !livemode { " :memo:" } else { "" };
+    let title = format!("New *Stripe* subscription schedule - *{}*{}", event_clean, memo);
+
+    let title_block = SlackEventUntagged::TextSection(TextSection {
+        type_: TextSectionType::Section,
+        text: TextObject { type_: TextObjectType::Mrkdwn, text: title.clone() },
+    });
+
+    let mut fields = Vec::new();
+    fields.push(format!("*Schedule ID:* {}", ss.id));
+    fields.push(format!("*Customer:* {}", ss.customer));
+    fields.push(format!("*Status:* {}", human_event_type(&ss.status)));
+    fields.push(format!("*End Behavior:* {}", human_event_type(&ss.end_behavior)));
+
+    let field_objs: FieldsSectionFields = fields.into_iter()
+        .map(|t| TextObject { type_: TextObjectType::Mrkdwn, text: t })
+        .collect();
+    let fields_block = SlackEventUntagged::FieldsSection(
+        FieldsSection { type_: FieldsSectionType::Section, fields: field_objs }
+    );
+
+    SlackEvent { blocks: vec![title_block, fields_block] }
+}
+
+// ----- Topup handling -----
+
+fn topup_to_slack_event(tu: &Topup, livemode: bool) -> SlackEvent {
+    let event_clean = human_event_type(&tu.event_type);
+    let memo = if !livemode { " :memo:" } else { "" };
+    let title = format!("New *Stripe* topup - *{}*{}", event_clean, memo);
+
+    let title_block = SlackEventUntagged::TextSection(TextSection {
+        type_: TextSectionType::Section,
+        text: TextObject { type_: TextObjectType::Mrkdwn, text: title.clone() },
+    });
+
+    let mut fields = Vec::new();
+    fields.push(format!("*Topup ID:* {}", tu.id));
+    fields.push(format!("*Amount:* ${:.2} {}", tu.amount as f64 / 100.0, tu.currency));
+    fields.push(format!("*Status:* {}", human_event_type(&tu.status)));
+
+    let field_objs: FieldsSectionFields = fields.into_iter()
+        .map(|t| TextObject { type_: TextObjectType::Mrkdwn, text: t })
+        .collect();
+    let fields_block = SlackEventUntagged::FieldsSection(
+        FieldsSection { type_: FieldsSectionType::Section, fields: field_objs }
+    );
 
     SlackEvent { blocks: vec![title_block, fields_block] }
 }
@@ -287,14 +439,19 @@ fn human_event_type<E: std::fmt::Debug>(ev: &E) -> String {
     let last = raw_str.rsplit("::").next().unwrap_or(&raw_str);
     // Generic: strip known prefixes
     let raw = last
-        .trim_start_matches("Invoice")
         .trim_start_matches("Invoiceitem")
+        .trim_start_matches("Invoice")
         .trim_start_matches("Charge")
         .trim_start_matches("Customer")
         .trim_start_matches("IssuingAuthorization")
         .trim_start_matches("IssuingCardholder")
         .trim_start_matches("IssuingCard")
-        .trim_start_matches("IssuingDispute");
+        .trim_start_matches("IssuingDispute")
+        .trim_start_matches("PaymentIntent")
+        .trim_start_matches("Payout")
+        .trim_start_matches("Source")
+        .trim_start_matches("SubscriptionSchedule")
+        .trim_start_matches("Topup");
     // Capitalize first letter and keep CamelCase
     let mut chars = raw.chars();
     if let Some(first) = chars.next() {
@@ -362,8 +519,13 @@ mod tests {
         assert_eq!(human_event_type(&ChargeEventType::ChargeCaptured), "Captured");
         assert_eq!(human_event_type(&ChargeEventType::ChargeExpired), "Expired");
         assert_eq!(human_event_type(&CustomerEventType::CustomerCreated), "Created");
-        assert_eq!(human_event_type(&InvoiceitemEventType::InvoiceitemCreated), "ItemCreated");
+        assert_eq!(human_event_type(&InvoiceitemEventType::InvoiceitemCreated), "Created");
         assert_eq!(human_event_type(&IssuingAuthorizationEventType::IssuingAuthorizationCreated), "Created");
+        assert_eq!(human_event_type(&IssuingCardEventType::IssuingCardCreated), "Created");
+        assert_eq!(human_event_type(&IssuingCardholderEventType::IssuingCardholderUpdated), "Updated");
+        assert_eq!(human_event_type(&IssuingDisputeEventType::IssuingDisputeFundsReinstated), "FundsReinstated");
+        assert_eq!(human_event_type(&PaymentIntentEventType::PaymentIntentPartiallyFunded), "PartiallyFunded");
+        assert_eq!(human_event_type(&PayoutEventType::PayoutCanceled), "Canceled");
     }
 
     #[test]
@@ -499,7 +661,7 @@ mod tests {
         // Check title block contains human-readable event
         if let SlackEventUntagged::TextSection(ts) = &ev.blocks[0] {
             println!("{}", ts.text.text);
-            assert!(ts.text.text.contains("*ItemCreated*"));
+            assert!(ts.text.text.contains("*Created*"));
         } else {
             panic!("Expected TextSection");
         }
@@ -640,32 +802,264 @@ mod tests {
     }
 
     #[test]
+    fn test_paymentintent_to_slack_event() {
+        let pi = PaymentIntent {
+            id: "pi_001".into(),
+            amount: 12345,
+            amount_received: Some(5000),
+            canceled_at: Some(1628000000),
+            cancellation_reason: Some(PaymentIntentCancellationReason::Abandoned),
+            capture_method: PaymentIntentCaptureMethod::Manual,
+            confirmation_method: PaymentIntentConfirmationMethod::Automatic,
+            created: 1628000000,
+            currency: "USD".into(),
+            customer: Some("cus_XYZ".into()),
+            description: Some("Test payment".into()),
+            event_type: PaymentIntentEventType::PaymentIntentCreated,
+            invoice: Some("inv_001".into()),
+            payment_method_types: vec!["card".into()],
+            receipt_email: Some("test@ex.com".into()),
+            status: PaymentIntentStatus::RequiresConfirmation,
+        };
+        let ev = paymentintent_to_slack_event(&pi, false);
+        assert_eq!(ev.blocks.len(), 2);
+        if let SlackEventUntagged::FieldsSection(fs) = &ev.blocks[1] {
+            println!("{}", fs.fields.iter().map(|f| f.text.clone()).collect::<Vec<_>>().join("\n"));
+            assert!(fs.fields.iter().any(|f| f.text.contains("*Intent ID:* pi_001")));
+            assert!(fs.fields.iter().any(|f| f.text.contains("*Amount:* 123.45 USD")));
+            assert!(fs.fields.iter().any(|f| f.text.contains("*Status:* RequiresConfirmation")));
+            assert!(fs.fields.iter().any(|f| f.text.contains("*Received:* 50.00 USD")));
+            assert!(fs.fields.iter().any(|f| f.text.contains("*Canceled At:*")));
+        } else {
+            panic!("Expected FieldsSection");
+        }
+    }
+
+    #[test]
+    fn test_payout_to_slack_event() {
+        let po = Payout {
+            id: "po_001".into(),
+            amount: 3500,
+            arrival_date: 1629000000,
+            automatic: true,
+            balance_transaction: None,
+            created: 1629000000,
+            currency: "USD".into(),
+            description: Some("Test payout".into()),
+            event_type: PayoutEventType::PayoutCreated,
+            failure_code: None,
+            failure_message: None,
+            method: "standard".into(),
+            reconciliation_status: PayoutReconciliationStatus::Completed,
+            source_type: "bank_account".into(),
+            statement_descriptor: None,
+            status: "Paid".into(),
+            type_: PayoutType::BankAccount,
+        };
+        let ev = payout_to_slack_event(&po, false);
+        assert_eq!(ev.blocks.len(), 2);
+        if let SlackEventUntagged::FieldsSection(fs) = &ev.blocks[1] {
+            println!("{}", fs.fields.iter().map(|f| f.text.clone()).collect::<Vec<_>>().join("\n"));
+            assert!(fs.fields.iter().any(|f| f.text.contains("*Payout ID:* po_001")));
+            assert!(fs.fields.iter().any(|f| f.text.contains("*Amount:* 35.00 USD")));
+            assert!(fs.fields.iter().any(|f| f.text.contains("*Status:* \"Paid\"")));
+            assert!(fs.fields.iter().any(|f| f.text.contains("*Arrival Date:*")));
+        } else {
+            panic!("Expected FieldsSection");
+        }
+    }
+
+    #[test]
+    fn test_source_to_slack_event() {
+        let so = Source {
+            id: "so_001".into(),
+            amount: Some(1200),
+            client_secret: "secret".into(),
+            created: 1629000000,
+            currency: Some("USD".into()),
+            customer: Some("cus_001".into()),
+            event_type: SourceEventType::SourceChargeable,
+            owner: None,
+            statement_descriptor: None,
+            status: "chargeable".into(),
+            type_: SourceType::Card,
+        };
+        let ev = source_to_slack_event(&so, false);
+        assert_eq!(ev.blocks.len(), 2);
+        if let SlackEventUntagged::FieldsSection(fs) = &ev.blocks[1] {
+            assert!(fs.fields.iter().any(|f| f.text.contains("*Source ID:* so_001")));
+            assert!(fs.fields.iter().any(|f| f.text.contains("*Amount:* 12.00 USD")));
+            assert!(fs.fields.iter().any(|f| f.text.contains("*Status:* chargeable")));
+            assert!(fs.fields.iter().any(|f| f.text.contains("*Type:* Card")));
+        } else { panic!("Expected FieldsSection"); }
+    }
+
+    #[test]
+    fn test_subscriptionschedule_to_slack_event() {
+        let ss = SubscriptionSchedule {
+            id: "ss_001".into(),
+            customer: "cus_002".into(),
+            default_settings: SubscriptionDefaultSettings { billing_cycle_anchor: SubscriptionDefaultSettingsBillingCycleAnchor::Automatic, collection_method: None },
+            end_behavior: SubscriptionScheduleEndBehavior::Cancel,
+            event_type: SubscriptionScheduleEventType::SubscriptionScheduleCreated,
+            released_at: None,
+            canceled_at: None,
+            completed_at: None,
+            created: 1629000000,
+            status: SubscriptionScheduleStatus::Active,
+        };
+        let ev = subscriptionschedule_to_slack_event(&ss, false);
+        assert_eq!(ev.blocks.len(), 2);
+        if let SlackEventUntagged::FieldsSection(fs) = &ev.blocks[1] {
+            assert!(fs.fields.iter().any(|f| f.text.contains("*Schedule ID:* ss_001")));
+            assert!(fs.fields.iter().any(|f| f.text.contains("*Customer:* cus_002")));
+            assert!(fs.fields.iter().any(|f| f.text.contains("*Status:* Active")));
+            assert!(fs.fields.iter().any(|f| f.text.contains("*End Behavior:* Cancel")));
+        } else { panic!("Expected FieldsSection"); }
+    }
+
+    #[test]
+    fn test_topup_to_slack_event() {
+        let tu = Topup {
+            id: "tu_001".into(),
+            amount: 6000,
+            created: 1629000000,
+            currency: "USD".into(),
+            description: Some("Test topup".into()),
+            event_type: TopupEventType::TopupCreated,
+            expected_availability_date: None,
+            failure_code: None,
+            failure_message: None,
+            status: TopupStatus::Pending,
+        };
+        let ev = topup_to_slack_event(&tu, false);
+        assert_eq!(ev.blocks.len(), 2);
+        if let SlackEventUntagged::FieldsSection(fs) = &ev.blocks[1] {
+            assert!(fs.fields.iter().any(|f| f.text.contains("*Topup ID:* tu_001")));
+            assert!(fs.fields.iter().any(|f| f.text.contains("*Amount:* $60.00 USD")));
+            assert!(fs.fields.iter().any(|f| f.text.contains("*Status:* Pending")));
+        } else { panic!("Expected FieldsSection"); }
+    }
+
+    #[test]
     fn test_stripe_to_slack_dispatch() -> Result<()> {
-        // Test Invoice dispatch
-        let inv = Invoice { /* minimal fields */ account_country: None, account_name: None, amount_due: 0, amount_paid: 0, amount_remaining: 0, amount_shipping: 0, attempt_count: 0, attempted: false, billing_reason: None, collection_method: InvoiceCollectionMethod::SendInvoice, created: 0, currency: "USD".into(), customer: None, customer_email: None, customer_name: None, event_type: InvoiceEventType::InvoiceCreated, hosted_invoice_url: None, id: None, lines: vec![], paid: false, paid_out_of_band: false, period_end: 0, period_start: 0, status: None, subtotal: 0, total: 0 };
-        let se_inv = StripeEvent { api_version: None, created: 0, fluvio_version: String::new(), id: String::new(), pending_webhooks: 0, data: EventData::Invoice(inv), livemode: true };
+        // Invoice dispatch
+        let inv = Invoice { 
+            account_country: None, account_name: None, amount_due: 0, amount_paid: 0, amount_remaining: 0, amount_shipping: 0, attempt_count: 0, attempted: false, billing_reason: None, collection_method: InvoiceCollectionMethod::SendInvoice, created: 0, currency: "USD".into(), customer: None, customer_email: None, customer_name: None, event_type: InvoiceEventType::InvoiceCreated, hosted_invoice_url: None, id: None, lines: vec![], paid: false, paid_out_of_band: false, period_end: 0, period_start: 0, status: None, subtotal: 0, total: 0,
+        };
+        let se_inv = StripeEvent {
+            api_version: None, created: 0, fluvio_version: String::new(), id: String::new(), pending_webhooks: 0, data: EventData::Invoice(inv), livemode: true, 
+        };
         stripe_to_slack(se_inv)?;
-
-        // Test Charge dispatch
-        let ch = Charge { amount: 0, amount_captured: 0, amount_refunded: 0, balance_transaction: None, calculated_statement_descriptor: None, captured: false, created: 0, currency: "USD".into(), customer: None, description: None, disputed: false, event_type: ChargeEventType::ChargeFailed, failure_code: None, failure_message: None, id: "".into(), invoice: None, paid: false, receipt_url: None, refunded: false, status: ChargeStatus::Failed };
-        let se_ch = StripeEvent { api_version: None, created: 0, fluvio_version: String::new(), id: String::new(), pending_webhooks: 0, data: EventData::Charge(ch), livemode: true };
-        stripe_to_slack(se_ch)?;
-
-        // Test Customer dispatch
-        let c = Customer { id: "".into(), event_type: CustomerEventType::CustomerUpdated, name: None, email: None, description: None, address: None, balance: None, currency: None, delinquent: None, invoice_prefix: None, next_invoice_sequence: None, phone: None, created: 0 };
-        let se_c = StripeEvent { api_version: None, created: 0, fluvio_version: String::new(), id: String::new(), pending_webhooks: 0, data: EventData::Customer(c), livemode: true };
-        stripe_to_slack(se_c)?;
-
-        // Test Invoiceitem dispatch
-        let ii = Invoiceitem { id: "".into(), event_type: InvoiceitemEventType::InvoiceitemDeleted, amount: 0, currency: "".into(), customer: "".into(), date: 0, description: None, period: Period { start: 0, end: 0 }, quantity: 0 };
-        let se_ii = StripeEvent { api_version: None, created: 0, fluvio_version: String::new(), id: String::new(), pending_webhooks: 0, data: EventData::Invoiceitem(ii), livemode: true };
+    
+        // Invoiceitem dispatch
+        let ii = Invoiceitem { 
+            id: "".into(), event_type: InvoiceitemEventType::InvoiceitemDeleted, amount: 0, currency: "".into(), customer: "".into(), date: 0, description: None, period: Period { start: 0, end: 0 }, quantity: 0, 
+        };
+        let se_ii = StripeEvent { 
+            api_version: None, created: 0, fluvio_version: String::new(), id: String::new(), pending_webhooks: 0, data: EventData::Invoiceitem(ii), livemode: true, 
+        };
         stripe_to_slack(se_ii)?;
-
-        // Test IssuingAuthorization dispatch
-        let ia2 = IssuingAuthorization { id: "".into(), amount: 0, amount_details: None, approved: false, authorization_method: IssuingAuthorizationAuthorizationMethod::Swipe, card: "".into(), cardholder: None, created: 0, currency: "".into(), event_type: IssuingAuthorizationEventType::IssuingAuthorizationUpdated, merchant_amount: 0, merchant_currency: "".into(), merchant_data: MerchantData { category: "".into(), category_code: "".into(), city: None, country: None, name: None, network_id: "".into(), postal_code: None, state: None, tax_id: None, terminal_id: None, url: None }, status: IssuingAuthorizationStatus::Closed, wallet: None };
-        let se_ia = StripeEvent { api_version: None, created: 0, fluvio_version: String::new(), id: String::new(), pending_webhooks: 0, data: EventData::IssuingAuthorization(ia2), livemode: true };
+    
+        // Charge dispatch
+        let ch = Charge { 
+            amount: 0, amount_captured: 0, amount_refunded: 0, balance_transaction: None, calculated_statement_descriptor: None, captured: false, created: 0, currency: "USD".into(), customer: None, description: None, disputed: false, event_type: ChargeEventType::ChargeFailed, failure_code: None, failure_message: None, id: "".into(), invoice: None, paid: false, receipt_url: None, refunded: false, status: ChargeStatus::Failed, 
+        };
+        let se_ch = StripeEvent { 
+            api_version: None, created: 0, fluvio_version: String::new(), id: String::new(), pending_webhooks: 0, data: EventData::Charge(ch), livemode: true, 
+        };
+        stripe_to_slack(se_ch)?;
+    
+        // Customer dispatch
+        let c = Customer { 
+            id: "".into(), event_type: CustomerEventType::CustomerUpdated, name: None, email: None, description: None, address: None, balance: None, currency: None, delinquent: None, invoice_prefix: None, next_invoice_sequence: None, phone: None, created: 0, 
+        };
+        let se_c = StripeEvent { 
+            api_version: None, created: 0, fluvio_version: String::new(), id: String::new(), pending_webhooks: 0, data: EventData::Customer(c), livemode: true, 
+        };
+        stripe_to_slack(se_c)?;
+    
+        // IssuingAuthorization dispatch
+        let ia = IssuingAuthorization { 
+            id: "".into(), amount: 0, amount_details: None, approved: false, authorization_method: IssuingAuthorizationAuthorizationMethod::Swipe, card: "".into(), cardholder: None, created: 0, currency: "".into(), event_type: IssuingAuthorizationEventType::IssuingAuthorizationUpdated, merchant_amount: 0, merchant_currency: "".into(), merchant_data: MerchantData { category: "".into(), category_code: "".into(), city: None, country: None, name: None, network_id: "".into(), postal_code: None, state: None, tax_id: None, terminal_id: None, url: None, }, status: IssuingAuthorizationStatus::Closed, wallet: None, 
+        };
+        let se_ia = StripeEvent { 
+            api_version: None, created: 0, fluvio_version: String::new(), id: String::new(), pending_webhooks: 0, data: EventData::IssuingAuthorization(ia), livemode: true, 
+        };
         stripe_to_slack(se_ia)?;
-
+    
+        // IssuingCard dispatch
+        let ic = IssuingCard { 
+            id: "ic_001".into(), brand: "Visa".into(), last4: "1234".into(), status: IssuingCardStatus::Active, type_: IssuingCardType::Physical, exp_month: 12, exp_year: 2025, cancellation_reason: None, cardholder: IssuingCardCardholder { email: None, id: None }, created: 1627000000, currency: "USD".into(), cvc: None, event_type: IssuingCardEventType::IssuingCardCreated, financial_account: None, 
+        };
+        let se_ic = StripeEvent { 
+            api_version: None, created: 0, fluvio_version: String::new(), id: String::new(), pending_webhooks: 0, data: EventData::IssuingCard(ic), livemode: true, 
+        };
+        stripe_to_slack(se_ic)?;
+    
+        // IssuingCardholder dispatch
+        let ih = IssuingCardholder { 
+            id: "".into(), name: "".into(), email: None, status: IssuingCardholderStatus::Active, phone_number: None, billing: Address { city: None, country: None, line1: None, line2: None, postal_code: None, state: None, }, event_type: IssuingCardholderEventType::IssuingCardholderCreated, individual: None, created: 0, type_: IssuingCardholderType::Individual, 
+        };
+        let se_ih = StripeEvent { 
+            api_version: None, created: 0, fluvio_version: String::new(), id: String::new(), pending_webhooks: 0, data: EventData::IssuingCardholder(ih), livemode: true, 
+        };
+        stripe_to_slack(se_ih)?;
+    
+        // IssuingDispute dispatch
+        let idp = IssuingDispute { 
+            id: "".into(), amount: 0, currency: "".into(), event_type: IssuingDisputeEventType::IssuingDisputeCreated, loss_reason: None, reason: IssuingDisputeReason::Other, status: IssuingDisputeStatus::Submitted, created: 0, 
+        };
+        let se_idp = StripeEvent { 
+            api_version: None, created: 0, fluvio_version: String::new(), id: String::new(), pending_webhooks: 0, data: EventData::IssuingDispute(idp), livemode: true, 
+        };
+        stripe_to_slack(se_idp)?;
+    
+        // PaymentIntent dispatch
+        let pi = PaymentIntent { 
+            id: "".into(), amount: 0, amount_received: None, canceled_at: None, cancellation_reason: None, capture_method: PaymentIntentCaptureMethod::Automatic, confirmation_method: PaymentIntentConfirmationMethod::Automatic, created: 0, currency: "".into(), customer: None, description: None, event_type: PaymentIntentEventType::PaymentIntentCreated, invoice: None, payment_method_types: vec![], receipt_email: None, status: PaymentIntentStatus::RequiresPaymentMethod, 
+        };
+        let se_pi = StripeEvent { 
+            api_version: None, created: 0, fluvio_version: String::new(), id: String::new(), pending_webhooks: 0, data: EventData::PaymentIntent(pi), livemode: true, 
+        };
+        stripe_to_slack(se_pi)?;
+    
+        // Payout dispatch
+        let po = Payout { 
+            id: "".into(), amount: 0, arrival_date: 0, automatic: false, balance_transaction: None, created: 0, currency: "".into(), description: None, event_type: PayoutEventType::PayoutCreated, failure_code: None, failure_message: None, method: "".into(), reconciliation_status: PayoutReconciliationStatus::Completed, source_type: "".into(), statement_descriptor: None, status: "".into(), type_: PayoutType::BankAccount, 
+        };
+        let se_po = StripeEvent { 
+            api_version: None, created: 0, fluvio_version: String::new(), id: String::new(), pending_webhooks: 0, data: EventData::Payout(po), livemode: true, 
+        };
+        stripe_to_slack(se_po)?;
+    
+        // Source dispatch
+        let so = Source { 
+            id: "".into(), amount: None, client_secret: "".into(), created: 0, currency: None, customer: None, event_type: SourceEventType::SourceChargeable, owner: None, statement_descriptor: None, status: "".into(), type_: SourceType::Card, 
+        };
+        let se_so = StripeEvent { 
+            api_version: None, created: 0, fluvio_version: String::new(), id: String::new(), pending_webhooks: 0, data: EventData::Source(so), livemode: true, 
+        };
+        stripe_to_slack(se_so)?;
+    
+        // SubscriptionSchedule dispatch
+        let ss = SubscriptionSchedule { 
+            id: "".into(), customer: "".into(), default_settings: SubscriptionDefaultSettings { billing_cycle_anchor: SubscriptionDefaultSettingsBillingCycleAnchor::Automatic, collection_method: None, }, end_behavior: SubscriptionScheduleEndBehavior::Cancel, event_type: SubscriptionScheduleEventType::SubscriptionScheduleCreated, released_at: None, canceled_at: None, completed_at: None, created: 0, status: SubscriptionScheduleStatus::Active, 
+        };
+        let se_ss = StripeEvent { 
+            api_version: None, created: 0, fluvio_version: String::new(), id: String::new(), pending_webhooks: 0, data: EventData::SubscriptionSchedule(ss), livemode: true, 
+        };
+        stripe_to_slack(se_ss)?;
+    
+        // Topup dispatch
+        let tu = Topup { 
+            id: "".into(), amount: 0, created: 0, currency: "".into(), description: None, event_type: TopupEventType::TopupCreated, expected_availability_date: None, failure_code: None, failure_message: None, status: TopupStatus::Pending, 
+        };
+        let se_tu = StripeEvent { 
+            api_version: None, created: 0, fluvio_version: String::new(), id: String::new(), pending_webhooks: 0, data: EventData::Topup(tu), livemode: true, 
+        };
+        stripe_to_slack(se_tu)?;
+    
         Ok(())
     }
 }
