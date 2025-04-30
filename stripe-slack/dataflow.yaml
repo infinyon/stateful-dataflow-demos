@@ -45,7 +45,7 @@ services:
 
     sinks:
       - type: topic
-        id: slack-billing-events
+        id: slack-stripe-events
 
 dev:
   imports:

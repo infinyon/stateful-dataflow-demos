@@ -1,10 +1,11 @@
+use schemars::JsonSchema;
 use serde::{Serialize, Deserialize};
 
 use crate::config::import::StateImport;
 
 use super::{NamedParameterWrapper, ParameterWrapper};
 
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, JsonSchema)]
 #[serde(untagged)]
 pub enum StepInvocationDefinition {
     Code(Code),
@@ -27,7 +28,7 @@ impl StepInvocationDefinition {
     }
 }
 
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, JsonSchema)]
 pub struct Dependency {
     pub name: String,
     #[serde(flatten)]
@@ -114,7 +115,7 @@ impl Dependency {
     }
 }
 
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, JsonSchema)]
 #[serde(untagged)]
 pub enum DependencyVersion {
     Version {
@@ -132,7 +133,7 @@ pub enum DependencyVersion {
 }
 
 /// Serialization representation of the code
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, JsonSchema)]
 #[serde(rename_all = "kebab-case")]
 pub struct Code {
     #[serde(alias = "$key$")]
@@ -148,14 +149,14 @@ pub struct Code {
 }
 
 /// Supported lang in sdf for build and generation
-#[derive(Default, Serialize, Deserialize, Debug, Clone, PartialEq, Eq)]
+#[derive(Default, Serialize, Deserialize, Debug, Clone, PartialEq, Eq, JsonSchema)]
 #[serde(rename_all = "kebab-case")]
 pub enum Lang {
     #[default]
     Rust,
 }
 
-#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+#[derive(Serialize, Deserialize, Debug, Clone, Default, JsonSchema)]
 #[serde(rename_all = "kebab-case")]
 pub struct FunctionDefinition {
     #[serde(alias = "$key$")]

@@ -1,6 +1,6 @@
 ### Slack Package
 
-The slack pakage already contains the package file with types generated from [slack-schema.json](./slack-shema.json). To regenerate the types, check the [Generate Types](#generate-types) section. You'll need to manually copy/paste it in the [sdf-pacakge.yaml](./sdf-package.yaml) file.
+The slack package ensures the Slack events are structured based on the [slack-schema.json](./slack-shema.json) schema.
 
 #### SDF Tests
 

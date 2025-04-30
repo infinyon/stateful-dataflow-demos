@@ -1,8 +1,7 @@
-### Stripe to Slack
+### Stripe Package
 
-This package has already generated the types. The following commands are for testing. 
-
-Check the bottom of this file for the types re-generation.
+Ensures that stripe events have been converted in the correct format as defined in the [stripe-schema.json](./stripe-schema.json).
+The conversion was perfomed using [jaq](../jaq/REAME.MD).
 
 #### Test Commands
 

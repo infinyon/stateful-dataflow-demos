@@ -1,5 +1,6 @@
 use std::fmt;
 
+use schemars::JsonSchema;
 use serde::{
     de::{Unexpected, Visitor},
     Deserialize, Deserializer, Serialize,
@@ -10,7 +11,7 @@ use super::Metadata;
 
 pub type PackageMetadata = Metadata;
 
-#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+#[derive(Serialize, Deserialize, Debug, Clone, Default, JsonSchema)]
 pub struct PackageImport {
     #[serde(rename = "pkg")]
     pub package: ImportMetadata,
@@ -23,7 +24,7 @@ pub struct PackageImport {
     pub functions: Vec<FunctionImport>,
 }
 
-#[derive(Serialize, Debug, Clone, Default, PartialEq, Eq)]
+#[derive(Serialize, Debug, Clone, Default, PartialEq, Eq, JsonSchema)]
 pub struct ImportMetadata {
     pub namespace: String,
     pub name: String,
@@ -92,18 +93,18 @@ impl Visitor<'_> for PackageImportMetadataVisitor {
     }
 }
 
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, JsonSchema)]
 pub struct FunctionImport {
     pub name: String,
     pub alias: Option<String>,
 }
 
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, JsonSchema)]
 pub struct TypeImport {
     pub name: String,
 }
 
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, JsonSchema)]
 pub struct StateImport {
     pub name: String,
 }

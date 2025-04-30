@@ -13,4 +13,6 @@ version = ["dep:semver"]
 anyhow = { workspace = true }
 check_keyword = { workspace = true }
 convert_case = { workspace = true }
+regex = { workspace = true }
 semver = { workspace = true, optional = true }
+wit-encoder = { workspace = true }

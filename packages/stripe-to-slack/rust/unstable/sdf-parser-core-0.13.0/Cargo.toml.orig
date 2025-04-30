@@ -9,6 +9,7 @@ keywords = ["sdf"]
 [dependencies]
 anyhow.workspace = true
 humantime = { workspace = true }
+schemars = { workspace = true }
 serde = { workspace = true, features = ["derive"] }
 serde_yaml = { workspace = true }
 serde_with = { workspace = true, features = ["std"] }

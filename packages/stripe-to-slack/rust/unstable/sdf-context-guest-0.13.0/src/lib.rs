@@ -15,7 +15,7 @@ pub mod bindings {
                     "sdf:row-state/row": ::sdf_row_guest::bindings::sdf::row_state::row,
                     "sdf:df/lazy": ::sdf_df_guest::bindings::sdf::df::lazy,
                 }
-            });  
+            });
         } else if #[cfg(feature = "row")] {
             generate!({
                 world: "context-world",

@@ -47,14 +47,14 @@ Create a Slack connector that notifies when a Stripe event is received.
 
 #### 3. Start the Dataflows
 
-Start the `stripe-clean` dataflow that converts Stripe events to smaller relevant structures - [stripe-clean.yaml](../stripe-clean/dataflow.yaml)
+Start the `stripe-reduce` dataflow that converts Stripe events to events defined in InfinyOn Stripe Schema - [stripe-reduce/dataflow.yaml](../stripe-reduce/dataflow.yaml)
 
 ```bash
-cd ../stripe-clean
+cd ../stripe-reduce
 sdf run
 ```
 
-Start the dataflow that listens for events from Stripe and converts them for Slack - [stripe-dataflow.yaml](dataflow.yaml)
+Start the dataflow that listens for events from Stripe and converts them for Slack - [stripe-spack/dataflow.yaml](dataflow.yaml)
 
 ```
 sdf run
