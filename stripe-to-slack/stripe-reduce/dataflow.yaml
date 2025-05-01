@@ -1,0 +1,47 @@
+apiVersion: 0.6.0
+meta:
+  name: stripe-reduce
+  version: 0.1.0
+  namespace: examples
+
+config:
+  converter: raw
+  consumer:
+    default_starting_offset:
+      value: 0
+      position: End  
+
+imports:
+  - pkg: examples/jaq@0.0.1
+    functions:
+      - name: jaq-transform
+
+topics:
+  stripe-origin-events:
+    schema:
+      value:
+        type: bytes
+
+  stripe-events:
+    schema:
+      value:
+        type: bytes
+
+services:
+  convert-stripe-events:
+    sources:
+      - type: topic
+        id: stripe-origin-events
+
+    transforms:
+      - operator: map
+        uses: jaq-transform
+
+    sinks:
+      - type: topic
+        id: stripe-events
+
+dev:
+  imports:
+    - pkg: examples/jaq@0.0.1
+      path: ../../packages/jaq

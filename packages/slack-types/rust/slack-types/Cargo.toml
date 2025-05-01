@@ -1,0 +1,51 @@
+[package]
+name = "slack_types"
+version = "0.0.0"
+edition = "2021"
+description = ""
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+
+[profile.wasm-debug]
+inherits = "dev"
+overflow-checks = false
+strip = true
+panic = "abort"
+
+[profile.wasm-release]
+inherits = "release"
+overflow-checks = false
+strip = true
+opt-level = 'z'
+codegen-units = 1
+panic = "abort"
+
+[profile.wasm-optimized]
+inherits = "release"
+overflow-checks = false
+strip = true
+opt-level = 3
+codegen-units = 1
+panic = "abort"
+
+[patch.crates-io]
+sdf-common = { path = "../unstable/sdf-common-0.13.0"}
+sdf-context-guest = { path = "../unstable/sdf-context-guest-0.13.0" }
+sdf-df-guest = { path = "../unstable/sdf-df-guest-0.13.0" }
+sdf-imports = { path = "../unstable/sdf-imports-0.13.0"}
+sdf-macros = { path = "../unstable/sdf-macros-0.13.0"}
+sdf-metadata = { path = "../unstable/sdf-metadata-0.13.0"}
+sdf-parser-core = { path = "../unstable/sdf-parser-core-0.13.0"}
+sdf-parser-df = { path = "../unstable/sdf-parser-df-0.13.0"}
+sdf-parser-host = { path = "../unstable/sdf-parser-host-0.13.0"}
+sdf-parser-package = { path = "../unstable/sdf-parser-package-0.13.0"}
+sdf-row-guest = { path = "../unstable/sdf-row-guest-0.13.0" }
+sdfg = { path = "../unstable/sdfg-0.13.0"}
+sdf-wit = { path = "../unstable/sdf-wit-0.13.0"}
+
+[dependencies]
+## GENERATED DEPENDENCIES
+serde =  { version = "1", features = ["std", "derive"]}
+sdfg = { version = "0.13.0" , features=[ "row"]  }
+## END OF GENERATED DEPENDENCIES

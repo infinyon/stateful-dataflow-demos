@@ -1,0 +1,57 @@
+apiVersion: 0.6.0
+meta:
+  name: stripe-slack
+  version: 0.1.0
+  namespace: examples
+
+config:
+  converter: json
+  consumer:
+    default_starting_offset:
+      value: 0
+      position: End  
+
+imports:
+  - pkg: examples/stripe-types@0.0.1
+    types:
+      - name: stripe-event
+  - pkg: examples/slack-types@0.0.1
+    types:
+      - name: slack-event
+  - pkg: examples/stripe-slack@0.0.1
+    functions:
+      - name: stripe-to-slack
+
+topics:
+  stripe-events:
+    schema:
+      value:
+        type: stripe-event
+
+  slack-stripe-events:
+    schema:
+      value:
+        type: slack-event
+
+services:
+  stripe-to-slack:
+    sources:
+      - type: topic
+        id: stripe-events
+
+    transforms:
+      - operator: map
+        uses: stripe-to-slack
+
+    sinks:
+      - type: topic
+        id: slack-stripe-events
+
+dev:
+  imports:
+    - pkg: examples/stripe-types@0.0.1
+      path: ../../packages/stripe-types
+    - pkg: examples/slack-types@0.0.1
+      path: ../../packages/slack-types
+    - pkg: examples/stripe-slack@0.0.1
+      path: ../../packages/stripe-slack

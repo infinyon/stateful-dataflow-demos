@@ -1,0 +1,22 @@
+{
+  "api_version": "2022-11-15",
+  "created": 1743408050,
+  "data": {
+    "balance": null,
+    "created": 1743404400,
+    "currency": "usd",
+    "delinquent": null,
+    "description": null,
+    "email": null,
+    "event_type": "customer.subscription.updated",
+    "id": "sub_1R8cKcIXrfseZ4WFUJm54bjI",
+    "invoice_prefix": null,
+    "name": null,
+    "next_invoice_sequence": null,
+    "phone": null
+  },
+  "fluvio_version": "0.1",
+  "id": "evt_1R8dH5IXrfseZ4WFNwRYPw7G",
+  "livemode": false,
+  "pending_webhooks": 2
+}

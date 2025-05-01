@@ -1,0 +1,27 @@
+{
+  "api_version": "2022-11-15",
+  "created": 1743177658,
+  "data": {
+    "brand": "Visa",
+    "cancellation_reason": null,
+    "cardholder": {
+      "email": "john.due@test.com",
+      "id": "ich_1R7fHxIXrfseZ4WFtJt87G9q"
+    },
+    "created": 1743177658,
+    "currency": "usd",
+    "cvc": null,
+    "event_type": "issuing_card.created",
+    "exp_month": 2,
+    "exp_year": 2028,
+    "financial_account": null,
+    "id": "ic_1R7fL4IXrfseZ4WFg7m33oMx",
+    "last4": "0005",
+    "status": "active",
+    "type": "virtual"
+  },
+  "fluvio_version": "0.1",
+  "id": "evt_1R7fL4IXrfseZ4WFxVu4Kop9",
+  "livemode": false,
+  "pending_webhooks": 1
+}

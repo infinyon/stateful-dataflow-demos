@@ -1,0 +1,20 @@
+{
+  "api_version": "2022-11-15",
+  "created": 1743185300,
+  "data": {
+    "amount": 50000,
+    "created": 1743184698,
+    "currency": "usd",
+    "description": "",
+    "event_type": "topup.succeeded",
+    "expected_availability_date": 1743184698,
+    "failure_code": null,
+    "failure_message": null,
+    "id": "tu_1R7hAcIXrfseZ4WFjKgLjc1k",
+    "status": "succeeded"
+  },
+  "fluvio_version": "0.1",
+  "id": "evt_1R7hKKIXrfseZ4WFKGOU4WlA",
+  "livemode": false,
+  "pending_webhooks": 1
+}

@@ -1,0 +1,30 @@
+{
+  "api_version": "2022-11-15",
+  "created": 1743030553,
+  "data": {
+    "address": {
+      "city": "",
+      "country": "CA",
+      "line1": "",
+      "line2": "",
+      "postal-code": null,
+      "state": "BC"
+    },
+    "balance": 0,
+    "created": 1743030553,
+    "currency": null,
+    "delinquent": false,
+    "description": "Accountant",
+    "email": "jenny.rosen@example.com",
+    "event_type": "customer.created",
+    "id": "cus_S15ElUuJ0dtChM",
+    "invoice_prefix": "7EC52D38",
+    "name": "Jenny Rosen",
+    "next_invoice_sequence": 1,
+    "phone": null
+  },
+  "fluvio_version": "0.1",
+  "id": "evt_1R734PIXrfseZ4WFtvhu2AEz",
+  "livemode": false,
+  "pending_webhooks": 2
+}

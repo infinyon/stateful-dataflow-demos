@@ -1,0 +1,35 @@
+{
+  "api_version": "2022-11-15",
+  "created": 1743177466,
+  "data": {
+    "billing": {
+      "city": "Salt Lake City",
+      "country": "US",
+      "line1": "233 doe avenue",
+      "line2": null,
+      "postal_code": "93534",
+      "state": "UT"
+    },
+    "created": 1743177465,
+    "email": "john.due@test.com",
+    "event_type": "issuing_cardholder.created",
+    "id": "ich_1R7fHxIXrfseZ4WFtJt87G9q",
+    "individual": {
+      "dob": {
+        "day": 30,
+        "month": 3,
+        "year": 1978
+      },
+      "first_name": "John",
+      "last_name": "Doe"
+    },
+    "name": "John Doe",
+    "phone_number": "+14455551212",
+    "status": "active",
+    "type": "individual"
+  },
+  "fluvio_version": "0.1",
+  "id": "evt_1R7fHyIXrfseZ4WFvKC1maLh",
+  "livemode": false,
+  "pending_webhooks": 1
+}

@@ -1,0 +1,27 @@
+{
+  "api_version": "2022-11-15",
+  "created": 1743642260,
+  "data": {
+    "amount": 33150,
+    "arrival_date": 1743638400,
+    "automatic": true,
+    "balance_transaction": "txn_1R9Fi1IXrfseZ4WFXjFRMRIp",
+    "created": 1743555792,
+    "currency": "usd",
+    "description": "STRIPE PAYOUT",
+    "event_type": "payout.paid",
+    "failure_code": null,
+    "failure_message": null,
+    "id": "po_1R9Fi0IXrfseZ4WF9fJNAIBm",
+    "method": "standard",
+    "reconciliation_status": "completed",
+    "source_type": "card",
+    "statement_descriptor": null,
+    "status": "paid",
+    "type": "bank_account"
+  },
+  "fluvio_version": "0.1",
+  "id": "evt_1R9cCeIXrfseZ4WFJvxcHRRS",
+  "livemode": true,
+  "pending_webhooks": 1
+}
