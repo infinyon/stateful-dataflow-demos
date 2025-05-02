@@ -15,7 +15,6 @@ pub struct PkgConfig {
     path: (Span, PathBuf),
     link_row: bool,
     link_df: bool,
-    hub: bool,
 }
 
 impl Parse for PkgConfig {
@@ -25,7 +24,6 @@ impl Parse for PkgConfig {
         let mut path = None;
         let mut link_row = false;
         let mut link_df = false;
-        let mut hub = false;
 
         if input.peek(token::Brace) {
             let content;
@@ -42,9 +40,6 @@ impl Parse for PkgConfig {
                     Opt::Df => {
                         link_df = true;
                     }
-                    Opt::Hub => {
-                        hub = true;
-                    }
                 }
             }
         }
@@ -60,7 +55,6 @@ impl Parse for PkgConfig {
             path,
             link_row,
             link_df,
-            hub,
         })
     }
 }
@@ -77,13 +71,13 @@ impl PkgConfig {
             )
         })?;
 
-        let dev_mode: bool = !self.hub;
+        let dev_mode = std::env::var("SDF_PROD_MODE").is_err();
 
         let sdf_package = parse_package(&file_content).map_err(|e| {
             syn::Error::new(self.path.0, format!("{}: {}", self.path.1.display(), e))
         })?;
 
-        let wit_dir_path = WitGenerator::builder()
+        let wit_inline = WitGenerator::builder()
             .dev_mode(dev_mode)
             .pkg_path(full_path)
             .build()
@@ -91,8 +85,6 @@ impl PkgConfig {
             .map_err(|e| {
                 syn::Error::new(self.path.0, format!("Failed to generate wit files: {}", e))
             })?;
-
-        let wit_dir_str = wit_dir_path.display().to_string();
 
         let meta = &sdf_package.meta;
 
@@ -134,7 +126,6 @@ impl PkgConfig {
         };
 
         let types_mod = create_ident(&format!("{}_types", meta_name));
-
         Ok(quote! {
             #modules_declaration
             pub mod pkg {
@@ -151,7 +142,7 @@ impl PkgConfig {
             pub mod bindings {
                 ::sdfg::wit_bindgen::generate!({
                     // use out dir for generated files
-                    path: #wit_dir_str,
+                    inline: #wit_inline,
                     world: "default-world",
                     generate_all,
                     generate_unused_types: true,
@@ -164,9 +155,10 @@ impl PkgConfig {
                 });
 
                 pub mod #meta_namespace_ident {
-                    pub mod #types_mod {
+                    pub mod #meta_name_ident {
                         pub use crate::pkg::functions::types;
                     }
+                    pub use self::#meta_name_ident as #types_mod;
                 }
                 pub struct Component;
               }
@@ -185,7 +177,6 @@ enum Opt {
     Path(Span, syn::LitStr),
     Row,
     Df,
-    Hub,
 }
 
 impl Parse for Opt {
@@ -202,9 +193,6 @@ impl Parse for Opt {
         } else if l.peek(kw::df) {
             input.parse::<kw::df>()?;
             Ok(Opt::Df)
-        } else if l.peek(kw::hub) {
-            input.parse::<kw::hub>()?;
-            Ok(Opt::Hub)
         } else {
             Err(l.error())
         }
@@ -215,5 +203,4 @@ mod kw {
     syn::custom_keyword!(path);
     syn::custom_keyword!(row);
     syn::custom_keyword!(df);
-    syn::custom_keyword!(hub);
 }

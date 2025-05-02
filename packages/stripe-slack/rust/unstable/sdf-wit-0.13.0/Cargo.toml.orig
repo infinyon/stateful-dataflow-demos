@@ -13,11 +13,14 @@ host = [ "dep:sdf-parser-host", "dep:sdf-imports" ]
 [dependencies]
 anyhow = { workspace = true }
 bon = { workspace = true }
-include_dir = { workspace = true }
 wit-encoder = { workspace = true }
 
 sdf-imports = { workspace = true, optional = true }
 sdf-parser-host = { workspace = true, optional = true }
+
+[build-dependencies]
+wit-encoder = { workspace = true }
+wit-parser = { workspace = true }
 
 [dev-dependencies]
 tempfile = { workspace = true }

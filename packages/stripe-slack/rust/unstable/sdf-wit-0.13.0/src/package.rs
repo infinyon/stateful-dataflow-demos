@@ -10,55 +10,12 @@ use sdf_parser_host::host::HostParser;
 pub struct WitGenerator {
     #[builder(default = PathBuf::from("../../sdf-package.yaml"))]
     pkg_path: PathBuf,
-    #[builder(default = PathBuf::from("."))]
-    target_dir: PathBuf,
     #[builder(default = true)]
     dev_mode: bool,
 }
 
 impl WitGenerator {
-    /// check if pkg path last modification time is newer than the output dir
-    fn should_regenerate(&self) -> bool {
-        if self.pkg_path.exists() {
-            let Ok(pkg_metadata) = std::fs::metadata(&self.pkg_path) else {
-                return true;
-            };
-            if pkg_metadata.modified().is_ok() {
-                let output_dir = self.target_dir.join(".wit");
-                if output_dir.exists() {
-                    let Ok(output_metadata) = std::fs::metadata(&output_dir) else {
-                        return true;
-                    };
-
-                    let Ok(pkg_modified) = pkg_metadata.modified() else {
-                        return true;
-                    };
-
-                    let Ok(output_modified) = output_metadata.modified() else {
-                        return true;
-                    };
-                    if pkg_modified <= output_modified {
-                        return false;
-                    }
-                } else {
-                    return true;
-                }
-            }
-        }
-        true
-    }
-
-    pub fn generate(&self) -> Result<PathBuf> {
-        if !self.should_regenerate() {
-            return Ok(self.target_dir.join(".wit"));
-        }
-
-        let output_dir = self.target_dir.join(".wit");
-
-        let deps_dir = output_dir.join("deps");
-
-        super::generate_common_wit_deps(&deps_dir)?;
-
+    pub fn generate(&self) -> Result<String> {
         let mut parser = HostParser::new();
 
         let file_content = std::fs::read_to_string(&self.pkg_path).context(format!(
@@ -131,15 +88,11 @@ impl WitGenerator {
             }
         }
 
-        let wit_default_file_path = output_dir.join("api.wit");
-        std::fs::write(&wit_default_file_path, package.to_string())?;
+        let mut pkg_wit = package.to_string();
 
-        // add .gitignore
+        pkg_wit.push_str(crate::SDF_WIT_PKGS);
 
-        let gitignore_path = output_dir.join(".gitignore");
-        std::fs::write(&gitignore_path, "*")?;
-
-        Ok(output_dir)
+        Ok(pkg_wit)
     }
 }
 
@@ -171,14 +124,13 @@ functions:
         std::fs::write(&pkg_path, sdf_pkg).unwrap();
         let generator = super::WitGenerator::builder()
             .pkg_path(pkg_path.clone())
-            .target_dir(temp_dir.path().to_path_buf())
             .build();
 
-        assert!(generator.should_regenerate());
-
-        generator
-            .generate()
-            .expect("failed to generate wit package");
-        assert!(!generator.should_regenerate());
+        let result = generator.generate().unwrap();
+        assert!(result.contains("package pkg-namespace:first-word"));
+        assert!(result.contains("interface first-word-len"));
+        assert!(result.contains("world default-world"));
+        assert!(result.contains("interface types"));
+        assert!(result.contains("package sdf:arrow {"),);
     }
 }
