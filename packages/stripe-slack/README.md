@@ -27,4 +27,33 @@ To test using SDF run the following commands:
 
 ```bash
 sdf test function stripe-to-slack --value-file sample-data/charge-succeeded.json
+sdf test function stripe-to-slack --value-file customer-created.json
+sdf test function stripe-to-slack --value-file customer-subscription-created.json
+sdf test function stripe-to-slack --value-file customer-subscription-updated.json
+sdf test function stripe-to-slack --value-file customer-updated.json
+sdf test function stripe-to-slack --value-file invoice-created.json
+sdf test function stripe-to-slack --value-file invoice-finalized.json
+sdf test function stripe-to-slack --value-file invoice-paid.json
+sdf test function stripe-to-slack --value-file invoice-payment-failed.json
+sdf test function stripe-to-slack --value-file invoice-payment-succeeded.json
+sdf test function stripe-to-slack --value-file invoice-sent.json
+sdf test function stripe-to-slack --value-file invoice-updated.json
+sdf test function stripe-to-slack --value-file invoiceitem-created.json
+sdf test function stripe-to-slack --value-file issuing-authorization-created.json
+sdf test function stripe-to-slack --value-file issuing-card-created.json
+sdf test function stripe-to-slack --value-file issuing-card-updated.json
+sdf test function stripe-to-slack --value-file issuing-cardholder-created.json
+sdf test function stripe-to-slack --value-file issuing-cardholder-updated.json
+sdf test function stripe-to-slack --value-file issuing-dispute-created.json
+sdf test function stripe-to-slack --value-file issuing-dispute-submitted.json
+sdf test function stripe-to-slack --value-file payment-intent-created.json
+sdf test function stripe-to-slack --value-file payout-created.json
+sdf test function stripe-to-slack --value-file payout-paid.json
+sdf test function stripe-to-slack --value-file payout-reconciliation-completed.json
+sdf test function stripe-to-slack --value-file payout-update.json
+sdf test function stripe-to-slack --value-file source-chargeable.json
+sdf test function stripe-to-slack --value-file subscription-schedule-created.json
+sdf test function stripe-to-slack --value-file subscription-schedule-updated.json
+sdf test function stripe-to-slack --value-file topup-created.json
+sdf test function stripe-to-slack --value-file topup-succeeded.json
 ```
