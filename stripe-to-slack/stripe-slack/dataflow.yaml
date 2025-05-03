@@ -1,6 +1,6 @@
 apiVersion: 0.6.0
 meta:
-  name: stripe-slack
+  name: stripe-slack-df
   version: 0.1.0
   namespace: examples
 
