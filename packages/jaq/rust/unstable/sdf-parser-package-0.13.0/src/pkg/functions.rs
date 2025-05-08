@@ -1,9 +1,10 @@
+use schemars::JsonSchema;
 use serde::{Deserialize, Serialize};
 
 use sdf_parser_core::config::transform::{code::Dependency, StepInvocationWrapperV0_5_0};
 
 /// All functions that can be used in the package
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, JsonSchema)]
 #[serde(tag = "operator")]
 #[serde(rename_all = "kebab-case")]
 pub enum Function {

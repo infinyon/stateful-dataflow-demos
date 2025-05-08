@@ -24,5 +24,5 @@ fluvio produce stripe-events -f ./sample-data/invoice-created.json --raw
 Check the result:
 
 ```bash
-fluvio consume slack-stripe-events -Bd -O json
+fluvio consume slack-stripe-events -B -O json
 ```

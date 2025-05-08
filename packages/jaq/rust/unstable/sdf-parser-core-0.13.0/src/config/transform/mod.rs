@@ -1,3 +1,4 @@
+use schemars::JsonSchema;
 use serde::{Deserialize, Serialize};
 
 use super::{import::StateImport, types::MetadataType};
@@ -8,7 +9,7 @@ pub mod code;
 
 pub type TransformsWrapperV0_5_0 = Vec<TransformOperator>;
 
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, JsonSchema)]
 pub struct WindowOperatorWrapper {
     #[serde(flatten)]
     pub properties: WindowProperties,
@@ -19,7 +20,7 @@ pub struct WindowOperatorWrapper {
     pub transforms: WindowTransforms,
 }
 
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, JsonSchema)]
 pub struct WindowTransforms {
     #[serde(default)]
     pub transforms: TransformsWrapperV0_5_0,
@@ -27,7 +28,7 @@ pub struct WindowTransforms {
     pub partition: Option<PartitionOperatorWrapper>,
 }
 
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, JsonSchema)]
 pub struct PartitionOperatorWrapper {
     #[serde(alias = "assign-key")]
     pub assign_key: StepInvocationWrapperV0_5_0,
@@ -37,7 +38,7 @@ pub struct PartitionOperatorWrapper {
     pub update_state: Option<StepInvocationWrapperV0_5_0>,
 }
 
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, JsonSchema)]
 #[serde(untagged)]
 pub enum StateWrapper {
     Ref(RefState),
@@ -54,13 +55,13 @@ impl StateWrapper {
         }
     }
 }
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, JsonSchema)]
 pub struct TypedState {
     #[serde(flatten)]
     pub inner_type: MetadataType,
 }
 
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, JsonSchema)]
 #[serde(rename_all = "kebab-case")]
 pub struct RefState {
     pub from: String,
@@ -82,13 +83,13 @@ impl RefState {
     }
 }
 
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, JsonSchema)]
 #[serde(rename_all = "kebab-case")]
 pub struct SystemState {
     pub system: String,
 }
 
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, JsonSchema)]
 #[serde(rename_all = "kebab-case")]
 pub struct StepInvocationWrapperV0_5_0 {
     #[serde(flatten)]
@@ -104,7 +105,7 @@ impl StepInvocationWrapperV0_5_0 {
     }
 }
 
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, JsonSchema)]
 #[serde(tag = "operator")]
 #[serde(rename_all = "kebab-case")]
 pub enum TransformOperator {
@@ -129,7 +130,7 @@ impl TransformOperator {
     }
 }
 
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, JsonSchema)]
 pub struct NamedParameterWrapper {
     pub name: String,
     #[serde(flatten)]
@@ -140,7 +141,7 @@ pub struct NamedParameterWrapper {
     pub kind: ParameterKindWrapper,
 }
 
-#[derive(Default, Serialize, Deserialize, Debug, Clone)]
+#[derive(Default, Serialize, Deserialize, Debug, Clone, JsonSchema)]
 #[serde(rename_all = "kebab-case")]
 pub enum ParameterKindWrapper {
     Key,
@@ -148,7 +149,7 @@ pub enum ParameterKindWrapper {
     Value,
 }
 
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, JsonSchema)]
 pub struct ParameterWrapper {
     #[serde(flatten)]
     pub ty: MetadataType,
@@ -158,7 +159,7 @@ pub struct ParameterWrapper {
     pub list: bool,
 }
 
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, JsonSchema)]
 pub struct WindowProperties {
     #[serde(flatten)]
     pub kind: WindowKind,
@@ -166,27 +167,27 @@ pub struct WindowProperties {
     pub watermark: WatermarkConfig,
 }
 
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, JsonSchema)]
 #[serde(rename_all = "kebab-case")]
 pub enum WindowKind {
     Tumbling(TumblingWindow),
     Sliding(SlidingWindow),
 }
 
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, JsonSchema)]
 pub struct TumblingWindow {
     pub duration: String,
     pub offset: Option<String>,
 }
 
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, JsonSchema)]
 pub struct SlidingWindow {
     pub duration: String,
     pub offset: Option<String>,
     pub slide: String,
 }
 
-#[derive(Serialize, Deserialize, Default, Debug, Clone)]
+#[derive(Serialize, Deserialize, Default, Debug, Clone, JsonSchema)]
 #[serde(rename_all = "kebab-case")]
 pub struct WatermarkConfig {
     pub idleness: Option<String>,

@@ -3,6 +3,7 @@ pub use parser::*;
 
 pub mod parser {
 
+    use schemars::{schema::Schema, JsonSchema};
     use serde::{Deserialize, Serialize};
 
     #[derive(Debug, Serialize, Deserialize, Clone, PartialEq, Eq)]
@@ -22,6 +23,17 @@ pub mod parser {
                 Self::Valid(data) => Some(data),
                 Self::Invalid(_) => None,
             }
+        }
+    }
+
+    // we implement this way to avoid json schema generated a schema for the invalid case
+    impl<U: JsonSchema> JsonSchema for MaybeValid<U> {
+        fn schema_name() -> String {
+            U::schema_name()
+        }
+
+        fn json_schema(generator: &mut schemars::r#gen::SchemaGenerator) -> Schema {
+            U::json_schema(generator)
         }
     }
 }

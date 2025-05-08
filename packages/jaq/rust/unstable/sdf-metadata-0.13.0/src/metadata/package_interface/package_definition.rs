@@ -1,4 +1,7 @@
-use std::{collections::BTreeMap, fmt::Display};
+use std::{
+    collections::{BTreeMap, HashSet},
+    fmt::Display,
+};
 
 use anyhow::Result;
 use wit_encoder::{Package, Use};
@@ -9,9 +12,9 @@ use crate::{
     importer::resolver::DependencyResolver,
     metadata::metadata::header::HeaderValidationError,
     util::{
-        merge::merge_types_and_states,
         config_error::{ConfigError, INDENT},
-        sdf_types_map::SdfTypesMap,
+        merge::merge_types_and_states,
+        sdf_types_map::{is_imported_type, SdfTypesMap},
         validate::{validate_all, MetadataTypeValidationFailure},
         validation_failure::ValidationFailure,
     },
@@ -264,7 +267,7 @@ impl PackageDefinition {
 
         let api_version = self.api_version()?;
 
-        let types = self.types_map();
+        let types_map = self.types_map();
 
         let imports = self
             .imports
@@ -285,7 +288,21 @@ impl PackageDefinition {
                     );
 
                     let mut uses = Use::new(types_iface);
-                    for ty in types {
+
+                    let mut needed_types = HashSet::new();
+
+                    for t in types {
+                        if !is_imported_type(&t) {
+                            continue;
+                        }
+                        needed_types.insert(t.clone());
+
+                        let typedeps = types_map.get_type_tree(&t);
+                        for (key, _) in typedeps {
+                            needed_types.insert(key);
+                        }
+                    }
+                    for ty in needed_types {
                         uses.item(wit_name_case(&ty), None);
                     }
                     Some(uses)
@@ -293,7 +310,7 @@ impl PackageDefinition {
             })
             .collect::<Vec<_>>();
 
-        let wit_interface = types.wit_interface(&api_version, imports);
+        let wit_interface = types_map.wit_interface(&api_version, imports);
 
         package.interface(wit_interface);
         Ok(package)

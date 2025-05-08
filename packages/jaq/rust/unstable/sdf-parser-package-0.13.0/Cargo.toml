@@ -31,6 +31,9 @@ path = "src/lib.rs"
 [dependencies.anyhow]
 version = "1.0.95"
 
+[dependencies.schemars]
+version = "0.8.22"
+
 [dependencies.sdf-parser-core]
 version = "0.13.0"
 
@@ -53,3 +56,6 @@ default-features = false
 [dependencies.serde_yaml]
 version = "0.9.0"
 default-features = false
+
+[dev-dependencies.serde_json]
+version = "1.0.133"

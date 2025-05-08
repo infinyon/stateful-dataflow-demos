@@ -1,5 +1,6 @@
 use std::collections::BTreeMap;
 
+use schemars::schema_for;
 use sdf_parser_core::config::{
     transform::StateWrapper,
     types::{
@@ -640,4 +641,11 @@ dev:
         topic.schema.value.converter.clone().unwrap(),
         SerdeConverter::Raw
     );
+}
+
+#[test]
+fn test_json_schema_def() {
+    let schema = schema_for!(DataflowDefinitionConfig);
+    let output = serde_json::to_string_pretty(&schema).expect("Failed to serialize JSON");
+    assert!(output.contains("$schema"));
 }

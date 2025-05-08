@@ -1,0 +1,31 @@
+apiVersion: 0.5.0
+meta:
+  name: bank-update
+  version: 0.1.0
+  namespace: example
+
+imports:
+  - pkg: example/bank@0.1.0
+    types:
+      - name: bank-event
+    states:
+      - name: account-balance
+    path: ../bank-types
+
+functions:
+  filter-positive-events:
+    operator: filter
+    states:
+      - name: account-balance
+    run: |
+      fn filter_positive_events(event: BankEvent) -> Result<bool> {
+         Ok(event.amount > 0.0)
+      }
+dev:
+  converter: json
+  imports:
+    - pkg: example/bank@0.1.0
+      path: ../bank-types
+  states:
+    - name: account-balance
+      path: ./

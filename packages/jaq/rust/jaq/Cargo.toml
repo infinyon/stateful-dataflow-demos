@@ -45,10 +45,8 @@ sdfg = { path = "../unstable/sdfg-0.13.0"}
 sdf-wit = { path = "../unstable/sdf-wit-0.13.0"}
 
 [dependencies]
-## GENERATED DEPENDENCIES
 serde =  { version = "1", features = ["std", "derive"]}
 sdfg = { version = "0.13.0" , features=[ "row"]  }
-## END OF GENERATED DEPENDENCIESjaq-core = "2.0.0"
 jaq-core = "2.0.0"
 jaq-std = "2.0.0"
 jaq-json = { version = "1.0.0", features = ["serde_json"] }

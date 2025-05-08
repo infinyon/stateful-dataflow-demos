@@ -64,6 +64,7 @@ pub enum DataflowDefinitionValidationError {
         ref_state_name: String,
     },
     Versioning(DataflowDefinitionVersionError),
+    PackageConflictName(String),
 }
 
 #[derive(Debug, Clone, Eq, PartialEq)]
@@ -122,6 +123,12 @@ impl ConfigError for DataflowDefinitionValidationError {
             Self::Schedule(failure) => failure.readable(indents),
             Self::DuplicateOperator(name) => {
                 format!("{}Duplicate inline operator with name: {} was found, inline operators must have unique names\n", indent, name)
+            }
+            Self::PackageConflictName(name) => {
+                format!(
+                    "{}Package {} conflicts with dataflow name and namespace\n",
+                    indent, name
+                )
             }
             Self::UndefinedState {
                 service_name,
@@ -351,11 +358,31 @@ impl DataflowDefinition {
             }
         }
 
+        if self.validate_pkg_names().is_err() {
+            errors.push(DataflowDefinitionValidationError::PackageConflictName(
+                format!("{}/{}", self.meta.namespace, self.meta.name),
+            ));
+        }
+
         if errors.is_empty() {
             Ok(())
         } else {
             Err(DataflowDefinitionValidationFailure { errors })
         }
+    }
+
+    fn validate_pkg_names(&self) -> Result<(), String> {
+        // fail if the namespace and name of the package is the same as the dataflow
+        for pkg in &self.imports {
+            if pkg.metadata.namespace == self.meta.namespace && pkg.metadata.name == self.meta.name
+            {
+                return Err(format!(
+                    "Package {} with namespace {} conflicts with dataflow name and namespace",
+                    pkg.metadata.name, pkg.metadata.namespace
+                ));
+            }
+        }
+        Ok(())
     }
 
     pub fn validate_version(&self) -> Result<(), DataflowDefinitionVersionError> {
@@ -1621,6 +1648,31 @@ mod test {
             package_import()
         );
         assert_eq!(dataflow.imports[1], next_version_import);
+    }
+
+    #[test]
+    fn test_pkg_df_name_conflict() {
+        let mut dataflow = dataflow();
+
+        // conflict with the dataflow name
+        dataflow.imports.push(PackageImport {
+            metadata: Header {
+                name: "example".to_string(),
+                version: "0.1.0".to_string(),
+                namespace: "example".to_string(),
+            },
+            path: None,
+            types: vec![],
+            states: vec![],
+            functions: vec![],
+        });
+
+        let res = dataflow.validate();
+        assert!(res.is_err());
+        let err = res.unwrap_err();
+        assert!(err
+            .to_string()
+            .contains("Package example/example conflicts with dataflow name and namespace"),)
     }
 
     fn package_import() -> PackageImport {

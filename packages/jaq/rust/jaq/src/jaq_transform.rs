@@ -1,21 +1,24 @@
 use sdfg::Result;
 use sdfg::sdf;
-use crate::bindings::examples::jaq_types::types::Bytes;
+use sdfg::anyhow::Context;
+use crate::bindings::examples::jaq::types::Bytes;
 
 use jaq_core::load::{Arena, File, Loader};
 use jaq_core::{Compiler, Ctx, RcIter};
 use jaq_json::Val;
 use serde_json::Value;
 
-use crate::filter_rules::JAQ_FILTER;
+static FILTER: OnceLock<_> = OnceLock::new();
 
+/// Event Processing function
 #[sdf(fn_name = "jaq-transform")]
-pub(crate) fn jaq_transform(input: Bytes) -> Result<Bytes> {
-    run_jaq_transform(input, JAQ_FILTER)
+pub(crate) fn jaq_transform(input: Bytes) -> Result<Option<Bytes>> {
+    let filter_rules = get_param("jaq-filter").context("missing parameter")?;
+    run_jaq_transform(input, &filter_rules)
 }
 
 /// JAQ transform function
-fn run_jaq_transform(input: Bytes, filter_rules: &str) -> Result<Bytes> {
+fn run_jaq_transform(input: Bytes, filter_rules: &str) -> Result<Option<Bytes>> {
     let filter_file = File {
         code: filter_rules,
         path: (),
@@ -54,11 +57,27 @@ fn run_jaq_transform(input: Bytes, filter_rules: &str) -> Result<Bytes> {
         }
     }
 
-    if out_json.len() == 1 {
-        Ok(serde_json::to_vec(&out_json[0])?.into())
-    } else {
-        Ok(serde_json::to_vec(&out_json)?.into())
+    match out_json.len() {
+        0 => Ok(None),
+        1 => {
+            if out_json[0].is_null() {
+                Ok(None)
+            } else {
+                let buf = serde_json::to_vec(&out_json[0])?;
+                Ok(Some(buf.into()))
+            }
+        }
+        _ => {
+            let buf = serde_json::to_vec(&out_json)?;
+            Ok(Some(buf.into()))
+        }
     }
+}
+
+fn get_fileter() -> &'static Filter {
+    FILTER.get_or_init(|| {
+        get_param("jaq-filter").context("missing parameter")
+    })
 }
 
 #[cfg(test)]
@@ -75,9 +94,11 @@ mod test {
             { "name": "Splish", "type": "dolphin", "clams": 2 },
             { "name": "Splash", "type": "dolphin", "clams": 2 }
         ]"#.as_bytes().to_vec();
-        let filter_rules = ".[] | .name";
+        let filter = ".[] | .name";
 
-        let raw_result = run_jaq_transform(creatures, filter_rules).expect("cannot transform");
+        let raw_result = run_jaq_transform(creatures, filter)
+            .expect("cannot transform")
+            .expect("must be some");
         let result = std::str::from_utf8(&raw_result).expect("cannot convert to str");
         println!("{}", result);
 
@@ -86,15 +107,19 @@ mod test {
     }
 
     #[test]
-    fn test_file() {
+    fn test_event_match() {
         let input_file: Vec<u8> = std::fs::read("../../sample-data/event1.json")
             .expect("cannot read event1 - input file");
+        let filter = std::fs::read_to_string("../../sample-data/filters/invoice-filter.jq")
+            .expect("cannot read filter - input file");
         let output_file: Vec<u8> = std::fs::read("../../sample-data/output/event1.json")
             .expect("cannot read event1 - output file");
 
-        let raw_result = run_jaq_transform(input_file, JAQ_FILTER).expect("transform");
-        let resul_str = std::str::from_utf8(&raw_result).expect("convert result to str");
-        let result_value = serde_json::from_slice::<Value>(resul_str.as_ref()).expect("convert result to value");
+        let raw_result = run_jaq_transform(input_file, &filter)
+            .expect("cannot transform")
+            .expect("must be some");
+        let result_str = std::str::from_utf8(&raw_result).expect("convert result to str");
+        let result_value = serde_json::from_slice::<Value>(result_str.as_ref()).expect("convert result to value");
         println!("{}", result_value);
 
         let output_str = std::str::from_utf8(&output_file).expect("convert output to str");
@@ -104,4 +129,14 @@ mod test {
         assert_eq!(result_value, output_value);
     }
 
+    #[test]
+    fn test_event_no_match() {
+        let input_file: Vec<u8> = std::fs::read("../../sample-data/event2.json")
+            .expect("cannot read event2 - input file");
+        let filter = std::fs::read_to_string("../../sample-data/filters/invoice-filter.jq")
+            .expect("cannot read filter - input file");
+
+        let raw_result = run_jaq_transform(input_file, &filter).expect("cannot transform");
+        assert!(raw_result.is_none());
+    }  
 }

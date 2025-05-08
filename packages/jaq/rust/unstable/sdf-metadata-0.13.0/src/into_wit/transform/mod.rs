@@ -126,6 +126,7 @@ impl TryFrom<StepInvocationWrapperV0_5_0> for StepInvocationWit {
                     code: None,
                     extra_deps: vec![],
                 },
+                params: Some(function.with.into_iter().collect()),
                 ..Default::default()
             }),
         }

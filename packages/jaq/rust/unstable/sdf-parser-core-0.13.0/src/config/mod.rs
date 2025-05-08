@@ -13,6 +13,7 @@ pub use wrapper::*;
 
 mod wrapper {
 
+    use schemars::JsonSchema;
     use serde::{Deserialize, Serialize};
 
     use super::*;
@@ -20,14 +21,14 @@ mod wrapper {
     use self::types::MetadataType;
 
     /// Common metadata
-    #[derive(Serialize, Deserialize, Debug, Clone, Default)]
+    #[derive(Serialize, Deserialize, Debug, Clone, Default, JsonSchema)]
     pub struct Metadata {
         pub name: String,
         pub version: String,
         pub namespace: String,
     }
 
-    #[derive(Serialize, Deserialize, Debug, Default, Clone)]
+    #[derive(Serialize, Deserialize, Debug, Default, Clone, JsonSchema)]
     pub struct DefaultConfigs {
         #[serde(skip_serializing_if = "Option::is_none", default)]
         pub consumer: Option<ConsumerConfigWrapper>,
@@ -37,7 +38,7 @@ mod wrapper {
         pub producer: Option<ProducerConfigWrapper>,
     }
 
-    #[derive(Serialize, Deserialize, Debug, Clone)]
+    #[derive(Serialize, Deserialize, Debug, Clone, JsonSchema)]
     #[serde(rename_all = "kebab-case")]
     pub struct TopicWrapper {
         pub name: Option<String>,
@@ -77,14 +78,14 @@ mod wrapper {
         }
     }
 
-    #[derive(Serialize, Deserialize, Debug, Clone)]
+    #[derive(Serialize, Deserialize, Debug, Clone, JsonSchema)]
     pub struct SchemaWrapper {
         #[serde(default)]
         pub key: Option<SerdeConfig>,
         pub value: SerdeConfig,
     }
 
-    #[derive(Serialize, Deserialize, Debug, Clone)]
+    #[derive(Serialize, Deserialize, Debug, Clone, JsonSchema)]
     pub struct SerdeConfig {
         #[serde(flatten)]
         pub ty: MetadataType,
@@ -100,14 +101,14 @@ mod wrapper {
         }
     }
 
-    #[derive(Serialize, Deserialize, Debug, Clone, Eq, PartialEq)]
+    #[derive(Serialize, Deserialize, Debug, Clone, Eq, PartialEq, JsonSchema)]
     #[serde(rename_all = "kebab-case")]
     pub enum SerdeConverter {
         Json,
         Raw,
     }
 
-    #[derive(Serialize, Deserialize, Debug, Clone)]
+    #[derive(Serialize, Deserialize, Debug, Clone, JsonSchema)]
     pub struct ConsumerConfigWrapper {
         #[serde(skip_serializing_if = "Option::is_none", default)]
         pub default_starting_offset: Option<OffsetWrapper>,
@@ -117,7 +118,7 @@ mod wrapper {
         pub isolation: Option<Isolation>,
     }
 
-    #[derive(Serialize, Deserialize, Debug, Clone, Eq, PartialEq)]
+    #[derive(Serialize, Deserialize, Debug, Clone, Eq, PartialEq, JsonSchema)]
     #[serde(tag = "position", content = "value")]
     pub enum OffsetWrapper {
         Offset(i64),
@@ -125,13 +126,13 @@ mod wrapper {
         End(u32),
     }
 
-    #[derive(Serialize, Deserialize, Debug, Clone)]
+    #[derive(Serialize, Deserialize, Debug, Clone, JsonSchema)]
     pub enum Isolation {
         ReadUncommitted,
         ReadCommitted,
     }
 
-    #[derive(Serialize, Deserialize, Debug, Clone)]
+    #[derive(Serialize, Deserialize, Debug, Clone, JsonSchema)]
     #[serde(rename_all = "kebab-case")]
     pub enum Compression {
         Gzip,
@@ -140,7 +141,7 @@ mod wrapper {
         Zstd,
     }
 
-    #[derive(Serialize, Deserialize, Debug, Clone)]
+    #[derive(Serialize, Deserialize, Debug, Clone, JsonSchema)]
     pub struct ProducerConfigWrapper {
         #[serde(skip_serializing_if = "Option::is_none", default)]
         pub batch_size: Option<i64>,

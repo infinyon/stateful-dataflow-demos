@@ -3,6 +3,7 @@ use std::{
     ops::{Deref, DerefMut},
 };
 
+use schemars::{schema::Schema, JsonSchema, SchemaGenerator};
 use serde::{Deserialize, Serialize};
 use serde_with::{serde_as, KeyValueMap};
 
@@ -25,7 +26,7 @@ pub fn parse_package(pkg: &str) -> anyhow::Result<PackageConfig> {
 pub type CurrentPkgConfig = PackageWrapperV0_5_0;
 pub type DevPkgConfig = PackageWrapperV0_5_0;
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, JsonSchema)]
 #[serde(tag = "apiVersion")]
 pub enum PackageConfig {
     #[serde(rename = "0.4.0")]
@@ -109,7 +110,7 @@ impl DerefMut for PackageConfig {
 }
 
 #[serde_as]
-#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+#[derive(Serialize, Deserialize, Debug, Clone, Default, JsonSchema)]
 pub struct PackageWrapperV0_5_0 {
     pub meta: PackageMetadata,
     #[serde(skip_serializing_if = "Vec::is_empty", default)]
@@ -120,8 +121,14 @@ pub struct PackageWrapperV0_5_0 {
     pub states: BTreeMap<String, TypedState>,
     #[serde(skip_serializing_if = "Vec::is_empty", default)]
     #[serde_as(as = "KeyValueMap<_>")]
+    #[schemars(schema_with = "function_schema")]
     pub functions: Vec<Function>,
     pub dev: Option<DevConfig>,
+}
+
+// for now treat as string but we will need to change this to a proper schema
+fn function_schema(generator: &mut SchemaGenerator) -> Schema {
+    String::json_schema(generator)
 }
 
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
@@ -131,6 +138,7 @@ pub struct PackageUnsupportedVersion {
 #[cfg(test)]
 mod tests {
 
+    use schemars::schema_for;
     use sdf_parser_core::{
         config::{
             transform::{Lang, StepInvocationDefinition},
@@ -374,5 +382,12 @@ meta:
         let config: PackageConfig = serde_yaml::from_str(&v4_yaml).expect("function to parse");
         assert!(!config.is_v5());
         assert!(config.is_v4());
+    }
+
+    #[test]
+    fn test_json_schema_def() {
+        let schema = schema_for!(PackageConfig);
+        let output = serde_json::to_string_pretty(&schema).expect("Failed to serialize JSON");
+        assert!(output.contains("$schema"));
     }
 }

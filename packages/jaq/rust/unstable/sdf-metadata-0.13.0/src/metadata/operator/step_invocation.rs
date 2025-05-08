@@ -851,6 +851,7 @@ impl Default for StepInvocation {
             imported_function_metadata: None,
             code_info: CodeInfo::default(),
             system: false,
+            params: None,
         }
     }
 }

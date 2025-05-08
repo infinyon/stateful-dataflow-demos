@@ -20,6 +20,8 @@ Generate one event:
 fluvio produce stripe-origin-events -f ./sample-data/event-send-invoice.json --raw
 ```
 
+fluvio produce stripe-origin-events -f ./sample-data/subscription-details.json --raw
+
 Generate all events:
 
 ```bash

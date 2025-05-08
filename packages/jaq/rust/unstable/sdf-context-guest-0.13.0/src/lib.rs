@@ -53,7 +53,7 @@ pub mod wit {
 
     pub mod utils {
         pub use crate::bindings::sdf::context::operator_context::{
-            key, window, get_row_value, get_value32, get_list32,
+            key, window, get_row_value, get_value32, get_list32, get_param,
         };
         #[cfg(feature = "table")]
         pub fn sql(query: &str) -> anyhow::Result<sdf_df_guest::LazyDf> {

@@ -18,6 +18,7 @@ mod wrapper {
     };
 
     use anyhow::{anyhow, Result};
+    use schemars::JsonSchema;
     use sdf_parser_package::pkg::PackageWrapperV0_5_0;
     use serde::{Deserialize, Serialize};
 
@@ -41,13 +42,14 @@ mod wrapper {
     /// Current dataflow definition config, this should be
     pub type CurrentDataflowDefinitionConfig = DataflowDefinitionWrapperV0_5_0;
 
-    #[derive(Serialize, Deserialize, Debug, Clone)]
+    #[derive(Serialize, Deserialize, Debug, Clone, JsonSchema)]
     #[serde(tag = "apiVersion")]
     pub enum DataflowDefinitionConfig {
         #[serde(rename = "0.5.0")]
         V0_5_0(CurrentDataflowDefinitionConfig),
         #[serde(rename = "0.6.0")]
         V0_6_0(CurrentDataflowDefinitionConfig),
+        #[schemars(skip)]
         #[serde(rename = "0.1.0", alias = "0.2.0", alias = "0.3.0", alias = "0.4.0")]
         Unsupported(DataflowDefinitionUnsupportedVersion),
     }
@@ -117,18 +119,20 @@ mod wrapper {
         pub meta: DataflowMetadata,
     }
 
-    #[derive(Serialize, Deserialize, Debug, Clone)]
+    #[derive(Serialize, Deserialize, Debug, Clone, JsonSchema)]
     pub struct DataflowDefinitionWrapperV0_5_0 {
         pub meta: DataflowMetadata,
         #[serde(skip_serializing_if = "Vec::is_empty", default)]
         pub imports: Vec<PackageImport>,
-        #[serde(with = "serde_with::rust::maps_duplicate_key_is_error")]
+        #[serde(deserialize_with = "serde_with::rust::maps_duplicate_key_is_error::deserialize")]
+        #[serde(serialize_with = "serde_with::rust::maps_duplicate_key_is_error::serialize")]
         pub services: BTreeMap<String, MaybeValid<OperationsWrapperV0_5_0>>,
         #[serde(default)]
         pub types: MetadataTypesMapWrapper,
         #[serde(
             skip_serializing_if = "BTreeMap::is_empty",
-            with = "serde_with::rust::maps_duplicate_key_is_error",
+            deserialize_with = "serde_with::rust::maps_duplicate_key_is_error::deserialize",
+            serialize_with = "serde_with::rust::maps_duplicate_key_is_error::serialize",
             default
         )]
         pub topics: BTreeMap<String, TopicWrapper>,
@@ -139,13 +143,14 @@ mod wrapper {
         pub packages: Vec<PackageWrapperV0_5_0>,
         #[serde(
             skip_serializing_if = "BTreeMap::is_empty",
-            with = "serde_with::rust::maps_duplicate_key_is_error",
+            deserialize_with = "serde_with::rust::maps_duplicate_key_is_error::deserialize",
+            serialize_with = "serde_with::rust::maps_duplicate_key_is_error::serialize",
             default
         )]
         pub schedule: BTreeMap<String, ScheduleWrapper>,
     }
 
-    #[derive(Serialize, Deserialize, Debug, Clone)]
+    #[derive(Serialize, Deserialize, Debug, Clone, JsonSchema)]
     #[serde(rename_all = "kebab-case")]
     pub enum ScheduleWrapper {
         Cron(String),
@@ -184,7 +189,7 @@ mod wrapper {
         }
     }
 
-    #[derive(Serialize, Deserialize, Debug, Clone)]
+    #[derive(Serialize, Deserialize, Debug, Clone, JsonSchema)]
     pub struct OperationsWrapperV0_5_0 {
         pub sources: Vec<IoRefWrapper>,
         #[serde(default = "IoRefWrapper::default_vec")]
@@ -199,14 +204,14 @@ mod wrapper {
 
     pub type PostTransforms = MaybeValid<PostTransformsInner>;
 
-    #[derive(Serialize, Deserialize, Debug, Clone)]
+    #[derive(Serialize, Deserialize, Debug, Clone, JsonSchema)]
     #[serde(rename_all = "kebab-case")]
     pub enum PostTransformsInner {
         Window(WindowOperatorWrapper),
         Partition(PartitionOperatorWrapper),
     }
 
-    #[derive(Serialize, Deserialize, Debug, Clone)]
+    #[derive(Serialize, Deserialize, Debug, Clone, JsonSchema)]
     #[serde(tag = "type", rename_all = "kebab-case")]
     pub enum IoRefWrapper {
         Topic(IoConfigRef),
@@ -241,7 +246,7 @@ mod wrapper {
         }
     }
 
-    #[derive(Serialize, Deserialize, Debug, Clone)]
+    #[derive(Serialize, Deserialize, Debug, Clone, JsonSchema)]
     pub struct IoConfigRef {
         pub id: String,
         #[serde(default)]

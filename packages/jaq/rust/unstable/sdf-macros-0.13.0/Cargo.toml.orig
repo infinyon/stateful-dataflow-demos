@@ -1,7 +1,7 @@
 [package]
 name = "sdf-macros"
-version = "0.13.0"
-edition = "2021"
+version.workspace = true
+edition.workspace = true
 description = "SDF macros"
 license = "Apache-2.0"
 keywords = ["sdf"]

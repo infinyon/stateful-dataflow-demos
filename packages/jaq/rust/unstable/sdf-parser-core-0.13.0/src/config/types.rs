@@ -4,6 +4,7 @@ use std::{collections::BTreeMap, ops::Deref};
 use std::str::FromStr;
 
 use anyhow::{anyhow, Result};
+use schemars::JsonSchema;
 use serde::{Deserialize, Serialize};
 
 use sdf_common::render::wit_name_case;
@@ -55,11 +56,12 @@ impl From<BTreeMap<String, MetadataType>> for MetadataTypesMap {
     }
 }
 
-#[derive(Serialize, Clone, Deserialize, Default, Debug, PartialEq, Eq)]
+#[derive(Serialize, Clone, Deserialize, Default, Debug, PartialEq, Eq, JsonSchema)]
 pub struct MetadataTypesMapWrapper {
     #[serde(flatten)]
     #[serde(skip_serializing_if = "HashMap::is_empty")]
-    #[serde(with = "::serde_with::rust::maps_duplicate_key_is_error")]
+    #[serde(deserialize_with = "::serde_with::rust::maps_duplicate_key_is_error::deserialize")]
+    #[serde(serialize_with = "::serde_with::rust::maps_duplicate_key_is_error::serialize")]
     pub map: HashMap<String, MaybeValid<MetadataType>>,
 }
 
@@ -78,7 +80,7 @@ impl TryFrom<MetadataTypesMapWrapper> for MetadataTypesMap {
     }
 }
 
-#[derive(Serialize, Deserialize, Debug, Clone, PartialEq, Eq)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq, Eq, JsonSchema)]
 #[serde(tag = "type")]
 #[serde(rename_all = "kebab-case")]
 pub enum CategoryKind {
@@ -141,7 +143,7 @@ impl CategoryKind {
     }
 }
 
-#[derive(Serialize, Deserialize, Debug, Clone, PartialEq, Eq)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq, Eq, JsonSchema)]
 #[serde(untagged)]
 #[serde(rename_all = "kebab-case")]
 pub enum ColumnType {
@@ -162,18 +164,18 @@ impl ColumnType {
     }
 }
 
-#[derive(Serialize, Deserialize, Debug, Clone, PartialEq, Eq)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq, Eq, JsonSchema)]
 #[serde(rename_all = "kebab-case")]
 pub struct RowType {
     pub properties: BTreeMap<String, ColumnType>,
 }
 
-#[derive(Serialize, Deserialize, Debug, Clone, PartialEq, Eq)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq, Eq, JsonSchema)]
 #[serde(rename_all = "kebab-case")]
 pub struct KeyValueType {
     pub properties: KeyValueProperties,
 }
-#[derive(Serialize, Deserialize, Debug, Clone, PartialEq, Eq)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq, Eq, JsonSchema)]
 #[serde(rename_all = "kebab-case")]
 pub struct KeyValueProperties {
     pub key: Box<MetadataType>,
@@ -186,7 +188,7 @@ impl From<KeyValueProperties> for KeyValueType {
     }
 }
 
-#[derive(Serialize, Deserialize, Debug, Clone, PartialEq, Eq)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq, Eq, JsonSchema)]
 #[serde(untagged)]
 pub enum MetadataTypeInner {
     MetadataTypeTagged(MetadataTypeTagged),
@@ -204,7 +206,7 @@ impl MetadataTypeInner {
     }
 }
 
-#[derive(Serialize, Deserialize, Debug, Clone, PartialEq, Eq)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq, Eq, JsonSchema)]
 #[serde(rename_all = "kebab-case")]
 pub struct MetadataType {
     #[serde(flatten)]
@@ -248,7 +250,7 @@ impl FromStr for MetadataType {
     }
 }
 
-#[derive(Serialize, Deserialize, Debug, Clone, PartialEq, Eq, Default)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq, Eq, Default, JsonSchema)]
 pub struct NoneType {
     #[serde(rename = "type")]
     type_: Option<()>,
@@ -311,7 +313,7 @@ impl From<MetadataTypeInner> for MetadataType {
     }
 }
 
-#[derive(Serialize, Deserialize, Debug, Clone, PartialEq, Eq)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq, Eq, JsonSchema)]
 #[serde(tag = "type")]
 #[serde(rename_all = "kebab-case")]
 pub enum MetadataTypeTagged {
@@ -391,29 +393,29 @@ impl FromStr for MetadataTypeTagged {
     }
 }
 
-#[derive(Serialize, Deserialize, Debug, Clone, PartialEq, Eq)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq, Eq, JsonSchema)]
 pub struct NamedType {
     #[serde(rename = "type")]
     pub ty: String,
 }
 
-#[derive(Serialize, Deserialize, Debug, Clone, PartialEq, Eq)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq, Eq, JsonSchema)]
 pub struct KeyedStateType {
     pub properties: KeyedStateProperties,
 }
 
-#[derive(Serialize, Deserialize, Debug, Clone, PartialEq, Eq)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq, Eq, JsonSchema)]
 pub struct KeyedStateProperties {
     pub key: Box<MetadataType>,
     pub value: Box<MetadataType>,
 }
 
-#[derive(Serialize, Deserialize, Debug, Clone, PartialEq, Eq)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq, Eq, JsonSchema)]
 pub struct ObjectType {
     pub properties: BTreeMap<String, ObjectPropertyType>,
 }
 
-#[derive(Serialize, Deserialize, Debug, Clone, PartialEq, Eq)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq, Eq, JsonSchema)]
 pub struct ObjectPropertyType {
     #[serde(flatten)]
     pub ty: MetadataType,
@@ -423,7 +425,7 @@ pub struct ObjectPropertyType {
     pub serde: SerdeTypeConfig,
 }
 
-#[derive(Serialize, Deserialize, Debug, Clone, PartialEq, Eq, Default)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq, Eq, Default, JsonSchema)]
 pub struct SerdeTypeConfig {
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub deserialize: Option<SerdeFieldConfig>,
@@ -431,7 +433,7 @@ pub struct SerdeTypeConfig {
     pub serialize: Option<SerdeFieldConfig>,
 }
 
-#[derive(Serialize, Deserialize, Debug, Clone, PartialEq, Eq, Default)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq, Eq, Default, JsonSchema)]
 pub struct SerdeFieldConfig {
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub rename: Option<String>,
@@ -457,7 +459,7 @@ impl From<MetadataTypeInner> for ObjectPropertyType {
     }
 }
 
-#[derive(Serialize, Deserialize, Debug, Clone, PartialEq, Eq)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq, Eq, JsonSchema)]
 pub struct EnumType {
     #[serde(rename = "oneOf")]
     pub one_of: BTreeMap<String, EnumVariantType>,
@@ -465,7 +467,7 @@ pub struct EnumType {
     pub tagging: EnumTaggingConfig,
 }
 
-#[derive(Serialize, Deserialize, Default, Debug, Clone, PartialEq, Eq)]
+#[derive(Serialize, Deserialize, Default, Debug, Clone, PartialEq, Eq, JsonSchema)]
 #[serde(rename_all = "kebab-case")]
 pub enum EnumTaggingConfig {
     #[default]
@@ -473,7 +475,7 @@ pub enum EnumTaggingConfig {
     Untagged,
 }
 
-#[derive(Serialize, Deserialize, Debug, Clone, PartialEq, Eq)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq, Eq, JsonSchema)]
 pub struct EnumVariantType {
     #[serde(flatten)]
     pub ty: Option<MetadataType>,
@@ -487,13 +489,13 @@ impl EnumVariantType {
     }
 }
 
-#[derive(Serialize, Deserialize, Debug, Clone, PartialEq, Eq)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq, Eq, JsonSchema)]
 pub struct ListType {
     #[serde(alias = "item")]
     pub items: Box<MetadataType>,
 }
 
-#[derive(Serialize, Deserialize, Debug, Clone, PartialEq, Eq)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq, Eq, JsonSchema)]
 pub struct OptionType {
     pub value: Box<MetadataType>,
 }

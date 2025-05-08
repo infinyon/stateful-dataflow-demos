@@ -1,7 +1,7 @@
 [package]
 name = "sdf-wit"
-version = "0.13.0"
-edition = "2021"
+version.workspace = true
+edition.workspace = true
 description = "Sdf WIT generator for sdf projects"
 license = "Apache-2.0"
 publish = false
@@ -13,11 +13,14 @@ host = [ "dep:sdf-parser-host", "dep:sdf-imports" ]
 [dependencies]
 anyhow = { workspace = true }
 bon = { workspace = true }
-include_dir = { workspace = true }
 wit-encoder = { workspace = true }
 
 sdf-imports = { workspace = true, optional = true }
 sdf-parser-host = { workspace = true, optional = true }
+
+[build-dependencies]
+wit-encoder = { workspace = true }
+wit-parser = { workspace = true }
 
 [dev-dependencies]
 tempfile = { workspace = true }
