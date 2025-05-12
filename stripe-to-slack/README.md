@@ -24,7 +24,7 @@ Grab the webhook URL from the output and add it to Stripe as described in the [n
 #### 2. Add Webhook to Stripe
 
 1. Open the Stripe webhook section - https://dashboard.stripe.com/test/webhooks
-  - Enable derised events
+  - Enable the events you are interested in.
   - Copy/Paste the webhook URL
 
 
