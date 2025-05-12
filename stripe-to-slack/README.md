@@ -15,7 +15,7 @@ The following sections describe how to deploy each component.
 On InfinyOn cloud use the [stripe-webhook.toml](./stripe-webhook.yaml) to create a webhook:
 
   ```bash
-  fluvio cloud webhook create -c use-cases/stripe/stripe-webhook.yaml
+  fluvio cloud webhook create -c stripe-webhook.yaml
   ```
 
 Grab the webhook URL from the output and add it to Stripe as described in the [next section](#2-add-webhook-to-stripe).
@@ -46,10 +46,10 @@ Create a Slack connector that notifies when a Stripe event is received.
   fluvio cloud secret set SLACK_BILLING_SECRET
   ```
 
-4. Start the Slack Billing Connector - [slack-billing-connector.yaml](./use-cases/stripe/slack-billing-connector.yaml)
+4. Start the Slack Billing Connector - [slack-connector.yaml](slack-connector.yaml)
 
   ```bash
-  fluvio cloud connector create -c use-cases/stripe/slack-billing-connector.yaml
+  fluvio cloud connector create -c slack-connector.yaml
   ```
 
 #### 3. Start Stripe Reduce Dataflow
