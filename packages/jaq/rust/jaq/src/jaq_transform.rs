@@ -54,7 +54,8 @@ fn run_jaq_transform(input: Bytes, filter: &Filter<Native<Val>>) -> Result<Optio
             }
         }
         _ => {
-            let buf = serde_json::to_vec(&out_json)?;
+            let result: Vec<Value> = out_json.into_iter().filter(|v| !v.is_null()).collect();
+            let buf = serde_json::to_vec(&result)?;
             Ok(Some(buf.into()))
         }
     }
@@ -121,11 +122,10 @@ mod test {
     use super::*;
 
     #[test]
-    fn test_local() {
+    fn test_fish_local() {
         let creatures = r#"[
             { "name": "Sammy", "type": "shark", "clams": 5 },
             { "name": "Bubbles", "type": "orca", "clams": 3 },
-            { "name": "Splish", "type": "dolphin", "clams": 2 },
             { "name": "Splash", "type": "dolphin", "clams": 2 }
         ]"#
         .as_bytes()
@@ -140,18 +140,17 @@ mod test {
         println!("{}", result);
 
         let out = serde_json::from_slice::<Value>(result.as_ref()).expect("failed");
-        assert_eq!(out, json!(["Sammy", "Bubbles", "Splish", "Splash"]));
+        assert_eq!(out, json!(["Sammy", "Bubbles", "Splash"]));
     }
 
     #[test]
-    fn test_event_match() {
-        let input_file: Vec<u8> = std::fs::read("../../sample-data/event1.json")
-            .expect("cannot read event1 - input file");
-        let filter = std::fs::read_to_string("../../sample-data/filters/invoice-filter.jq")
-            .expect("cannot read filter - input file");
+    fn test_fish_from_file() {
+        let input_file: Vec<u8> = std::fs::read("../../sample-data/fish.json")
+            .expect("cannot read fish - input file");
+        let filter = ".[] | .name";
         let filter = create_filter(&filter).expect("cannot create filter");
-        let output_file: Vec<u8> = std::fs::read("../../sample-data/output/event1.json")
-            .expect("cannot read event1 - output file");
+        let output_file: Vec<u8> = std::fs::read("../../sample-data/output/fish.json")
+            .expect("cannot read fish - output file");
 
         let raw_result = run_jaq_transform(input_file, &filter)
             .expect("cannot transform")
@@ -170,14 +169,28 @@ mod test {
     }
 
     #[test]
-    fn test_event_no_match() {
-        let input_file: Vec<u8> = std::fs::read("../../sample-data/event2.json")
-            .expect("cannot read event2 - input file");
-        let filter = std::fs::read_to_string("../../sample-data/filters/invoice-filter.jq")
+    fn test_player_from_file() {
+        let input_file: Vec<u8> = std::fs::read("../../sample-data/players.json")
+            .expect("cannot read player - input file");
+        let filter = std::fs::read_to_string("../../sample-data/player-conditional-filter.jq")
             .expect("cannot read filter - input file");
         let filter = create_filter(&filter).expect("cannot create filter");
+        let output_file: Vec<u8> = std::fs::read("../../sample-data/output/players.json")
+            .expect("cannot read player - output file");
 
-        let raw_result = run_jaq_transform(input_file, &filter).expect("cannot transform");
-        assert!(raw_result.is_none());
+        let raw_result = run_jaq_transform(input_file, &filter)
+            .expect("cannot transform")
+            .expect("must be some");
+        let result_str = std::str::from_utf8(&raw_result).expect("convert result to str");
+        let result_value =
+            serde_json::from_slice::<Value>(result_str.as_ref()).expect("convert result to value");
+        println!("{}", result_value);
+
+        let output_str = std::str::from_utf8(&output_file).expect("convert output to str");
+        let output_value =
+            serde_json::from_slice::<Value>(output_str.as_ref()).expect("convert output to value");
+        println!("{}", output_value);
+
+        assert_eq!(result_value, output_value);
     }
 }
