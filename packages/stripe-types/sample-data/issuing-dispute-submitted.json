@@ -1,0 +1,18 @@
+{
+  "api_version": "2022-11-15",
+  "created": 1743185636,
+  "data": {
+    "amount": 1000,
+    "created": 1743185635,
+    "currency": "usd",
+    "event_type": "issuing_dispute.submitted",
+    "id": "idp_1R7hPjIXrfseZ4WFQT0CpSqL",
+    "loss_reason": null,
+    "reason": "fraudulent",
+    "status": "submitted"
+  },
+  "fluvio_version": "0.1",
+  "id": "evt_1R7hPkIXrfseZ4WF0ymI8MO4",
+  "livemode": false,
+  "pending_webhooks": 1
+}

@@ -1,0 +1,53 @@
+types:
+  slack_event:
+    type: object
+    properties:
+      blocks:
+        type: list
+        type_name: slack_event_blocks
+        items:
+          type: enum
+          type_name: slack_event_untagged
+          tagging: untagged
+          oneOf:
+            text_section:
+              type: text_section
+            fields_section:
+              type: fields_section
+  text_section:
+    type: object
+    properties:
+      text:
+        type: text_object
+      type:
+        type: enum
+        type_name: text_section_type
+        oneOf:
+          section:
+            type: null
+  fields_section:
+    type: object
+    properties:
+      fields:
+        type: list
+        type_name: fields_section_fields
+        items:
+          type: text_object
+      type:
+        type: enum
+        type_name: fields_section_type
+        oneOf:
+          section:
+            type: null
+  text_object:
+    type: object
+    properties:
+      text:
+        type: string
+      type:
+        type: enum
+        type_name: text_object_type
+        oneOf:
+          mrkdwn:
+            type: null
+

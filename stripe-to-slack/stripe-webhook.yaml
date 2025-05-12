@@ -1,0 +1,9 @@
+meta:
+  name: stripe
+  topic: stripe-origin-events
+  logLevel: debug 
+
+webhook:
+  outputParts: full
+  outputType: json
+  outputUri: full

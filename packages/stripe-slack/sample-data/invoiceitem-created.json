@@ -1,0 +1,22 @@
+{
+  "api_version": "2022-11-15",
+  "created": 1742320724,
+  "data": {
+    "amount": 10000,
+    "currency": "usd",
+    "customer": "cus_OFwBYCNrfB3TFy",
+    "date": 1742320724,
+    "description": "Professional Service",
+    "event_type": "invoiceitem.created",
+    "id": "ii_1R44PYIXrfseZ4WFgt0449QH",
+    "period": {
+      "end": 1742320724,
+      "start": 1742320724
+    },
+    "quantity": 1
+  },
+  "fluvio_version": "0.1",
+  "id": "evt_1R44PZIXrfseZ4WFE2FBB8Q7",
+  "livemode": false,
+  "pending_webhooks": 1
+}

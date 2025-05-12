@@ -1,0 +1,7 @@
+[
+  { "player_id": 1, "username": "ShadowNinja",  "high_score": 1200},
+  { "player_id": 2, "username": "PixelWizard"},
+  { "player_id": 3, "username": "QuestMaster",  "high_score": 4500},
+  { "player_id": 4, "username": "SpeedRacer",   "high_score": 3000},
+  { "player_id": 5, "username": "SkyPirate"}
+]

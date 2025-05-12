@@ -1,7 +1,9 @@
 [workspace]
 members = [
-    "packages/slack/rust/slack-package",
-    "packages/stripe/rust/stripe-types",
+    "packages/slack-types/rust/slack-types",
+    "packages/stripe-types/rust/stripe-types",
+    "packages/jaq/rust/jaq",
+    "packages/stripe-slack/rust/stripe-slack"
 ]
 
 resolver = "2"

@@ -1,0 +1,35 @@
+{
+  "api_version": "2022-11-15",
+  "created": 1743184698,
+  "data": {
+    "amount": null,
+    "client_secret": "src_client_secret_fGmKqE06v0ksx5bDntD2pjLp",
+    "created": 1743184698,
+    "currency": "usd",
+    "customer": null,
+    "event_type": "source.chargeable",
+    "flow": "code_verification",
+    "id": "src_1R7hAcIXrfseZ4WFVqxxLCqm",
+    "object": "source",
+    "owner": {
+      "address": {
+        "city": null,
+        "country": "US",
+        "line1": null,
+        "line2": null,
+        "postal_code": null,
+        "state": null
+      },
+      "email": null,
+      "name": "Jenny Rosen",
+      "phone": null
+    },
+    "statement_descriptor": null,
+    "status": "chargeable",
+    "type": "ach_debit"
+  },
+  "fluvio_version": "0.1",
+  "id": "evt_1R7hAdIXrfseZ4WFxbRRHenJ",
+  "livemode": false,
+  "pending_webhooks": 1
+}

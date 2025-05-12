@@ -1,0 +1,22 @@
+{
+  "api_version": "2022-11-15",
+  "created": 1742320715,
+  "data": {
+    "balance": 0,
+    "created": 1689257742,
+    "currency": "usd",
+    "delinquent": false,
+    "description": null,
+    "email": "nick+fc1@infinyon.com",
+    "event_type": "customer.updated",
+    "id": "cus_OFwBYCNrfB3TFy",
+    "invoice_prefix": "A420CEBA",
+    "name": "Infinyon",
+    "next_invoice_sequence": 1,
+    "phone": null
+  },
+  "fluvio_version": "0.1",
+  "id": "evt_1R44PPIXrfseZ4WFfl4sj1bw",
+  "livemode": false,
+  "pending_webhooks": 1
+}

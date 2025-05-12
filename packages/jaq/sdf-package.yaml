@@ -1,0 +1,19 @@
+apiVersion: 0.6.0
+
+meta:
+  name: jaq
+  version: 0.0.1
+  namespace: examples
+
+functions:
+  jaq-transform:
+    operator: filter-map
+    inputs:
+      - name: input
+        type: bytes
+    output:
+      type: bytes
+      optional: true
+
+dev:
+  converter: raw 

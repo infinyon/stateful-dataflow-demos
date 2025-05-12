@@ -1,0 +1,39 @@
+{
+	"blocks": [
+		{
+			"type": "section",
+			"text": {
+				"type": "mrkdwn",
+				"text": "New *Stripe* event - *invoice.created* (draft) :memo:"
+			}
+		},
+		{
+			"type": "section",
+			"fields": [
+        {
+					"type": "mrkdwn",
+					"text": "*Account:*\nInfinyOn (US)"
+				},
+				{
+					"type": "mrkdwn",
+					"text": "*Customer:*\nNick Cardin <nick+fc9@infinyon.com>"
+				},
+				{
+					"type": "mrkdwn",
+					"text": "*Amount Due:*\n350.00 USD"
+				},
+				{
+					"type": "mrkdwn",
+					"text": "*Amount Paid:*\n0.00 USD"
+				},				{
+					"type": "mrkdwn",
+					"text": "*Period:*\nMar 10, 2025 - Apr 23, 2025"
+				},
+				{
+					"type": "mrkdwn",
+					"text": "*Items:*\n -"
+				}
+			]
+		}
+  ]
+}
