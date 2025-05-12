@@ -26,6 +26,11 @@ topics:
     schema:
       value:
         type: bytes
+  
+  stripe-events-not-handled:
+    schema:
+      value:
+        type: bytes
 
 services:
   reduce-invoice:
@@ -771,6 +776,40 @@ services:
     sinks:
       - type: topic
         id: stripe-events
+
+  reduce-not-handled:
+    sources:
+      - type: topic
+        id: stripe-origin-events
+
+    transforms:
+      - operator: filter-map
+        uses: jaq-transform
+        with: 
+          jaq-filter: | 
+            if ( .body.type
+                | ( startswith("invoice.")
+                  or startswith("customer.")
+                  or startswith("charge.")
+                  or startswith("subscription_schedule.")
+                  or startswith("invoiceitem.")
+                  or startswith("payment_intent.")
+                  or startswith("payout.")
+                  or startswith("issuing_cardholder.")
+                  or startswith("issuing_card.")
+                  or startswith("issuing_dispute.")
+                  or startswith("topup.")
+                  or startswith("source.")
+                  or startswith("issuing_authorization."))
+                | not
+              )
+            then .body
+            else null
+            end
+
+    sinks:
+      - type: topic
+        id: stripe-events-not-handled
 
 dev:
   imports:

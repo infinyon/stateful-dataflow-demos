@@ -1,6 +1,5 @@
-payment_method.attached
-customer_cash_balance_transaction.created
-cash_balance.funds_available
+customer_cash_balance_transaction
+cash_balance
 issuing_transaction.created
-balance.available
 issuing_transaction.updated
+balance.available
