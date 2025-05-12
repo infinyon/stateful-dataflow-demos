@@ -12,15 +12,13 @@ sdf run
 
 Use `--ui` to see the dataflow UI.
 
-### Generate Records & Check Result
+### Test Events
 
 Generate one event:
 
 ```bash
-fluvio produce stripe-origin-events -f ./sample-data/event-send-invoice.json --raw
+fluvio produce stripe-origin-events -f ./sample-data/invoice-created.json --raw
 ```
-
-fluvio produce stripe-origin-events -f ./sample-data/subscription-details.json --raw
 
 Generate all events:
 
@@ -31,5 +29,19 @@ fluvio produce stripe-origin-events -f ./sample-data/events.json
 Check the result:
 
 ```bash
-fluvio consume stripe-events -Bd
+fluvio consume stripe-events -Bd -O json
+```
+
+### Test "Not Handled" Events
+
+These events have not been processed by JAQ. It is left to the user to add any additional events as required by the use case.
+
+```bash
+fluvio produce stripe-origin-events -f ./sample-data/events-not-handled.json
+```
+
+Check the result:
+
+```bash
+fluvio consume stripe-events-not-handled -Bd -O json
 ```
