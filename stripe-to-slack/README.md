@@ -1,14 +1,24 @@
 ### Stripe to Slack Dataflow
 
-The end-to-end use-case will be a webhook that listens to Stripe events, converts them to SDF types, and sends notification to Slack. The example has the following components:
+The end-to-end use-case will be a webhook that listens to Stripe events, converts them to SDF types, and sends notification to Slack. 
+
+### Prerequisites
+
+This dataflow reuquires an incoming webhook, which requires an account on [InfinyOn Cloud](https://infinyon.cloud).
+If you want to run on test data locally, skip to [Deploy and on Local Machine (Test)](#deploy-and-on-local-machine-test).
+
+<hr />
+
+### Deploy on InfinyOn Cloud (Production)
+
+The following steps will deploy the following resources:
 
 1. [Stripe webhook](./stripe-webhook.yaml) for incoming events.
 2. [Slack connector](./slack-connector.yaml) for outgoing notifications.
 3. [Stripe reduce dataflow](../stripe-reduce) for converting Stripe types to known types.
 4. [Stripe to Slack dataflow](./stripe-slack) for converting Stripe events to Slack notifications.
 
-The following sections describe how to deploy each component.
-
+All packages have been published on the Hub, and they are ready for use in dataflows.
 
 #### 1. Create a webhook for Stripe 
 
@@ -52,31 +62,92 @@ Create a Slack connector that notifies when a Stripe event is received.
   fluvio cloud connector create -c slack-connector.yaml
   ```
 
-#### 3. Start Stripe Reduce Dataflow
+#### 3. Deploy Stripe Reduce Dataflow
 
-Start the `stripe-reduce` dataflow that converts Stripe events to events defined in InfinyOn Stripe Schema - [stripe-reduce/dataflow.yaml](./stripe-reduce/dataflow.yaml)
+Deploy the `stripe-reduce` dataflow that converts Stripe events to events defined in InfinyOn Stripe Schema - [stripe-reduce/dataflow.yaml](./stripe-reduce/dataflow.yaml)
 
 ```bash
 cd ./stripe-reduce
-sdf run
+sdf deploy
 ```
 
 This dataflow uses [jaq package](../packages/jaq) to convert Stripe events into a simpler form that is easier to work with.
 
 
-#### 4. Start Stripe to Slack Dataflow
+#### 4. Deploy Stripe to Slack Dataflow
 
-Start the `stripe-slack` dataflow that converts Stripe events to Slack notifications - [stripe-slack/dataflow.yaml](./stripe-slack/dataflow.yaml)
+Deploy the `stripe-slack` dataflow that converts Stripe events to Slack notifications - [stripe-slack/dataflow.yaml](./stripe-slack/dataflow.yaml)
 
 ```bash
 cd ./stripe-slack
-sdf run
+sdf deploy
 ```
 
 This dataflow uses [stripe-types](../packages/stripe-types), [slack-types](../packages/slack-types), and [stripe-to-slack](../packages/stripe-to-slack) packages to convert Stripe events to Slack notifications.
 
 
 #### 5. End-to-end Test
+
+Then use Stripe UI to trigger events and watch the notifications in Slack.
+
+
+<hr />
+
+### Deploy on Local Machine (Test)
+
+You may run and test the dataflows on your local machine by producing and consuming events to and from topics.
+
+#### 1. Build the Packages
+
+First, build the packages that are used by the dataflows.
+
+1. Build `jaq` package
+
+```bash
+cd ../packages/jaq && sdf build && cd ../../stripe-to-slack
+```
+
+2. Build `slack-types` package
+
+```bash
+cd ../packages/slack-types && sdf build && cd ../../stripe-to-slack
+```
+
+3. Build `stripe-types` package
+
+```bash
+cd ../packages/stripe-types && sdf build && cd ../../stripe-to-slack
+```
+
+4. Build `stripe-slack` package
+
+```bash
+cd ../packages/stripe-slack && sdf build && cd  ../../stripe-to-slack
+```
+
+#### 2. Start Stripe Reduce Dataflow
+
+Start the `stripe-reduce` dataflow that converts Stripe events to events defined in InfinyOn Stripe Schema - [stripe-reduce/dataflow.yaml](./stripe-reduce/dataflow.yaml)
+
+```bash
+cd ./stripe-reduce && sdf run
+```
+
+This dataflow uses [jaq package](../packages/jaq) to convert Stripe events into a simpler form that is easier to work with.
+
+
+#### 3. Start Stripe to Slack Dataflow
+
+In another terminal, start the `stripe-slack` dataflow. This dataflow converts Stripe events to Slack notifications - [stripe-slack/dataflow.yaml](./stripe-slack/dataflow.yaml)
+
+```bash
+cd ./stripe-slack && sdf run
+```
+
+This dataflow uses [stripe-types](../packages/stripe-types), [slack-types](../packages/slack-types), and [stripe-to-slack](../packages/stripe-to-slack) packages to convert Stripe events to Slack notifications.
+
+
+#### 4. End-to-end Test
 
 Generate a test event from local file & show it display in Slack.
 
@@ -91,7 +162,3 @@ fluvio consume slack-stripe-events -Bd -O json
 ```
 
 Slack should also display the notifications.
-
-#### Next Steps
-
-* Then use Stripe UI to trigger additional events.
