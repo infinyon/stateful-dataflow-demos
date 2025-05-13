@@ -2,6 +2,7 @@ apiVersion: 0.1.0
 meta:
   version: 0.2.12
   name: slack-billing
+  logLevel: debug 
   type: http-sink
   topic: slack-stripe-events
   secrets:

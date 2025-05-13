@@ -49,8 +49,9 @@ Grab the webhook URL from the output and add it to Stripe as described in the [n
 Create a Slack connector that notifies when a Stripe event is received.
 
 1. Add Slack App - https://api.slack.com/apps
-2. Enable webhooks - https://hooks.slack.com/services/
-3. Add webhook secret to InfinyOn Cloud
+2. Add an `Incoming Webhook` to get the webhook URL and secret:
+  - https://hooks.slack.com/services/XXXXXXXX/YYYYYYYY/ZZZZZZZZZZZZZZZZZZZZZZZZ
+3. Take the secret components and add to InfinyOn Cloud:
 
   ```bash
   fluvio cloud secret set SLACK_BILLING_SECRET
