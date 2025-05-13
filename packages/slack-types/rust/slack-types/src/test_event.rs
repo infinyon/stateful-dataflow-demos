@@ -1,8 +1,8 @@
 use sdfg::Result;
 use sdfg::sdf;
-use crate::bindings::examples::slack_types_types::types::SlackEvent;
+use crate::bindings::infinyon::slack_types_types::types::SlackEvent;
 #[allow(unused_imports)]
-use crate::bindings::examples::slack_types_types::types::*;
+use crate::bindings::infinyon::slack_types_types::types::*;
 #[sdf(fn_name = "test-event")]
 pub(crate) fn test_event(sev: SlackEvent) -> Result<SlackEvent> {
     Ok(sev)

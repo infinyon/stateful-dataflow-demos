@@ -2,8 +2,8 @@ apiVersion: 0.6.0
 
 meta:
   name: jaq
-  version: 0.0.1
-  namespace: examples
+  version: 0.0.2
+  namespace: infinyon
 
 functions:
   jaq-transform:

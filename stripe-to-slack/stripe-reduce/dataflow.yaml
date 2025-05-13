@@ -2,7 +2,7 @@ apiVersion: 0.6.0
 meta:
   name: stripe-reduce
   version: 0.1.0
-  namespace: examples
+  namespace: infinyon
 
 config:
   converter: raw
@@ -12,7 +12,7 @@ config:
       position: End  
 
 imports:
-  - pkg: examples/jaq@0.0.1
+  - pkg: infinyon/jaq@0.0.2
     functions:
       - name: jaq-transform
 
@@ -813,5 +813,5 @@ services:
 
 dev:
   imports:
-    - pkg: examples/jaq@0.0.1
+    - pkg: infinyon/jaq@0.0.2
       path: ../../packages/jaq

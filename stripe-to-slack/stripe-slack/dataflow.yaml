@@ -12,13 +12,13 @@ config:
       position: End  
 
 imports:
-  - pkg: examples/stripe-types@0.0.1
+  - pkg: infinyon/stripe-types@0.0.1
     types:
       - name: stripe-event
-  - pkg: examples/slack-types@0.0.1
+  - pkg: infinyon/slack-types@0.0.1
     types:
       - name: slack-event
-  - pkg: examples/stripe-slack@0.0.1
+  - pkg: infinyon/stripe-slack@0.0.1
     functions:
       - name: stripe-to-slack
 
@@ -49,9 +49,9 @@ services:
 
 dev:
   imports:
-    - pkg: examples/stripe-types@0.0.1
+    - pkg: infinyon/stripe-types@0.0.1
       path: ../../packages/stripe-types
-    - pkg: examples/slack-types@0.0.1
+    - pkg: infinyon/slack-types@0.0.1
       path: ../../packages/slack-types
-    - pkg: examples/stripe-slack@0.0.1
+    - pkg: infinyon/stripe-slack@0.0.1
       path: ../../packages/stripe-slack

@@ -1,9 +1,9 @@
 use sdfg::Result;
 use sdfg::sdf;
-use crate::bindings::examples::stripe_slack_types::types::SlackEvent;
-use crate::bindings::examples::stripe_slack_types::types::StripeEvent;
+use crate::bindings::infinyon::stripe_slack_types::types::SlackEvent;
+use crate::bindings::infinyon::stripe_slack_types::types::StripeEvent;
 #[allow(unused_imports)]
-use crate::bindings::examples::stripe_slack_types::types::*;
+use crate::bindings::infinyon::stripe_slack_types::types::*;
 
 use chrono::{Utc, TimeZone};
 

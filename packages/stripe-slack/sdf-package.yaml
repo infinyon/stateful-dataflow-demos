@@ -3,13 +3,13 @@ apiVersion: 0.6.0
 meta:
   name: stripe-slack
   version: 0.0.1
-  namespace: examples
+  namespace: infinyon
 
 imports:
-  - pkg: examples/stripe-types@0.0.1
+  - pkg: infinyon/stripe-types@0.0.1
     types:
       - name: stripe-event
-  - pkg: examples/slack-types@0.0.1
+  - pkg: infinyon/slack-types@0.0.1
     types:
       - name: slack-event
 
@@ -24,7 +24,7 @@ functions:
 
 dev:
   imports:
-    - pkg: examples/stripe-types@0.0.1
+    - pkg: infinyon/stripe-types@0.0.1
       path: ../stripe-types
-    - pkg: examples/slack-types@0.0.1
+    - pkg: infinyon/slack-types@0.0.1
       path: ../slack-types

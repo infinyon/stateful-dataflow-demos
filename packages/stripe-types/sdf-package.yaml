@@ -3,7 +3,7 @@ apiVersion: 0.6.0
 meta:
   name: stripe-types
   version: 0.0.1
-  namespace: examples
+  namespace: infinyon
 
 types:
   stripe_event:

@@ -8,7 +8,7 @@ use serde_json::Value;
 use sdfg::sdf;
 use sdfg::Result;
 
-use crate::bindings::examples::jaq::types::Bytes;
+use crate::bindings::infinyon::jaq::types::Bytes;
 
 static FILTER: OnceLock<Result<Filter<Native<Val>>, JaqError>> = OnceLock::new();
 
