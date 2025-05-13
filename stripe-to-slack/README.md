@@ -130,7 +130,8 @@ cd ../packages/stripe-slack && sdf build && cd  ../../stripe-to-slack
 Start the `stripe-reduce` dataflow that converts Stripe events to events defined in InfinyOn Stripe Schema - [stripe-reduce/dataflow.yaml](./stripe-reduce/dataflow.yaml)
 
 ```bash
-cd ./stripe-reduce && sdf run
+cd ./stripe-reduce
+sdf run
 ```
 
 This dataflow uses [jaq package](../packages/jaq) to convert Stripe events into a simpler form that is easier to work with.
@@ -141,7 +142,8 @@ This dataflow uses [jaq package](../packages/jaq) to convert Stripe events into 
 In another terminal, start the `stripe-slack` dataflow. This dataflow converts Stripe events to Slack notifications - [stripe-slack/dataflow.yaml](./stripe-slack/dataflow.yaml)
 
 ```bash
-cd ./stripe-slack && sdf run
+cd ./stripe-slack
+sdf run
 ```
 
 This dataflow uses [stripe-types](../packages/stripe-types), [slack-types](../packages/slack-types), and [stripe-to-slack](../packages/stripe-to-slack) packages to convert Stripe events to Slack notifications.
