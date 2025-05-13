@@ -5,9 +5,9 @@ Dataflows for complex use cases:
 * [Stripe to Slack](./stripe-to-slack)
 
 
-### DataFlow Architecture
+### Anatomy of a Data Pipeline
 
-Implementing an event-driven dataflow can be challenging — raw webhooks from third-party vendors like Stripe or GitHub are typically verbose and unwieldy for analytics. To simplify downstream processing, we split the pipeline into two distinct stages:
+Implementing an event-driven end-to-end data pipeline can be challenging — raw webhooks from third-party vendors like Stripe or GitHub are typically verbose and unwieldy for analytics. To simplify downstream processing, we split the pipeline into two distinct stages:
 
 #### Reduce
 Converts raw vendor events into compact, Fluvio-native types.
