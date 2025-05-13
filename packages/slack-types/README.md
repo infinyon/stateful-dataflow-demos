@@ -4,6 +4,12 @@ The slack package ensures the Slack events are structured based on the [slack-sc
 
 #### SDF Tests
 
+Build the project:
+
+```bash
+sdf build
+```
+
 Test events parsing:
 
 ```bash

@@ -7,7 +7,11 @@ You may use the following tool to test you `JQ` expression: - https://gedenkt.at
 
 The JAQ filtering format expects an if/else expression as to match a `filter-map` SDF operation. This construct allows you to use a filter operation as well as a conditional operation. 
 
-Let's take a look:
+If you want to test localy, you must run:
+
+```bash
+sdf build
+```
 
 ### Filter Statement
 
