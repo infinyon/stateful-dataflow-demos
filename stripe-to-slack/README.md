@@ -5,7 +5,7 @@ The end-to-end use-case will be a webhook that listens to Stripe events, convert
 ### Prerequisites
 
 This dataflow reuquires an incoming webhook, which requires an account on [InfinyOn Cloud](https://infinyon.cloud).
-If you want to run on test data locally, skip to [Deploy and on Local Machine (Test)](#deploy-and-on-local-machine-test).
+If you want to run on test data locally, skip to [Deploy and on Local Machine (Test)](#deploy-on-local-machine-test).
 
 <hr />
 
