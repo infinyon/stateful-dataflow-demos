@@ -18,7 +18,7 @@ imports:
   - pkg: infinyon/slack-types@0.0.1
     types:
       - name: slack-event
-  - pkg: infinyon/stripe-slack@0.0.1
+  - pkg: infinyon/stripe-slack@0.0.2
     functions:
       - name: stripe-to-slack
 
@@ -53,5 +53,5 @@ dev:
       path: ../../packages/stripe-types
     - pkg: infinyon/slack-types@0.0.1
       path: ../../packages/slack-types
-    - pkg: infinyon/stripe-slack@0.0.1
+    - pkg: infinyon/stripe-slack@0.0.2
       path: ../../packages/stripe-slack
