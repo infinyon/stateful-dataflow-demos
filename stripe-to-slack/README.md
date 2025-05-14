@@ -35,14 +35,8 @@ Grab the webhook URL from the output and add it to Stripe as described in the [n
 
 1. Open the Stripe webhook section - https://dashboard.stripe.com/test/webhooks
   - Enable the events you are interested in.
-  - Copy/Paste the webhook URL
+  - Paste the InfinyOn webhook URL from the output of the previous step.
 
-
-2. Generate some events and see them in the `stripe-origin-events` topic:
-
-  ```bash 
-  fluvio consume stripe-origin-events -Bd -O json
-  ```
 
 #### 3. Create a Slack Connector
 

@@ -2,7 +2,7 @@ apiVersion: 0.6.0
 
 meta:
   name: stripe-slack
-  version: 0.0.1
+  version: 0.0.2
   namespace: infinyon
 
 imports:
