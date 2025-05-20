@@ -1,7 +1,7 @@
 apiVersion: 0.6.0
 meta:
   name: stripe-to-slack
-  version: 0.1.0
+  version: 0.1.1
   namespace: infinyon
 
 config:
@@ -15,10 +15,10 @@ imports:
   - pkg: infinyon/stripe-types@0.0.1
     types:
       - name: stripe-event
-  - pkg: infinyon/slack-types@0.0.1
+  - pkg: infinyon/slack-types@0.0.3
     types:
       - name: slack-event
-  - pkg: infinyon/stripe-slack@0.0.2
+  - pkg: infinyon/stripe-slack@0.0.4
     functions:
       - name: stripe-to-slack
 
@@ -51,7 +51,7 @@ dev:
   imports:
     - pkg: infinyon/stripe-types@0.0.1
       path: ../../packages/stripe-types
-    - pkg: infinyon/slack-types@0.0.1
+    - pkg: infinyon/slack-types@0.0.3
       path: ../../packages/slack-types
-    - pkg: infinyon/stripe-slack@0.0.2
+    - pkg: infinyon/stripe-slack@0.0.4
       path: ../../packages/stripe-slack

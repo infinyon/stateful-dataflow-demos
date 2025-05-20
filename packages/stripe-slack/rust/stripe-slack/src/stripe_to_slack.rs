@@ -31,78 +31,102 @@ pub(crate) fn stripe_to_slack(se: StripeEvent) -> Result<SlackEvent> {
 // ----- Invoice handling -----
 
 fn invoice_to_slack_event(inv: &Invoice, livemode: bool) -> SlackEvent {
-    let status_text = format_status(&inv.status.as_ref().map(|s| format!("{:?}", s)).unwrap_or_default());
-    let title_text = format_event_title(&humalize_event_type(&inv.event_type), Some(status_text.as_str()), livemode);
-
-    let fields = vec![
+    let header = format_header(&humalize_event_type(&inv.event_type), Some(":moneybag:"), livemode);
+    let account_fields = vec![
         format!("*Account:*\n {} ({})", 
-            inv.account_name.clone().unwrap_or_default(), inv.account_country.clone().unwrap_or_default()),
+            inv.account_name.clone().unwrap_or_default(), 
+            inv.account_country.clone().unwrap_or_default()
+        ),
         format!("*Customer:*\n {} <{}>", 
-            inv.customer_name.clone().unwrap_or_default(), inv.customer_email.clone().unwrap_or_default()),
+            inv.customer_name.clone().unwrap_or_default(), 
+            inv.customer_email.clone().unwrap_or_default()
+        ),
+    ];
+    let amount_fields = vec![
         format!("*Amount Due:*\n {}", 
             format_money(inv.amount_due.into(), &inv.currency)),
         format!("*Amount Paid:*\n {}", 
             format_money(inv.amount_paid.into(), &inv.currency)),
-        format!("*Period:*\n {} – {}", 
-            format_timestamp(inv.period_start), format_timestamp(inv.period_end)),
-        format!("*Items:*\n {}", 
-            format_invoice_items(&inv.lines)),
+    ];
+    let period_text = format!("*Period:*\n {} – {}", 
+        format_timestamp(inv.period_start), 
+        format_timestamp(inv.period_end)
+    );
+    let itemized_text = format!("*Itemized:*{}", 
+        format_invoice_items(&inv.lines)
+    );
+    let status_text = format!("*Status:*\n {}", 
+        get_enum_text(&inv.status.as_ref().map(|s| format!("{:?}", s)).unwrap_or_default())
+    );
+
+    // Build known blocks
+    let blocks = vec![
+        make_header(header),
+        make_divider(),
+        make_fields_section(account_fields),
+        make_text_section(period_text),
+        make_fields_section(amount_fields),
+        make_text_section(itemized_text),
+        make_text_section(status_text)
     ];
 
-    SlackEvent { blocks: vec![
-        make_text_section(title_text),
-        make_fields_section(fields),
-    ]}
+    SlackEvent{ blocks }
 }
 
 // ----- Invoiceitem handling -----
 
 fn invoiceitem_to_slack_event(ii: &Invoiceitem, livemode: bool) -> SlackEvent {
-    let title_text = format_event_title(&humalize_event_type(&ii.event_type), None, livemode);
-
-    let mut fields = vec![
+    let header = format_header(&humalize_event_type(&ii.event_type), Some(":memo:"), livemode);
+    let fields = vec![
         format!("*Item ID:*\n {}", ii.id),
         format!("*Amount:*\n {}", format_money(ii.amount.into(), &ii.currency)),
         format!("*Quantity:*\n {}", ii.quantity),
         format!("*Date:*\n {}", format_timestamp(ii.date))
     ];
+
+    // Build known blocks
+    let mut blocks = vec![
+        make_header(header),
+        make_divider(),
+        make_fields_section(fields)
+    ];
+
+    // Add optional blocks
     if let Some(desc) = &ii.description {
-        fields.push(format!("*Description:*\n {}", desc));
+        blocks.push(make_text_section(format!("*Description:*\n {}", desc)));
     }
 
-    SlackEvent { blocks: vec![
-        make_text_section(title_text),
-        make_fields_section(fields),
-    ]}
+    SlackEvent{ blocks }
 }
 
 // ----- Charge handling -----
 
 fn charge_to_slack_event(ch: &Charge, livemode: bool) -> SlackEvent {
-    let status_text = format_status(format!("{:?}", ch.status).as_str());
-    let title_text = format_event_title(&humalize_event_type(&ch.event_type), Some(status_text.as_str()), livemode);
-
+    let header = format_header(&humalize_event_type(&ch.event_type), Some(":credit_card:"), livemode);
     let mut fields = vec![
         format!("*Charge ID:*\n {}", ch.id),
         format!("*Amount:*\n {}", format_money(ch.amount.into(), &ch.currency)),
-        format!("*Status:*\n {}", status_text),
         format!("*Description:*\n {}", ch.description.clone().unwrap_or_default()),
+        format!("*Status:*\n {}", get_enum_text(format!("{:?}", ch.status).as_str())),
     ];
     if let Some(cust) = &ch.customer {
         fields.push(format!("*Customer:*\n {}", cust));
     }
 
-    SlackEvent { blocks: vec![
-        make_text_section(title_text),
-        make_fields_section(fields),
-    ]}
+    // Build known blocks
+    let blocks = vec![
+        make_header(header),
+        make_divider(),
+        make_fields_section(fields)
+    ];
+    
+    SlackEvent{ blocks }
 }
 
 // ----- Customer handling -----
 
 fn customer_to_slack_event(c: &Customer, livemode: bool) -> SlackEvent {
-    let title_text = format_event_title(&humalize_event_type(&c.event_type), None, livemode);
-
+    let header = format_header(&humalize_event_type(&c.event_type), Some(":office_worker:"), livemode);    
     let mut fields = vec![
         format!("*Customer ID:*\n {}", c.id),
     ];
@@ -112,109 +136,126 @@ fn customer_to_slack_event(c: &Customer, livemode: bool) -> SlackEvent {
     if let Some(email) = &c.email {
         fields.push(format!("*Email:*\n {}", email));
     }
-    if let Some(desc) = &c.description {
-        fields.push(format!("*Description:*\n {}", desc));
-    }
     
-    SlackEvent { blocks: vec![ 
-        make_text_section(title_text), 
-        make_fields_section(fields) 
-    ]}
+    // Build known blocks
+    let mut blocks = vec![
+        make_header(header),
+        make_divider(),
+        make_fields_section(fields)
+    ];
+
+    // Add optional blocks
+    if let Some(desc) = &c.description {
+        blocks.push(make_text_section(format!("*Description:*\n {}", desc)));
+    }
+
+    SlackEvent{ blocks }
 }
 
 // ----- Issuing Authorization handling -----
 
 fn issuingauthorization_to_slack_event(ia: &IssuingAuthorization, livemode: bool) -> SlackEvent {
-    let status_text = format_status(format!("{:?}", ia.status).as_str());
-    let title_text = format_event_title(&humalize_event_type(&ia.event_type), Some(status_text.as_str()), livemode);
+    let header = format_header(&humalize_event_type(&ia.event_type), Some(":ok:"), livemode);
 
     let fields = vec![
         format!("*Authorization ID:*\n {}", ia.id),
         format!("*Amount:*\n {}", format_money(ia.amount.into(), &ia.currency)),
         format!("*Merchant Amount:*\n {}", format_money(ia.merchant_amount.into(), &ia.merchant_currency)),
-        format!("*Status:*\n {}", status_text),
         format!("*Card:*\n {}", ia.card),
         format!("*Approved:*\n {}", ia.approved),
+        format!("*Status:*\n {}",  get_enum_text(format!("{:?}", ia.status).as_str())),
     ];
 
-    SlackEvent { blocks: vec![ 
-        make_text_section(title_text), 
-        make_fields_section(fields) 
-    ]}
+    // Build known blocks
+    let blocks = vec![
+        make_header(header),
+        make_divider(),
+        make_fields_section(fields)
+    ];
+    
+    SlackEvent{ blocks }
 }
 
 // ----- Issuing Card handling -----
 
 fn issuingcard_to_slack_event(ic: &IssuingCard, livemode: bool) -> SlackEvent {
-    let status_text = format_status(format!("{:?}", ic.status).as_str());
-    let title_text = format_event_title(&humalize_event_type(&ic.event_type), Some(status_text.as_str()), livemode);
+    let header = format_header(&humalize_event_type(&ic.event_type), Some(":card_index:"), livemode);    
 
     let fields = vec![
         format!("*Card ID:*\n {}", ic.id),
         format!("*Brand:*\n {}", ic.brand),
         format!("*Last4:*\n {}", ic.last4),
-        format!("*Status:*\n {}", status_text),
-        format!("*Type:*\n {}", format_status(format!("{:?}", ic.type_).as_str())),
+        format!("*Type:*\n {}", get_enum_text(format!("{:?}", ic.type_).as_str())),
         format!("*Exp:*\n {}/{}", ic.exp_month, ic.exp_year),
+        format!("*Status:*\n {}", get_enum_text(format!("{:?}", ic.status).as_str())),
     ];
 
-    SlackEvent { blocks: vec![ 
-        make_text_section(title_text), 
-        make_fields_section(fields) 
-    ]}
+    // Build known blocks
+    let blocks = vec![
+        make_header(header),
+        make_divider(),
+        make_fields_section(fields)
+    ];
+    
+    SlackEvent{ blocks }
 }
 
 // ----- Issuing Cardholder handling -----
 
 fn issuingcardholder_to_slack_event(ih: &IssuingCardholder, livemode: bool) -> SlackEvent {
-    let status_text = format_status(format!("{:?}", ih.status).as_str());
-    let title_text = format_event_title(&humalize_event_type(&ih.event_type), Some(status_text.as_str()), livemode);
-
+    let header = format_header(&humalize_event_type(&ih.event_type), Some(":envelope_with_arrow:"), livemode);      
+    
     let fields = vec![
         format!("*Cardholder ID:*\n {}", ih.id),
         format!("*Name:*\n {}", ih.name),
         format!("*Email:*\n {}", ih.email.clone().unwrap_or_default()),
-        format!("*Status:*\n {}", status_text),
+        format!("*Status:*\n {}",  get_enum_text(format!("{:?}", ih.status).as_str())),
     ];
 
-    SlackEvent { blocks: vec![ 
-        make_text_section(title_text), 
-        make_fields_section(fields) 
-    ]}
+    // Build known blocks
+    let blocks = vec![
+        make_header(header),
+        make_divider(),
+        make_fields_section(fields)
+    ];
+    
+    SlackEvent{ blocks }
 }
 
 // ----- Issuing Dispute handling -----
 
 fn issuingdispute_to_slack_event(idp: &IssuingDispute, livemode: bool) -> SlackEvent {
-    let status_text = format_status(format!("{:?}", idp.status).as_str());
-    let title_text = format_event_title(&humalize_event_type(&idp.event_type), Some(status_text.as_str()), livemode);
+    let header = format_header(&humalize_event_type(&idp.event_type), Some(":warning:"), livemode);      
 
     let mut fields = vec![
         format!("*Dispute ID:*\n {}", idp.id),
         format!("*Amount:*\n {}", format_money(idp.amount.into(), &idp.currency)),
-        format!("*Status:*\n {}", status_text),
-        format!("*Reason:*\n {}", format_status(format!("{:?}", idp.reason).as_str())),
+        format!("*Reason:*\n {}", get_enum_text(format!("{:?}", idp.reason).as_str())),
+        format!("*Status:*\n {}", get_enum_text(format!("{:?}", idp.status).as_str())),
     ];
     if let Some(lr) = &idp.loss_reason {
-        fields.push(format!("*Loss Reason:*\n {}", format_status(format!("{:?}",lr).as_str())));
+        fields.push(format!("*Loss Reason:*\n {}", get_enum_text(format!("{:?}",lr).as_str())));
     }
 
-    SlackEvent {blocks: vec![ 
-        make_text_section(title_text), 
-        make_fields_section(fields) 
-    ]}
+    // Build known blocks
+    let blocks = vec![
+        make_header(header),
+        make_divider(),
+        make_fields_section(fields)
+    ];
+    
+    SlackEvent{ blocks }
 }
 
 // ----- Payment Intent handling -----
 
 fn paymentintent_to_slack_event(pi: &PaymentIntent, livemode: bool) -> SlackEvent {
-    let status_text = format_status(format!("{:?}", pi.status).as_str());
-    let title_text = format_event_title(&humalize_event_type(&pi.event_type), Some(status_text.as_str()), livemode);
+    let header = format_header(&humalize_event_type(&pi.event_type), Some(":money_with_wings:"), livemode);      
 
     let mut fields = vec![
         format!("*Intent ID:*\n {}", pi.id),
         format!("*Amount:*\n {}", format_money(pi.amount.into(), &pi.currency)),
-        format!("*Status:*\n {}", status_text),
+        format!("*Status:*\n {}", get_enum_text(format!("{:?}", pi.status).as_str())),
     ];
     if let Some(received) = pi.amount_received {
         fields.push(format!("*Received:*\n {}", format_money(received.into(), &pi.currency)));
@@ -223,16 +264,20 @@ fn paymentintent_to_slack_event(pi: &PaymentIntent, livemode: bool) -> SlackEven
         fields.push(format!("*Canceled At:*\n {}", format_timestamp(canceled)));
     }
 
-    SlackEvent { blocks: vec![ 
-        make_text_section(title_text), 
-        make_fields_section(fields) 
-    ]}
+    // Build known blocks
+    let blocks = vec![
+        make_header(header),
+        make_divider(),
+        make_fields_section(fields)
+    ];
+    
+    SlackEvent{ blocks }
 }
 
 // ----- Payout handling -----
 
 fn payout_to_slack_event(po: &Payout, livemode: bool) -> SlackEvent {
-    let title_text = format_event_title(&humalize_event_type(&po.event_type), Some(po.status.as_str()), livemode);
+    let header = format_header(&humalize_event_type(&po.event_type), Some(":hand_with_index_finger:"), livemode);      
 
     let fields = vec![
         format!("*Payout ID:*\n {}", po.id),
@@ -241,67 +286,79 @@ fn payout_to_slack_event(po: &Payout, livemode: bool) -> SlackEvent {
         format!("*Arrival Date:*\n {}", format_timestamp(po.arrival_date)),
     ];
 
-    SlackEvent { blocks: vec![ 
-        make_text_section(title_text), 
-        make_fields_section(fields) 
-    ]}
+    // Build known blocks
+    let blocks = vec![
+        make_header(header),
+        make_divider(),
+        make_fields_section(fields)
+    ];
+    
+    SlackEvent{ blocks }
 }
 
 // ----- Source handling -----
 
 fn source_to_slack_event(so: &Source, livemode: bool) -> SlackEvent {
-    let title_text = format_event_title(&humalize_event_type(&so.event_type), Some(so.status.as_str()), livemode);
-
+    let header = format_header(&humalize_event_type(&so.event_type), Some(":office:"), livemode);      
     let mut fields = vec![
         format!("*Source ID:*\n {}", so.id),
+        format!("*Type:*\n {}", get_enum_text(format!("{:?}", so.type_).as_str())),
         format!("*Status:*\n {}", so.status),
-        format!("*Type:*\n {}", format_status(format!("{:?}", so.type_).as_str())),
     ];
     if let Some(amount) = so.amount {
         fields.push(format!("*Amount:*\n {}", 
             format_money(amount.into(), &so.currency.clone().unwrap_or_else(|| "USD".into()))));
     }
 
-    SlackEvent { blocks: vec![ 
-        make_text_section(title_text), 
-        make_fields_section(fields) 
-    ]}
+    // Build known blocks
+    let blocks = vec![
+        make_header(header),
+        make_divider(),
+        make_fields_section(fields)
+    ];
+    
+    SlackEvent{ blocks }
 }
 
 // ----- Subscription Schedule handling -----
 
 fn subscriptionschedule_to_slack_event(ss: &SubscriptionSchedule, livemode: bool) -> SlackEvent {
-    let status_text = format_status(format!("{:?}", ss.status).as_str());
-    let title_text = format_event_title(&humalize_event_type(&ss.event_type), Some(status_text.as_str()), livemode);
-
+    let header = format_header(&humalize_event_type(&ss.event_type), Some(":incoming_envelope:"), livemode);    
     let fields = vec![
         format!("*Schedule ID:*\n {}", ss.id),
         format!("*Customer:*\n {}", ss.customer),
-        format!("*Status:*\n {}", status_text),
-        format!("*End Behavior:*\n {}",format_status(format!("{:?}", ss.end_behavior).as_str())),
+        format!("*End Behavior:*\n {}",get_enum_text(format!("{:?}", ss.end_behavior).as_str())),
+        format!("*Status:*\n {}",  get_enum_text(format!("{:?}", ss.status).as_str())),
     ];
 
-    SlackEvent { blocks: vec![ 
-        make_text_section(title_text),
-        make_fields_section(fields) 
-    ]}
+    // Build known blocks
+    let blocks = vec![
+        make_header(header),
+        make_divider(),
+        make_fields_section(fields)
+    ];
+    
+    SlackEvent{ blocks }
 }
 
 // ----- Topup handling -----
 
 fn topup_to_slack_event(tu: &Topup, livemode: bool) -> SlackEvent {
-    let status_text = format_status(format!("{:?}", tu.status).as_str());
-    let title_text = format_event_title(&humalize_event_type(&tu.event_type), Some(status_text.as_str()), livemode);
-
+    let header = format_header(&humalize_event_type(&tu.event_type), Some(":top:"), livemode);    
     let fields = vec![
         format!("*Topup ID:*\n {}", tu.id),
         format!("*Amount:*\n {}", format_money(tu.amount.into(), &tu.currency)),
-        format!("*Status:*\n {}", status_text)
+        format!("*Status:*\n {}", get_enum_text(format!("{:?}", tu.status).as_str()))
     ];
-    SlackEvent { blocks: vec![ 
-        make_text_section(title_text), 
-        make_fields_section(fields) 
-    ]}
+
+    // Build known blocks
+    let blocks = vec![
+        make_header(header),
+        make_divider(),
+        make_fields_section(fields)
+    ];
+    
+    SlackEvent{ blocks }
 }
 
 // ----- Helper functions -----
@@ -325,18 +382,24 @@ fn humalize_event_type<E: std::fmt::Debug>(ev: &E) -> String {
 }
 
 /// Formats a Slack title for any service event.
-fn format_event_title(event_clean: &str, status_text: Option<&str>, livemode: bool) -> String {
-    let lvm = if !livemode { ":memo:" } else { ":white_check_mark:" };
-
-    if let Some(status_text) = status_text {
-        format!("*{}* ({}) {}", event_clean, status_text.to_lowercase(), lvm)
-    } else {
-        format!("*{}* {}", event_clean, lvm)
+fn format_header(event: &str, emoji: Option<&str>, livemode: bool) -> String {
+    let mut header = "".to_string();
+    
+    if let Some(emoji) = emoji {
+        header.push_str(&format!("{} ", emoji));
     }
+    header.push_str(&format!("{}", event));
+    if livemode {
+        header.push_str(" - :white_check_mark:");
+    } else {
+        header.push_str(" - :ghost: demo :ghost:");
+    }
+
+    header
 }
 
 /// Stripe before "::" or return original
-fn format_status(input: &str) -> String {
+fn get_enum_text(input: &str) -> String {
     if let Some(index) = input.find("::") {
         input[index + 2..].to_string()
     } else {
@@ -358,11 +421,11 @@ fn format_timestamp(ts: i32) -> String {
 
 fn format_invoice_items(lines: &[LineItem]) -> String {
     if lines.is_empty() {
-        "\n-".into()
+        "\n - ".into()
     } else {
         lines
             .iter()
-            .map(|l| format!("\n- {} ({:.2} {})", l.description, l.amount as f64 / 100.0, l.currency))
+            .map(|l| format!("\n • {} ({:.2} {})", l.description, l.amount as f64 / 100.0, l.currency))
             .collect::<Vec<_>>()
             .join("")
     }
@@ -383,6 +446,19 @@ fn make_fields_section(raw_fields: Vec<String>) -> SlackEventUntagged {
     SlackEventUntagged::FieldsSection(FieldsSection {
         type_: FieldsSectionType::Section,
         fields,
+    })
+}
+
+fn make_header<T: Into<String>>(text: T) -> SlackEventUntagged {
+    SlackEventUntagged::Header(Header {
+        type_: HeaderType::Header,
+        text: TextObject { type_: TextObjectType::PlainText, text: text.into() },
+    })
+}
+
+fn make_divider() -> SlackEventUntagged {
+    SlackEventUntagged::Divider(Divider {
+        type_: DividerType::Divider
     })
 }
 
@@ -423,56 +499,28 @@ mod tests {
     }
 
     #[test]
-    fn test_format_event_title() {
-        // Test case 1: Livemode is true
-        let event_clean = "Payment Intent Created";
-        let status_text = Some("Succeeded");
-        let livemode = true;
-        
-        let result = format_event_title(event_clean, status_text, livemode);
-        let expected = "*Payment Intent Created* (succeeded) :white_check_mark:";
-        assert_eq!(result, expected);
-
-        // Test case 2: Livemode is false
-        let livemode = false;
-        
-        let result = format_event_title(event_clean, None, livemode);
-        let expected = "*Payment Intent Created* :memo:";
-        assert_eq!(result, expected);
-        
-        // Test case 3: Different event and status
-        let event_clean = "Invoice Created";
-        let status_text = Some("Failed");
-        let livemode = true;
-        
-        let result = format_event_title(event_clean, status_text, livemode);
-        let expected = "*Invoice Created* (failed) :white_check_mark:";
-        assert_eq!(result, expected);
-    }
-
-    #[test]
-    fn test_format_status() {
+    fn test_get_enum_text() {
         // Test case 1: String with "::"
         let input = "Stripe::PaymentIntentCreated";
-        let result = format_status(input);
+        let result = get_enum_text(input);
         let expected = "PaymentIntentCreated";
         assert_eq!(result, expected);
 
         // Test case 2: String without "::"
         let input = "PaymentIntentCreated";
-        let result = format_status(input);
+        let result = get_enum_text(input);
         let expected = "PaymentIntentCreated";
         assert_eq!(result, expected);
 
         // Test case 3: String with multiple "::"
         let input = "Stripe::PaymentIntent::Created";
-        let result = format_status(input);
+        let result = get_enum_text(input);
         let expected = "PaymentIntent::Created";  // It only strips the first "::"
         assert_eq!(result, expected);
 
         // Test case 4: Empty string
         let input = "";
-        let result = format_status(input);
+        let result = get_enum_text(input);
         let expected = "";
         assert_eq!(result, expected);
     }
@@ -492,11 +540,50 @@ mod tests {
             LineItem { description: "B".into(), amount: 800, currency: "EUR".into() },
         ];
         let out = format_invoice_items(&items);
-        assert_eq!(out, "\n- A (12.00 USD)\n- B (8.00 EUR)");
+        assert_eq!(out, "\n • A (12.00 USD)\n • B (8.00 EUR)");
 
         // Empty
         let empty: InvoiceLines = Vec::new();
-        assert_eq!(format_invoice_items(&empty), "\n-");
+        assert_eq!(format_invoice_items(&empty), "\n - ");
+    }
+
+    #[test]
+    fn test_format_header() {
+        // Test case 1: Livemode is true
+        let event_clean = "Payment Intent Created";
+        let emoji = Some(":money_with_wings:");
+        let livemode = true;
+
+        let result = format_header(event_clean, emoji, livemode);
+        let expected = ":money_with_wings: Payment Intent Created - :white_check_mark:";
+        assert_eq!(result, expected);
+
+        // Test case 2: Livemode is false
+        let emoji = None;
+        let livemode = false;
+        
+        let result = format_header(event_clean, emoji, livemode);
+        let expected = "Payment Intent Created - :ghost: demo :ghost:";
+        assert_eq!(result, expected);
+        
+        // Test case 3: Different event and status
+        let event_clean = "Invoice Created";
+        let emoji = None;
+        let livemode = true;
+        
+        let result = format_header(event_clean, emoji, livemode);
+        let expected = "Invoice Created - :white_check_mark:";
+        assert_eq!(result, expected);        
+    }
+
+    #[test]
+    fn test_format_divider() {
+        let section = make_divider();
+        if let SlackEventUntagged::Divider(d) = section {
+            assert_eq!(d.type_, DividerType::Divider);
+        } else {
+            panic!("Expected Divider variant");
+        }
     }
 
     #[test]
@@ -535,27 +622,55 @@ mod tests {
         };
 
         let ev = invoice_to_slack_event(&inv, false);
-        assert_eq!(ev.blocks.len(), 2);
+        assert_eq!(ev.blocks.len(), 7);
 
-        if let SlackEventUntagged::TextSection(ts) = &ev.blocks[0] {
-            assert_eq!(ts.text.text, "*Invoice Created* (paid) :memo:".to_string());
+        if let SlackEventUntagged::Header(ts) = &ev.blocks[0] {
+            assert_eq!(ts.text.text, ":moneybag: Invoice Created - :ghost: demo :ghost:".to_string());
         } else {
-            panic!("Expected first block to be TextSection");
+            panic!("Expected block to be Header");
         }
 
-        if let SlackEventUntagged::FieldsSection(fs) = &ev.blocks[1] {
-            let texts: Vec<String> =
-                fs.fields.iter().map(|f| f.text.clone()).collect();
-            assert_eq!(texts.len(), 6);
+        if let SlackEventUntagged::Divider(d) = &ev.blocks[1] {
+            assert_eq!(d.type_, DividerType::Divider);
+        } else {
+            panic!("Expected block to be Divider");
+        }
+                
+        if let SlackEventUntagged::FieldsSection(fs) = &ev.blocks[2] {
+            let texts: Vec<String> = fs.fields.iter().map(|f| f.text.clone()).collect();
+            assert_eq!(texts.len(), 2);
             assert_eq!(texts[0], "*Account:*\n Acct (US)".to_string());
             assert_eq!(texts[1], "*Customer:*\n Cust <c@e.com>".to_string());
-            assert_eq!(texts[2], "*Amount Due:*\n 15.00 USD".to_string());
-            assert_eq!(texts[3], "*Amount Paid:*\n 15.00 USD".to_string());
-            assert_eq!(texts[4], "*Period:*\n Jan 01, 2021 – Jan 02, 2021".to_string());
-            assert_eq!(texts[5], "*Items:*\n \n- Svc (15.00 USD)".to_string());
         } else {
-            panic!("Expected second block to be FieldsSection");
+            panic!("Expected bock to be FieldsSection");
         }
+
+        if let SlackEventUntagged::TextSection(ts) = &ev.blocks[3] {
+            assert_eq!(ts.text.text, "*Period:*\n Jan 01, 2021 – Jan 02, 2021".to_string());
+        } else {
+            panic!("Expected block to be TextSection");
+        }
+
+        if let SlackEventUntagged::FieldsSection(fs) = &ev.blocks[4] {
+            let texts: Vec<String> = fs.fields.iter().map(|f| f.text.clone()).collect();
+            assert_eq!(texts.len(), 2);
+            assert_eq!(texts[0], "*Amount Due:*\n 15.00 USD".to_string());
+            assert_eq!(texts[1], "*Amount Paid:*\n 15.00 USD".to_string());
+        } else {
+            panic!("Expected bock to be FieldsSection");
+        }
+
+        if let SlackEventUntagged::TextSection(ts) = &ev.blocks[5] {
+            assert_eq!(ts.text.text, "*Itemized:*\n • Svc (15.00 USD)".to_string());
+        } else {
+            panic!("Expected block to be TextSection");
+        }
+        
+        if let SlackEventUntagged::TextSection(ts) = &ev.blocks[6] {
+            assert_eq!(ts.text.text, "*Status:*\n Paid".to_string());
+        } else {
+            panic!("Expected block to be TextSection");
+        }        
     }
 
     #[test]
@@ -573,24 +688,35 @@ mod tests {
         };
 
         let ev = invoiceitem_to_slack_event(&ii, false);
-        assert_eq!(ev.blocks.len(), 2);
+        assert_eq!(ev.blocks.len(), 4);
 
-        if let SlackEventUntagged::TextSection(ts) = &ev.blocks[0] {
-            assert_eq!(ts.text.text, "*Invoiceitem Created* :memo:".to_string());
+        if let SlackEventUntagged::Header(ts) = &ev.blocks[0] {
+            assert_eq!(ts.text.text, ":memo: Invoiceitem Created - :ghost: demo :ghost:".to_string());
         } else {
-            panic!("Expected first block to be TextSection");
+            panic!("Expected first block to be Header");
         }
 
-        if let SlackEventUntagged::FieldsSection(fs) = &ev.blocks[1] {
+        if let SlackEventUntagged::Divider(d) = &ev.blocks[1] {
+            assert_eq!(d.type_, DividerType::Divider);
+        } else {
+            panic!("Expected second block to be Divider");
+        }
+
+        if let SlackEventUntagged::FieldsSection(fs) = &ev.blocks[2] {
             let texts: Vec<String> = fs.fields.iter().map(|f| f.text.clone()).collect();
-            assert_eq!(texts.len(), 5);
+            assert_eq!(texts.len(), 4);
             assert_eq!(texts[0], "*Item ID:*\n ii_001".to_string());
             assert_eq!(texts[1], "*Amount:*\n 5.00 USD".to_string());
             assert_eq!(texts[2], "*Quantity:*\n 3".to_string());
             assert_eq!(texts[3], "*Date:*\n Jun 29, 2021".to_string());
-            assert_eq!(texts[4], "*Description:*\n Item desc".to_string());
         } else {
-            panic!("Expected second block to be FieldsSection");
+            panic!("Expected bock to be FieldsSection");
+        }
+
+        if let SlackEventUntagged::TextSection(ts) = &ev.blocks[3] {
+            assert_eq!(ts.text.text, "*Description:*\n Item desc".to_string());
+        } else {
+            panic!("Expected block to be TextSection");
         }
     }
 
@@ -619,28 +745,31 @@ mod tests {
             status: ChargeStatus::Succeeded,
         };
         let ev = charge_to_slack_event(&ch, false);
-        // Should have exactly two blocks: title + fields
-        assert_eq!(ev.blocks.len(), 2);
+        assert_eq!(ev.blocks.len(), 3);
 
-        // 1) Title must be exact
-        if let SlackEventUntagged::TextSection(ts) = &ev.blocks[0] {
-            assert_eq!(ts.text.text,"*Charge Captured* (succeeded) :memo:".to_string());
+        if let SlackEventUntagged::Header(ts) = &ev.blocks[0] {
+            assert_eq!(ts.text.text,":credit_card: Charge Captured - :ghost: demo :ghost:".to_string());
         } else {
-            panic!("Expected first block to be TextSection");
+            panic!("Expected first block to be Header");
         }
 
-        // 2) Fields must match exactly and in order
-        if let SlackEventUntagged::FieldsSection(fs) = &ev.blocks[1] {
+        if let SlackEventUntagged::Divider(d) = &ev.blocks[1] {
+            assert_eq!(d.type_, DividerType::Divider);
+        } else {
+            panic!("Expected second block to be Divider");
+        }
+
+        if let SlackEventUntagged::FieldsSection(fs) = &ev.blocks[2] {
             let texts: Vec<String> = fs.fields.iter().map(|f| f.text.clone()).collect();
             // You should have exactly these 5 fields
             assert_eq!(texts.len(), 5);
             assert_eq!(texts[0], "*Charge ID:*\n ch_789".to_string());
             assert_eq!(texts[1], "*Amount:*\n 20.00 USD".to_string());
-            assert_eq!(texts[2], "*Status:*\n Succeeded".to_string());
-            assert_eq!(texts[3], "*Description:*\n Test charge".to_string());
+            assert_eq!(texts[2], "*Description:*\n Test charge".to_string());
+            assert_eq!(texts[3], "*Status:*\n Succeeded".to_string());
             assert_eq!(texts[4], "*Customer:*\n cus_456".to_string());
         } else {
-            panic!("Expected second block to be FieldsSection");
+            panic!("Expected bock to be FieldsSection");
         }
     }
 
@@ -662,23 +791,34 @@ mod tests {
             created: 1620000000,
         };
         let ev = customer_to_slack_event(&c, false);
-        assert_eq!(ev.blocks.len(), 2);
+        assert_eq!(ev.blocks.len(), 4);
 
-        if let SlackEventUntagged::TextSection(ts) = &ev.blocks[0] {
-            assert_eq!(ts.text.text, "*Customer Created* :memo:".to_string());
+        if let SlackEventUntagged::Header(ts) = &ev.blocks[0] {
+            assert_eq!(ts.text.text, ":office_worker: Customer Created - :ghost: demo :ghost:".to_string());
         } else {
-            panic!("Expected first block to be TextSection");
+            panic!("Expected first block to be Header");
         }
 
-        if let SlackEventUntagged::FieldsSection(fs) = &ev.blocks[1] {
+        if let SlackEventUntagged::Divider(d) = &ev.blocks[1] {
+            assert_eq!(d.type_, DividerType::Divider);
+        } else {
+            panic!("Expected second block to be Divider");
+        }
+
+        if let SlackEventUntagged::FieldsSection(fs) = &ev.blocks[2] {
             let texts: Vec<String> = fs.fields.iter().map(|f| f.text.clone()).collect();
-            assert_eq!(texts.len(), 4);
+            assert_eq!(texts.len(), 3);
             assert_eq!(texts[0], "*Customer ID:*\n cus_001".to_string());
             assert_eq!(texts[1], "*Name:*\n Test User".to_string());
             assert_eq!(texts[2], "*Email:*\n test@example.com".to_string());
-            assert_eq!(texts[3], "*Description:*\n VIP customer".to_string());
         } else {
-            panic!("Expected second block to be FieldsSection");
+            panic!("Expected bock to be FieldsSection");
+        }
+
+        if let SlackEventUntagged::TextSection(ts) = &ev.blocks[3] {
+            assert_eq!(ts.text.text, "*Description:*\n VIP customer".to_string());
+        } else {
+            panic!("Expected block to be TextSection");
         }
     }
 
@@ -715,25 +855,31 @@ mod tests {
         };
 
         let ev = issuingauthorization_to_slack_event(&ia, false);
-        assert_eq!(ev.blocks.len(), 2);
+        assert_eq!(ev.blocks.len(), 3);
 
-        if let SlackEventUntagged::TextSection(ts) = &ev.blocks[0] {
-            assert_eq!(ts.text.text, "*Issuing Authorization Created* (pending) :memo:".to_string());
+        if let SlackEventUntagged::Header(ts) = &ev.blocks[0] {
+            assert_eq!(ts.text.text, ":ok: Issuing Authorization Created - :ghost: demo :ghost:".to_string());
         } else {
-            panic!("Expected first block to be TextSection");
+            panic!("Expected first block to be Header");
         }
 
-        if let SlackEventUntagged::FieldsSection(fs) = &ev.blocks[1] {
+        if let SlackEventUntagged::Divider(d) = &ev.blocks[1] {
+            assert_eq!(d.type_, DividerType::Divider);
+        } else {
+            panic!("Expected second block to be Divider");
+        }
+
+        if let SlackEventUntagged::FieldsSection(fs) = &ev.blocks[2] {
             let texts: Vec<String> = fs.fields.iter().map(|f| f.text.clone()).collect();
             assert_eq!(texts.len(), 6);
             assert_eq!(texts[0], "*Authorization ID:*\n ia_001".to_string());
             assert_eq!(texts[1], "*Amount:*\n 25.00 USD".to_string());
             assert_eq!(texts[2], "*Merchant Amount:*\n 24.00 USD".to_string());
-            assert_eq!(texts[3], "*Status:*\n Pending".to_string());
-            assert_eq!(texts[4], "*Card:*\n card_123".to_string());
-            assert_eq!(texts[5], "*Approved:*\n true".to_string());
+            assert_eq!(texts[3], "*Card:*\n card_123".to_string());
+            assert_eq!(texts[4], "*Approved:*\n true".to_string());
+            assert_eq!(texts[5], "*Status:*\n Pending".to_string());
         } else {
-            panic!("Expected second block to be FieldsSection");
+            panic!("Expected bock to be FieldsSection");
         }
     }
 
@@ -756,25 +902,31 @@ mod tests {
             financial_account: None,
         };
         let ev = issuingcard_to_slack_event(&ic, false);
-        assert_eq!(ev.blocks.len(), 2);
+        assert_eq!(ev.blocks.len(), 3);
 
-        if let SlackEventUntagged::TextSection(ts) = &ev.blocks[0] {
-            assert_eq!(ts.text.text, "*Issuing Card Created* (active) :memo:".to_string());
+        if let SlackEventUntagged::Header(ts) = &ev.blocks[0] {
+            assert_eq!(ts.text.text, ":card_index: Issuing Card Created - :ghost: demo :ghost:".to_string());
         } else {
-            panic!("Expected first block to be TextSection");
+            panic!("Expected first block to be Header");
         }
 
-        if let SlackEventUntagged::FieldsSection(fs) = &ev.blocks[1] {
+        if let SlackEventUntagged::Divider(d) = &ev.blocks[1] {
+            assert_eq!(d.type_, DividerType::Divider);
+        } else {
+            panic!("Expected second block to be Divider");
+        }
+
+        if let SlackEventUntagged::FieldsSection(fs) = &ev.blocks[2] {
             let texts: Vec<String> = fs.fields.iter().map(|f| f.text.clone()).collect();
             assert_eq!(texts.len(), 6);
             assert_eq!(texts[0], "*Card ID:*\n ic_001".to_string());
             assert_eq!(texts[1], "*Brand:*\n Visa".to_string());
             assert_eq!(texts[2], "*Last4:*\n 1234".to_string());
-            assert_eq!(texts[3], "*Status:*\n Active".to_string());
-            assert_eq!(texts[4], "*Type:*\n Physical".to_string());
-            assert_eq!(texts[5], "*Exp:*\n 12/2025".to_string());
+            assert_eq!(texts[3], "*Type:*\n Physical".to_string());
+            assert_eq!(texts[4], "*Exp:*\n 12/2025".to_string());
+            assert_eq!(texts[5], "*Status:*\n Active".to_string());
         } else {
-            panic!("Expected second block to be FieldsSection");
+            panic!("Expected block to be FieldsSection");
         }
     }
 
@@ -793,15 +945,22 @@ mod tests {
             type_: IssuingCardholderType::Individual,
         };
         let ev = issuingcardholder_to_slack_event(&ih, false);
-        assert_eq!(ev.blocks.len(), 2);
+        assert_eq!(ev.blocks.len(), 3);
 
-        if let SlackEventUntagged::TextSection(ts) = &ev.blocks[0] {
-            assert_eq!(ts.text.text, "*Issuing Cardholder Created* (active) :memo:".to_string());
+        if let SlackEventUntagged::Header(ts) = &ev.blocks[0] {
+            assert_eq!(ts.text.text, 
+                ":envelope_with_arrow: Issuing Cardholder Created - :ghost: demo :ghost:".to_string());
         } else {
-            panic!("Expected first block to be TextSection");
+            panic!("Expected first block to be Header");
         }
 
-        if let SlackEventUntagged::FieldsSection(fs) = &ev.blocks[1] {
+        if let SlackEventUntagged::Divider(d) = &ev.blocks[1] {
+            assert_eq!(d.type_, DividerType::Divider);
+        } else {
+            panic!("Expected second block to be Divider");
+        }
+
+        if let SlackEventUntagged::FieldsSection(fs) = &ev.blocks[2] {
             let texts: Vec<String> = fs.fields.iter().map(|f| f.text.clone()).collect();
             assert_eq!(texts.len(), 4);
             assert_eq!(texts[0], "*Cardholder ID:*\n ih_001".to_string());
@@ -809,7 +968,7 @@ mod tests {
             assert_eq!(texts[2], "*Email:*\n alice@example.com".to_string());
             assert_eq!(texts[3], "*Status:*\n Active".to_string());
         } else {
-            panic!("Expected second block to be FieldsSection");
+            panic!("Expected bock to be FieldsSection");
         }
     }
 
@@ -826,24 +985,30 @@ mod tests {
             created: 1627200000,
         };
         let ev = issuingdispute_to_slack_event(&idp, false);
-        assert_eq!(ev.blocks.len(), 2);
+        assert_eq!(ev.blocks.len(), 3);
 
-        if let SlackEventUntagged::TextSection(ts) = &ev.blocks[0] {
-            assert_eq!(ts.text.text,"*Issuing Dispute Created* (submitted) :memo:".to_string());
+        if let SlackEventUntagged::Header(ts) = &ev.blocks[0] {
+            assert_eq!(ts.text.text,":warning: Issuing Dispute Created - :ghost: demo :ghost:".to_string());
         } else {
-            panic!("Expected first block to be TextSection");
+            panic!("Expected first block to be Header");
         }
 
-        if let SlackEventUntagged::FieldsSection(fs) = &ev.blocks[1] {
+        if let SlackEventUntagged::Divider(d) = &ev.blocks[1] {
+            assert_eq!(d.type_, DividerType::Divider);
+        } else {
+            panic!("Expected second block to be Divider");
+        }
+
+        if let SlackEventUntagged::FieldsSection(fs) = &ev.blocks[2] {
             let texts: Vec<String> = fs.fields.iter().map(|f| f.text.clone()).collect();
             assert_eq!(texts.len(), 5);
             assert_eq!(texts[0], "*Dispute ID:*\n idp_001".to_string());
             assert_eq!(texts[1], "*Amount:*\n 7.50 USD".to_string());
-            assert_eq!(texts[2], "*Status:*\n Submitted".to_string());
-            assert_eq!(texts[3], "*Reason:*\n Other".to_string());
+            assert_eq!(texts[2], "*Reason:*\n Other".to_string());
+            assert_eq!(texts[3], "*Status:*\n Submitted".to_string());
             assert_eq!(texts[4], "*Loss Reason:*\n InvalidIncorrectAmountDispute".to_string());
         } else {
-            panic!("Expected second block to be FieldsSection");
+            panic!("Expected bock to be FieldsSection");
         }
     }
 
@@ -868,15 +1033,22 @@ mod tests {
             status: PaymentIntentStatus::RequiresConfirmation,
         };
         let ev = paymentintent_to_slack_event(&pi, false);
-        assert_eq!(ev.blocks.len(), 2);
+        assert_eq!(ev.blocks.len(), 3);
 
-        if let SlackEventUntagged::TextSection(ts) = &ev.blocks[0] {
-            assert_eq!(ts.text.text, "*Payment Intent Created* (requiresconfirmation) :memo:".to_string());
+        if let SlackEventUntagged::Header(ts) = &ev.blocks[0] {
+            assert_eq!(ts.text.text, 
+                ":money_with_wings: Payment Intent Created - :ghost: demo :ghost:".to_string());
         } else {
-            panic!("Expected first block to be TextSection");
+            panic!("Expected first block to be Header");
         }
 
-        if let SlackEventUntagged::FieldsSection(fs) = &ev.blocks[1] {
+        if let SlackEventUntagged::Divider(d) = &ev.blocks[1] {
+            assert_eq!(d.type_, DividerType::Divider);
+        } else {
+            panic!("Expected second block to be Divider");
+        }
+
+        if let SlackEventUntagged::FieldsSection(fs) = &ev.blocks[2] {
             let texts: Vec<String> = fs.fields.iter().map(|f| f.text.clone()).collect();
             assert_eq!(texts.len(), 5);
             assert_eq!(texts[0], "*Intent ID:*\n pi_001".to_string());
@@ -885,7 +1057,7 @@ mod tests {
             assert_eq!(texts[3], "*Received:*\n 50.00 USD".to_string());
             assert_eq!(texts[4], "*Canceled At:*\n Aug 03, 2021".to_string());
         } else {
-            panic!("Expected second block to be FieldsSection");
+            panic!("Expected bock to be FieldsSection");
         }
     }
 
@@ -911,15 +1083,22 @@ mod tests {
             type_: PayoutType::BankAccount,
         };
         let ev = payout_to_slack_event(&po, false);
-        assert_eq!(ev.blocks.len(), 2);
+        assert_eq!(ev.blocks.len(), 3);
 
-        if let SlackEventUntagged::TextSection(ts) = &ev.blocks[0] {
-            assert_eq!(ts.text.text, "*Payout Created* (paid) :memo:".to_string());
+        if let SlackEventUntagged::Header(ts) = &ev.blocks[0] {
+            assert_eq!(ts.text.text, 
+                ":hand_with_index_finger: Payout Created - :ghost: demo :ghost:".to_string());
         } else {
-            panic!("Expected first block to be TextSection");
+            panic!("Expected first block to be Header");
         }
 
-        if let SlackEventUntagged::FieldsSection(fs) = &ev.blocks[1] {
+        if let SlackEventUntagged::Divider(d) = &ev.blocks[1] {
+            assert_eq!(d.type_, DividerType::Divider);
+        } else {
+            panic!("Expected second block to be Divider");
+        }
+
+        if let SlackEventUntagged::FieldsSection(fs) = &ev.blocks[2] {
             let texts: Vec<String> = fs.fields.iter().map(|f| f.text.clone()).collect();
             assert_eq!(texts.len(), 4);
             assert_eq!(texts[0], "*Payout ID:*\n po_001".to_string());
@@ -927,7 +1106,7 @@ mod tests {
             assert_eq!(texts[2], "*Status:*\n Paid".to_string());
             assert_eq!(texts[3], "*Arrival Date:*\n Aug 15, 2021".to_string());
         } else {
-            panic!("Expected second block to be FieldsSection");
+            panic!("Expected bock to be FieldsSection");
         }
     }
 
@@ -947,23 +1126,29 @@ mod tests {
             type_: SourceType::Card,
         };
         let ev = source_to_slack_event(&so, false);
-        assert_eq!(ev.blocks.len(), 2);
+        assert_eq!(ev.blocks.len(), 3);
 
-        if let SlackEventUntagged::TextSection(ts) = &ev.blocks[0] {
-            assert_eq!(ts.text.text, "*Source Chargeable* (chargeable) :memo:".to_string());
+        if let SlackEventUntagged::Header(ts) = &ev.blocks[0] {
+            assert_eq!(ts.text.text, ":office: Source Chargeable - :ghost: demo :ghost:".to_string());
         } else {
-            panic!("Expected first block to be TextSection");
+            panic!("Expected first block to be Header");
         }
 
-        if let SlackEventUntagged::FieldsSection(fs) = &ev.blocks[1] {
+        if let SlackEventUntagged::Divider(d) = &ev.blocks[1] {
+            assert_eq!(d.type_, DividerType::Divider);
+        } else {
+            panic!("Expected second block to be Divider");
+        }
+
+        if let SlackEventUntagged::FieldsSection(fs) = &ev.blocks[2] {
             let texts: Vec<String> = fs.fields.iter().map(|f| f.text.clone()).collect();
             assert_eq!(texts.len(), 4);
             assert_eq!(texts[0], "*Source ID:*\n so_001".to_string());
-            assert_eq!(texts[1], "*Status:*\n chargeable".to_string());
-            assert_eq!(texts[2], "*Type:*\n Card".to_string());
+            assert_eq!(texts[1], "*Type:*\n Card".to_string());
+            assert_eq!(texts[2], "*Status:*\n chargeable".to_string());
             assert_eq!(texts[3], "*Amount:*\n 12.00 USD".to_string());
         } else {
-            panic!("Expected second block to be FieldsSection");
+            panic!("Expected bock to be FieldsSection");
         }
     }
 
@@ -986,23 +1171,30 @@ mod tests {
             status: SubscriptionScheduleStatus::Active,
         };
         let ev = subscriptionschedule_to_slack_event(&ss, false);
-        assert_eq!(ev.blocks.len(), 2);
+        assert_eq!(ev.blocks.len(), 3);
 
-        if let SlackEventUntagged::TextSection(ts) = &ev.blocks[0] {
-            assert_eq!(ts.text.text, "*Subscription Schedule Created* (active) :memo:".to_string());
+        if let SlackEventUntagged::Header(ts) = &ev.blocks[0] {
+            assert_eq!(ts.text.text, 
+                ":incoming_envelope: Subscription Schedule Created - :ghost: demo :ghost:".to_string());
         } else {
-            panic!("Expected first block to be TextSection");
+            panic!("Expected first block to be Header");
+        }
+
+        if let SlackEventUntagged::Divider(d) = &ev.blocks[1] {
+            assert_eq!(d.type_, DividerType::Divider);
+        } else {
+            panic!("Expected second block to be Divider");
         }
         
-        if let SlackEventUntagged::FieldsSection(fs) = &ev.blocks[1] {
+        if let SlackEventUntagged::FieldsSection(fs) = &ev.blocks[2] {
             let texts: Vec<String> = fs.fields.iter().map(|f| f.text.clone()).collect();
             assert_eq!(texts.len(), 4);
             assert_eq!(texts[0], "*Schedule ID:*\n ss_001".to_string());
             assert_eq!(texts[1], "*Customer:*\n cus_002".to_string());
-            assert_eq!(texts[2], "*Status:*\n Active".to_string());
-            assert_eq!(texts[3], "*End Behavior:*\n Cancel".to_string());
+            assert_eq!(texts[2], "*End Behavior:*\n Cancel".to_string());
+            assert_eq!(texts[3], "*Status:*\n Active".to_string());
         } else {
-            panic!("Expected second block to be FieldsSection");
+            panic!("Expected bock to be FieldsSection");
         }
     }
 
@@ -1021,21 +1213,28 @@ mod tests {
             status: TopupStatus::Pending,
         };
         let ev = topup_to_slack_event(&tu, false);
-        assert_eq!(ev.blocks.len(), 2);
+        assert_eq!(ev.blocks.len(), 3);
 
-        if let SlackEventUntagged::TextSection(ts) = &ev.blocks[0] {
-            assert_eq!(ts.text.text, "*Topup Created* (pending) :memo:".to_string());
+        if let SlackEventUntagged::Header(ts) = &ev.blocks[0] {
+            assert_eq!(ts.text.text, ":top: Topup Created - :ghost: demo :ghost:".to_string());
         } else {
-            panic!("Expected first block to be TextSection");
+            panic!("Expected first block to be Header");
         }
-        if let SlackEventUntagged::FieldsSection(fs) = &ev.blocks[1] {
+
+        if let SlackEventUntagged::Divider(d) = &ev.blocks[1] {
+            assert_eq!(d.type_, DividerType::Divider);
+        } else {
+            panic!("Expected second block to be Divider");
+        }
+
+        if let SlackEventUntagged::FieldsSection(fs) = &ev.blocks[2] {
             let texts: Vec<String> = fs.fields.iter().map(|f| f.text.clone()).collect();
             assert_eq!(texts.len(), 3);
             assert_eq!(texts[0], "*Topup ID:*\n tu_001".to_string());
             assert_eq!(texts[1], "*Amount:*\n 60.00 USD".to_string());
             assert_eq!(texts[2], "*Status:*\n Pending".to_string());
         } else {
-            panic!("Expected second block to be FieldsSection");
+            panic!("Expected bock to be FieldsSection");
         }
     }
 
