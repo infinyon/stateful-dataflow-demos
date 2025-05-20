@@ -1,0 +1,11 @@
+{
+  "blocks": [
+    {
+      "text": {
+        "text": ":moneybag: Invoice Paid - :ghost: demo :ghost:",
+        "type": "plain_text"
+      },
+      "type": "header"
+    }
+  ]
+}

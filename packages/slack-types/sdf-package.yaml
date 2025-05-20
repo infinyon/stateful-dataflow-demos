@@ -2,60 +2,86 @@ apiVersion: 0.6.0
 
 meta:
   name: slack-types
-  version: 0.0.1
+  version: 0.0.3
   namespace: infinyon
 
 types:
-  slack-event:
+  slack_event:
     type: object
     properties:
       blocks:
         type: list
-        type-name: slack-event-blocks
+        type_name: slack_event_blocks
         items:
           type: enum
-          type-name: slack-event-untagged
+          type_name: slack_event_untagged
           tagging: untagged
           oneOf:
-            text-section:
-              type: text-section
-            fields-section:
-              type: fields-section
-  text-section:
+            header:
+              type: header
+            text_section:
+              type: text_section
+            fields_section:
+              type: fields_section
+            divider:
+              type: divider
+  header:
     type: object
     properties:
       text:
-        type: text-object
+        type: text_object
       type:
         type: enum
-        type-name: text-section-type
+        type_name: header_type
+        oneOf:
+          header:
+            type: null
+  text_section:
+    type: object
+    properties:
+      text:
+        type: text_object
+      type:
+        type: enum
+        type_name: text_section_type
         oneOf:
           section:
             type: null
-  fields-section:
+  fields_section:
     type: object
     properties:
       fields:
         type: list
-        type-name: fields-section-fields
+        type_name: fields_section_fields
         items:
-          type: text-object
+          type: text_object
       type:
         type: enum
-        type-name: fields-section-type
+        type_name: fields_section_type
         oneOf:
           section:
             type: null
-  text-object:
+  divider:
+    type: object
+    properties:
+      type:
+        type: enum
+        type_name: divider_type
+        oneOf:
+          divider:
+            type: null
+  text_object:
     type: object
     properties:
       text:
         type: string
       type:
         type: enum
-        type-name: text-object-type
+        type_name: text_object_type
         oneOf:
           mrkdwn:
+            type: null
+          plain_text:
             type: null
             
 functions:

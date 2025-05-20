@@ -2,13 +2,6 @@
 	"blocks": [
 		{
 			"type": "section",
-			"text": {
-				"type": "mrkdwn",
-				"text": "New *Stripe* event - *invoice.created* (draft) :memo:"
-			}
-		},
-		{
-			"type": "section",
 			"fields": [
         {
 					"type": "mrkdwn",
@@ -16,7 +9,7 @@
 				},
 				{
 					"type": "mrkdwn",
-					"text": "*Customer:*\nNick Cardin <nick+fc9@infinyon.com>"
+					"text": "*Customer:*\n Jacky Chan"
 				},
 				{
 					"type": "mrkdwn",

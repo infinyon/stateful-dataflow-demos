@@ -18,16 +18,40 @@
             "items": {
               "oneOf": [
                 {
+                  "$ref": "#/components/schemas/header"
+                },
+                {
                   "$ref": "#/components/schemas/text_section"
                 },
                 {
                   "$ref": "#/components/schemas/fields_section"
+                },
+                {
+                  "$ref": "#/components/schemas/divider"
                 }
               ]
             }
           }
         }
       },
+      "header": {
+        "type": "object",
+        "required": [
+          "type",
+          "text"
+        ],
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": [
+              "header"
+            ]
+          },
+          "text": {
+            "$ref": "#/components/schemas/text_object"
+          }
+        }
+      },      
       "text_section": {
         "type": "object",
         "required": [
@@ -67,6 +91,20 @@
           }
         }
       },
+      "divider": {
+        "type": "object",
+        "required": [
+          "type"
+        ],
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": [
+              "divider"
+            ]
+          }
+        }
+      },      
       "text_object": {
         "type": "object",
         "required": [
@@ -77,7 +115,8 @@
           "type": {
             "type": "string",
             "enum": [
-              "mrkdwn"
+              "mrkdwn",
+              "plain_text"
             ]
           },
           "text": {

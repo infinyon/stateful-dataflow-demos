@@ -149,7 +149,7 @@ This dataflow uses [stripe-types](../packages/stripe-types), [slack-types](../pa
 Generate a test event from local file & show it display in Slack.
 
 ```bash
-fluvio produce stripe-origin-events -f packages/stripe-to-slack/sample-data/event-send-invoice.json --raw
+fluvio produce stripe-origin-events -f stripe-reduce/sample-data/invoice-created.json --raw
 ```
 
 Checkout the Slack topic to see the notification.

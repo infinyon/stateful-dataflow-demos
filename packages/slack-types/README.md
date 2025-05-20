@@ -13,8 +13,10 @@ sdf build
 Test events parsing:
 
 ```bash
-sdf test function test-event --value-file sample-data/title-event.json
-sdf test function test-event --value-file sample-data/fields-event.json
+sdf test function test-event --value-file sample-data/header.json
+sdf test function test-event --value-file sample-data/fields.json
+sdf test function test-event --value-file sample-data/text.json
+sdf test function test-event --value-file sample-data/divider.json
 ```
 
 ### Generate Types
