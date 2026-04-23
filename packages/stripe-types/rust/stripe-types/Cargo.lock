@@ -882,25 +882,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "include_dir"
-version = "0.7.4"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "923d117408f1e49d914f1a379a309cffe4f18c05cf4e3d12e613a15fc81bd0dd"
-dependencies = [
- "include_dir_macros",
-]
-
-[[package]]
-name = "include_dir_macros"
-version = "0.7.4"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "7cab85a7ed0bd5f0e76d93846e0147172bed2e2d3f859bcc33a8d9699cad1a75"
-dependencies = [
- "proc-macro2",
- "quote",
-]
-
-[[package]]
 name = "indexmap"
 version = "1.9.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1239,9 +1220,9 @@ checksum = "74765f6d916ee2faa39bc8e68e4f3ed8949b48cccdac59983d287a7cb71ce9c5"
 
 [[package]]
 name = "rand"
-version = "0.8.5"
+version = "0.8.6"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "34af8d1a0e25924bc5b7c43c079c942339d8f0a8b57c39049bef581b46327404"
+checksum = "5ca0ecfa931c29007047d1bc58e623ab12e5590e8c7cc53200d5202b69266d8a"
 dependencies = [
  "rand_core",
 ]
@@ -1403,6 +1384,8 @@ dependencies = [
 [[package]]
 name = "sdf-common"
 version = "0.13.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "ed9c998ed93d2b0f8b149440bb928b0ab692c4bcb75e851c3aa1c1836a7de424"
 dependencies = [
  "anyhow",
  "check_keyword",
@@ -1415,6 +1398,8 @@ dependencies = [
 [[package]]
 name = "sdf-context-guest"
 version = "0.13.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "1327fe262d831ca41e811fa73a8361e4a242b3097e2adbf7ecfb82cf12ebf715"
 dependencies = [
  "anyhow",
  "cfg-if",
@@ -1425,6 +1410,8 @@ dependencies = [
 [[package]]
 name = "sdf-imports"
 version = "0.13.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "d6c3a6eeb5459c37ec373709bc20afe57b3d518f904daeec49c019e0bc556f5d"
 dependencies = [
  "anyhow",
  "sdf-common",
@@ -1436,6 +1423,8 @@ dependencies = [
 [[package]]
 name = "sdf-macros"
 version = "0.13.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "3b542fb685470d53ea218c5056a49a47502c2706e1c39da26c5e73d08f2adc46"
 dependencies = [
  "proc-macro2",
  "quote",
@@ -1448,6 +1437,8 @@ dependencies = [
 [[package]]
 name = "sdf-metadata"
 version = "0.13.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "22e14a3666588f38553294aae40c8d49e53f5d00afa635320cf32b7cddcd3e68"
 dependencies = [
  "anyhow",
  "cfg-if",
@@ -1467,6 +1458,8 @@ dependencies = [
 [[package]]
 name = "sdf-parser-core"
 version = "0.13.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "83dcacf15f86fdc66c605089686cb22d1647b10e6950a007bf318cb2170ef58e"
 dependencies = [
  "anyhow",
  "humantime",
@@ -1480,6 +1473,8 @@ dependencies = [
 [[package]]
 name = "sdf-parser-df"
 version = "0.13.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "f68653b0f19a9db7bdb62340b9ffcd4313efb050242d78b93fc8f02cc3c503da"
 dependencies = [
  "anyhow",
  "humantime",
@@ -1496,6 +1491,8 @@ dependencies = [
 [[package]]
 name = "sdf-parser-host"
 version = "0.13.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "09b5a76250f030ddc2d3390652fb0382a64b95d8dcfb11106847ebe3d06dae8b"
 dependencies = [
  "anyhow",
  "sdf-metadata",
@@ -1508,6 +1505,8 @@ dependencies = [
 [[package]]
 name = "sdf-parser-package"
 version = "0.13.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "dc25a04bac2d091f3b4997673b65964f84805f56b87b7a84e598b3459b84c40e"
 dependencies = [
  "anyhow",
  "schemars",
@@ -1521,6 +1520,8 @@ dependencies = [
 [[package]]
 name = "sdf-row-guest"
 version = "0.13.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "056bf7d9498be2019de2b8b51ee8ec77e36adf81f1d87996b0d3bc54559f00cf"
 dependencies = [
  "anyhow",
  "serde",
@@ -1531,18 +1532,22 @@ dependencies = [
 [[package]]
 name = "sdf-wit"
 version = "0.13.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "b823d842b72d3ff34574252fd91bd414f654c7b9c8f49e8da58147d433c93acc"
 dependencies = [
  "anyhow",
  "bon",
- "include_dir",
  "sdf-imports",
  "sdf-parser-host",
  "wit-encoder",
+ "wit-parser 0.229.0",
 ]
 
 [[package]]
 name = "sdfg"
 version = "0.13.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "9bf74b779e8a01f21adbffa8332d1a17f5835d5608d058fc5369fcf21536f5f2"
 dependencies = [
  "anyhow",
  "sdf-context-guest",
@@ -2914,7 +2919,3 @@ dependencies = [
  "cc",
  "pkg-config",
 ]
-
-[[patch.unused]]
-name = "sdf-df-guest"
-version = "0.13.0"
